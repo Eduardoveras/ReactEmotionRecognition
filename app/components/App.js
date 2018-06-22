@@ -1,6 +1,8 @@
 import React from 'react';
 import $ from 'jquery';
 import affdex from '../vendors/affdex';
+import { Link } from 'react-router-dom'
+
 
 const divStyle = {
   width: '130px',
@@ -151,10 +153,10 @@ class App extends React.Component {
     return (<div>
       <div className="sidenav">
         <img alt="yolo" style={divStyle} src="../assets/images/logosdec.png" />
-        <a href="manual.html">Manual</a>
-        <a href="demo.html">Deteccion</a>
-        <a href="reportes.html">Reportes</a>
-        <a href="estadisticas.html">Estadisticas</a>
+          <Link to='/'>Home</Link>
+          <Link to='/reports'>Reportes</Link>
+          <Link to='/statistics'>Estadisticas</Link>
+          <Link to='/'>Manuales</Link>
       </div>
       <div className="container-fluid main">
         <div className="row border border-primary rounded main-box">
