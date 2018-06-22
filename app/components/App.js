@@ -30,7 +30,7 @@ class App extends React.Component {
 
     // Add a callback to notify when the detector is initialized and ready for runing.
     this.detector.addEventListener('onInitializeSuccess', () => {
-      App.log('#logs', 'The detector reports initialized');
+      App.log('#logs', 'Los reportes del detector han inicializado.');
       // Display canvas instead of video feed because we want to draw the feature points on it
       $('#face_video_canvas').css('display', 'block');
       $('#face_video').css('display', 'none');
@@ -39,37 +39,90 @@ class App extends React.Component {
 
     // Add a callback to notify when camera access is allowed
     this.detector.addEventListener('onWebcamConnectSuccess', () => {
-      App.log('#logs', 'Webcam access allowed');
+      App.log('#logs', 'Acceso a la camara permitido !');
     });
 
     // Add a callback to notify when camera access is denied
     this.detector.addEventListener('onWebcamConnectFailure', () => {
       App.log('#logs', 'webcam denied');
-      console.log('Webcam access denied');
+      console.log('Acceso a la camara denegado !');
     });
 
     // Add a callback to notify when detector is stopped
     this.detector.addEventListener('onStopSuccess', () => {
-      App.log('#logs', 'The detector reports stopped');
+      App.log('#logs', 'Los reportes del detector han terminado');
       $('#results').html('');
     });
 
     // Add a callback to receive the results from processing an image.
     // The faces object contains the list of the faces detected in an image.
     this.detector.addEventListener('onImageResultsSuccess', (faces, image, timestamp) => {
+        var porcentajeAMostrar = 25;
       $('#results').html('');
-      App.log('#results', `Timestamp: ${timestamp.toFixed(2)}`);
-      App.log('#results', `Number of faces found: ${faces.length}`);
+      App.log('#results', `Tiempo en la sesion: ${(timestamp.toFixed(2))/60}`);
       if (faces.length > 0) {
-        App.log('#results', `Appearance: ${JSON.stringify(faces[0].appearance)}`);
-        App.log('#results', `Emotions: ${JSON.stringify(faces[0].emotions, (key, val) => {
-          return val.toFixed ? Number(val.toFixed(0)) : val;
-        })}`);
-        App.log('#results', `Expressions: ${JSON.stringify(faces[0].expressions, (key, val) => {
-          return val.toFixed ? Number(val.toFixed(0)) : val;
-        })}`);
-        App.log('#results', `Emoji: ${faces[0].emojis.dominantEmoji}`);
-        App.drawFeaturePoints(image, faces[0].featurePoints);
+          /*
+          App.log('#results', `Emotions: ${JSON.stringify(faces[0].emotions, (key, val) => {
+            return val.toFixed ? Number(val.toFixed(0)) : val;
+          })}`);
+          */
+          if (faces[0].emotions.joy > porcentajeAMostrar){
+              App.log('#results', "<strong className='text-primary'>Felicidad: </strong> " + faces[0].emotions.joy, function (key, val) {
+                  return val.toFixed ? Number(val.toFixed(2)) : val;
+              });
+          }
+
+
+          if(faces[0].emotions.sadness > porcentajeAMostrar)
+          {
+              App.log('#results', "<strong className='text-danger'>Tristeza: </strong> " + faces[0].emotions.sadness, function(key, val) {
+                  return val.toFixed ? Number(val.toFixed(2)) : val;
+              });
+          }
+
+          if(faces[0].emotions.disgust > porcentajeAMostrar)
+          {
+              App.log('#results', "<strong className='text-danger'>Disgusto: </strong> " + faces[0].emotions.disgust, function(key, val) {
+                  return val.toFixed ? Number(val.toFixed(0)) : val;
+              });
+          }
+
+          if(faces[0].emotions.contempt > porcentajeAMostrar)
+          {
+              App.log('#results', "<strong className='text-danger'>Desprecio: </strong> " + faces[0].emotions.contempt, function(key, val) {
+                  return val.toFixed ? Number(val.toFixed(0)) : val;
+              });
+          }
+
+          if(faces[0].emotions.anger > porcentajeAMostrar)
+          {
+              App.log('#results', "<strong className='text-danger'>Enojo: </strong> " + faces[0].emotions.anger, function(key, val) {
+                  return val.toFixed ? Number(val.toFixed(0)) : val;
+              });
+          }
+
+          if(faces[0].emotions.fear > porcentajeAMostrar)
+          {
+              App.log('#results', "<strong className='text-danger'>Miedo: </strong> " + faces[0].emotions.fear, function(key, val) {
+                  return val.toFixed ? Number(val.toFixed(0)) : val;
+              });
+          }
+
+          if(faces[0].emotions.surprise > porcentajeAMostrar)
+          {
+              App.log('#results', "<strong className='text-primary'>Sorpresa: </strong> " + faces[0].emotions.surprise, function(key, val) {
+                  return val.toFixed ? Number(val.toFixed(0)) : val;
+              });
+          }
+
+          App.log('#results', "Emoji acorde a la emocion detectada: " + faces[0].emojis.dominantEmoji);
+          App.log("#results", " ");
+          App.log("#results", "<h3><strong>Otros valores:</strong></h3>");
+          App.log('#results', "<strong className='text-primary'>Atencion a la camara: </strong> " + faces[0].emotions.engagement, function(key, val) {
+              return val.toFixed ? Number(val.toFixed(0)) : val;
+          });
+
+          App.drawFeaturePoints(image, faces[0].featurePoints);
       }
     });
 
@@ -83,12 +136,12 @@ class App extends React.Component {
       $('#logs').html('');
       this.detector.start();
     }
-    App.log('#logs', 'Clicked the start button');
+    App.log('#logs', 'Clickeado el boton de iniciar');
   }
 
   // function executes when the Stop button is pushed.
   onStop() {
-    App.log('#logs', 'Clicked the stop button');
+    App.log('#logs', 'Clickeado el boton de parar.');
     if (this.detector && this.detector.isRunning) {
       this.detector.removeEventListener();
       this.detector.stop();
@@ -97,7 +150,7 @@ class App extends React.Component {
 
   // function executes when the Reset button is pushed.
   onReset() {
-    App.log('#logs', 'Clicked the reset button');
+    App.log('#logs', 'Clickeado el boton de resetear.');
     if (this.detector && this.detector.isRunning) {
       this.detector.reset();
 
@@ -131,9 +184,9 @@ class App extends React.Component {
               <div id="results" />
               <div>
                 <h3>Logs del detector</h3>
-                <button id="start" onClick={this.onStart.bind(this)}>Start</button>
-                <button id="stop" onClick={this.onStop.bind(this)}>Stop</button>
-                <button id="reset" onClick={this.onReset.bind(this)}>Reset</button>
+                <button id="start" onClick={this.onStart.bind(this)}>Iniciar</button>
+                <button id="stop" onClick={this.onStop.bind(this)}>Parar</button>
+                <button id="reset" onClick={this.onReset.bind(this)}>Reiniciar</button>
               </div>
               <div id="logs" />
       </div>
