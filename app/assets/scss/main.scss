@@ -3,10 +3,27 @@ body {
   font-family: 'Open Sans', sans-serif;
   background-color: rgb(238, 236, 236);
 }
-
+.center-text{
+  text-align: center;
+}
 #logs{
   font-size: 14px;
 }
+.logo{
+  width: 130px;
+  height: 130px;
+}
+
+#affdex_elements{
+  height: 100%;
+  margin-top: 14px;
+}
+
+.app-column{
+  width: 680px;
+  height: 520px;
+}
+
 .sidenav {
   width: 150px;
   position: fixed;

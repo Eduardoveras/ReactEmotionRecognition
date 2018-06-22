@@ -1,10 +1,11 @@
+/* eslint-disable react/prefer-stateless-function */
 import React from 'react';
 
 
 class Statistics extends React.Component {
   render() {
     return (
-      <p>hello world reports</p>
+      <p>hello world stats</p>
     );
   }
 }
