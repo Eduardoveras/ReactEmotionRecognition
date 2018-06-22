@@ -10,7 +10,8 @@ affdex.getAffdexDotJsLocation = function() {
       affdexJS = scripts[i].src.replace(/\/affdex\.js$/, '/');
     }
   }
-  return affdexJS;
+  // return affdexJS;
+    return 'https://download.affectiva.com/js/3.2/';
 };
 
 affdex.FaceDetectorMode = {
@@ -334,6 +335,7 @@ affdex.CameraDetector = function(element, imgW, imgH, faceMode) {
     if(!self.isRunning) {
       ctor();
       var url = affdex.getAffdexDotJsLocation() + adapterJSVersion;
+      // var url =  'https://download.affectiva.com/js/3.2/'+ adapterJSVersion;
       require(docElement, url, function() {
         self._startCamera();
       },

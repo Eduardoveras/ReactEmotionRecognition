@@ -35,10 +35,6 @@ class App extends React.Component {
       this.height = 480;
       this.faceMode = affdex.FaceDetectorMode.LARGE_FACES;
       this.detector = new affdex.CameraDetector(1, this.width, this.height, this.faceMode);
-      console.log("111")
-      console.log(this.detector)
-      console.log("222")
-
 
       // Enable detection of all Expressions, Emotions and Emojis classifiers.
       this.detector.detectAllEmotions();
@@ -48,6 +44,8 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+      console.log($(this.refs.affElement)[0]);
+      this.detector = new affdex.CameraDetector($(this.refs.affElement)[0], this.width, this.height, this.faceMode);
 
     // Add a callback to notify when the detector is initialized and ready for runing.
     this.detector.addEventListener('onInitializeSuccess', () => {
