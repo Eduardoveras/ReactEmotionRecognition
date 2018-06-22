@@ -1,6 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
-import affdex from '../vendors/affdex'
+import affdex from '../vendors/affdex';
 
 const divStyle = {
   width: '130px',
@@ -23,29 +23,30 @@ const centerTextStyle = {
 
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
 
-
-  constructor(props)
-  {
-      super(props);
-
-      // SDK Needs to create video and canvas nodes in the DOM in order to function
-      // Here we are adding those nodes a predefined div.
-      this.width = 640;
-      this.height = 480;
-      this.faceMode = affdex.FaceDetectorMode.LARGE_FACES;
-      this.detector = new affdex.CameraDetector(1, this.width, this.height, this.faceMode);
-
-      // Enable detection of all Expressions, Emotions and Emojis classifiers.
-      this.detector.detectAllEmotions();
-      this.detector.detectAllExpressions();
-      this.detector.detectAllEmojis();
-      this.detector.detectAllAppearance();
+    this.width = 640;
+    this.height = 480;
   }
 
   componentDidMount() {
-      console.log($(this.refs.affElement)[0]);
-      this.detector = new affdex.CameraDetector($(this.refs.affElement)[0], this.width, this.height, this.faceMode);
+    // SDK Needs to create video and canvas nodes in the DOM in order to function
+    // Here we are adding those nodes a predefined div.
+    this.affRef = $(this.refs.affElement)[0]
+    this.faceMode = affdex.FaceDetectorMode.LARGE_FACES;
+    this.detector = new affdex.CameraDetector(1, this.width, this.height, this.faceMode);
+    this.detector = new affdex.CameraDetector(
+      $(this.affRef)[0],
+      this.width,
+      this.height,
+      this.faceMode,
+    );
+    // Enable detection of all Expressions, Emotions and Emojis classifiers.
+    this.detector.detectAllEmotions();
+    this.detector.detectAllExpressions();
+    this.detector.detectAllEmojis();
+    this.detector.detectAllAppearance();
 
     // Add a callback to notify when the detector is initialized and ready for runing.
     this.detector.addEventListener('onInitializeSuccess', () => {
@@ -124,16 +125,16 @@ class App extends React.Component {
     }
   }
 
-  log(node_name, msg) {
-    $(node_name).append(`<span>${msg}</span><br />`);
+  log(nodeName, msg) {
+    $(nodeName).append(`<span>${msg}</span><br />`);
   }
 
   drawFeaturePoints(img, featurePoints) {
     const contxt = $('#face_video_canvas')[0].getContext('2d');
 
-    const hRatio = contxt.canvas.width / img.width;
-    const vRatio = contxt.canvas.height / img.height;
-    const ratio = Math.min(hRatio, vRatio);
+    // const hRatio = contxt.canvas.width / img.width;
+    // const vRatio = contxt.canvas.height / img.height;
+    // const ratio = Math.min(hRatio, vRatio);
 
     contxt.strokeStyle = '#FFFFFF';
     for (const id in featurePoints) {
@@ -147,33 +148,33 @@ class App extends React.Component {
   }
 
   render() {
-      return <div>
-          <div className="sidenav">
-              <img alt="yolo" style={divStyle} src="../assets/images/logosdec.png"/>
-              <a href="manual.html">Manual</a>
-              <a href="demo.html">Deteccion</a>
-              <a href="reportes.html">Reportes</a>
-              <a href="estadisticas.html">Estadisticas</a>
-          </div>
-          <div className="container-fluid main">
-              <div className="row border border-primary rounded main-box">
-                  <div className="col-md-8" style={colStyle}>
-                      <div id="affdex_elements" style={affStyle} ref="affElement"/>
-                      <div className="center-text" style={centerTextStyle}>
-                          <div id="results"/>
-                          <div>
-                              <h3>Logs del detector</h3>
-                              <button id="start" onClick={this.onStart.bind(this)}>Start</button>
-                              <button id="stop" onClick={this.onStop.bind(this)}>Stop</button>
-                              <button id="reset" onClick={this.onReset.bind(this)}>Reset</button>
-                          </div>
-                          <div id="logs"/>
-                      </div>
-                  </div>
-
+    return (<div>
+      <div className="sidenav">
+        <img alt="yolo" style={divStyle} src="../assets/images/logosdec.png" />
+        <a href="manual.html">Manual</a>
+        <a href="demo.html">Deteccion</a>
+        <a href="reportes.html">Reportes</a>
+        <a href="estadisticas.html">Estadisticas</a>
+      </div>
+      <div className="container-fluid main">
+        <div className="row border border-primary rounded main-box">
+          <div className="col-md-8" style={colStyle}>
+            <div id="affdex_elements" style={affStyle} ref="affElement" />
+            <div className="center-text" style={centerTextStyle}>
+              <div id="results" />
+              <div>
+                <h3>Logs del detector</h3>
+                <button id="start" onClick={this.onStart.bind(this)}>Start</button>
+                <button id="stop" onClick={this.onStop.bind(this)}>Stop</button>
+                <button id="reset" onClick={this.onReset.bind(this)}>Reset</button>
               </div>
+              <div id="logs" />
+            </div>
           </div>
-      </div>;
+
+        </div>
+      </div>
+            </div>);
   }
 }
 
