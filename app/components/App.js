@@ -115,7 +115,6 @@ class App extends React.Component {
               App.log('#results', "<strong className='text-danger'>Disgusto: </strong> " + faces[0].emotions.disgust, function(key, val) {
                   return val.toFixed ? Number(val.toFixed(0)) : val;
               });
-
               negativas += 1;
               disgusto += 1;
 
@@ -131,7 +130,6 @@ class App extends React.Component {
               App.log('#results', "<strong className='text-danger'>Desprecio: </strong> " + faces[0].emotions.contempt, function(key, val) {
                   return val.toFixed ? Number(val.toFixed(0)) : val;
               });
-
               negativas += 1;
               desprecio += 1;
 
@@ -147,7 +145,6 @@ class App extends React.Component {
               App.log('#results', "<strong className='text-danger'>Enojo: </strong> " + faces[0].emotions.anger, function(key, val) {
                   return val.toFixed ? Number(val.toFixed(0)) : val;
               });
-
               negativas += 1;
               enojo += 1;
 
@@ -162,7 +159,6 @@ class App extends React.Component {
               App.log('#results', "<strong className='text-danger'>Miedo: </strong> " + faces[0].emotions.fear, function(key, val) {
                   return val.toFixed ? Number(val.toFixed(0)) : val;
               });
-
               negativas += 1;
               miedo += 1;
 
@@ -177,7 +173,6 @@ class App extends React.Component {
               App.log('#results', "<strong className='text-primary'>Sorpresa: </strong> " + faces[0].emotions.surprise, function(key, val) {
                   return val.toFixed ? Number(val.toFixed(0)) : val;
               });
-
               positivas += 1;
               sorpresa += 1;
 
