@@ -1,6 +1,20 @@
 import React from 'react';
 import $ from 'jquery';
 import affdex from '../vendors/affdex';
+import title from '../assets/images/reports/title'
+import list from '../assets/images/reports/list'
+import percentage from '../assets/images/reports/percentage'
+
+let reporte = "";
+let positivas = 0;
+let negativas = 0;
+let felicidad = 0;
+let tristeza = 0;
+let disgusto = 0;
+let desprecio = 0;
+let enojo = 0;
+let miedo = 0;
+let sorpresa = 0;
 
 class App extends React.Component {
   constructor(props) {
@@ -57,7 +71,7 @@ class App extends React.Component {
     // Add a callback to receive the results from processing an image.
     // The faces object contains the list of the faces detected in an image.
     this.detector.addEventListener('onImageResultsSuccess', (faces, image, timestamp) => {
-        var porcentajeAMostrar = 25;
+        let porcentajeAMostrar = 25;
       $('#results').html('');
       App.log('#results', `Tiempo en la sesion: ${(timestamp.toFixed(2))/60}`);
       if (faces.length > 0) {
@@ -70,6 +84,14 @@ class App extends React.Component {
               App.log('#results', "<strong className='text-primary'>Felicidad: </strong> " + faces[0].emotions.joy, function (key, val) {
                   return val.toFixed ? Number(val.toFixed(2)) : val;
               });
+
+              positivas += 1;
+              felicidad += 1;
+
+              if((timestamp.toFixed(2) % 5) <= 1)
+              {
+                  reporte += "Felicidad encontrada con un porcentaje de: " + faces[0].emotions.joy + " en el minuto: " + ((timestamp/60).toFixed(2)) + ". \n";
+              }
           }
 
 
@@ -78,6 +100,14 @@ class App extends React.Component {
               App.log('#results', "<strong className='text-danger'>Tristeza: </strong> " + faces[0].emotions.sadness, function(key, val) {
                   return val.toFixed ? Number(val.toFixed(2)) : val;
               });
+
+              negativas += 1;
+              tristeza += 1;
+
+              if((timestamp.toFixed(2) % 5) <= 1)
+              {
+                  reporte += "Tristeza encontrada con un porcentaje de: " + faces[0].emotions.sadness + " en el minuto: " + ((timestamp/60).toFixed(2)) + ". \n";
+              }
           }
 
           if(faces[0].emotions.disgust > porcentajeAMostrar)
@@ -85,6 +115,14 @@ class App extends React.Component {
               App.log('#results', "<strong className='text-danger'>Disgusto: </strong> " + faces[0].emotions.disgust, function(key, val) {
                   return val.toFixed ? Number(val.toFixed(0)) : val;
               });
+              negativas += 1;
+              disgusto += 1;
+
+
+              if((timestamp.toFixed(2) % 5) <= 1)
+              {
+                  reporte += "Disgusto encontrado con un porcentaje de: " + faces[0].emotions.disgust  + " en el minuto: " + ((timestamp/60).toFixed(2)) + ". \n";
+              }
           }
 
           if(faces[0].emotions.contempt > porcentajeAMostrar)
@@ -92,6 +130,14 @@ class App extends React.Component {
               App.log('#results', "<strong className='text-danger'>Desprecio: </strong> " + faces[0].emotions.contempt, function(key, val) {
                   return val.toFixed ? Number(val.toFixed(0)) : val;
               });
+              negativas += 1;
+              desprecio += 1;
+
+
+              if((timestamp.toFixed(2) % 5) <= 1)
+              {
+                  reporte += "Desprecio encontrado con un porcentaje de: " + faces[0].emotions.contemp  + " en el minuto: " + ((timestamp/60).toFixed(2)) + ". \n";
+              }
           }
 
           if(faces[0].emotions.anger > porcentajeAMostrar)
@@ -99,6 +145,13 @@ class App extends React.Component {
               App.log('#results', "<strong className='text-danger'>Enojo: </strong> " + faces[0].emotions.anger, function(key, val) {
                   return val.toFixed ? Number(val.toFixed(0)) : val;
               });
+              negativas += 1;
+              enojo += 1;
+
+              if((timestamp.toFixed(2) % 5) <= 1)
+              {
+                  reporte += "Enojo encontrado con un porcentaje de: " + faces[0].emotions.anger  + " en el minuto: " + ((timestamp/60).toFixed(2)) + ". \n";
+              }
           }
 
           if(faces[0].emotions.fear > porcentajeAMostrar)
@@ -106,6 +159,13 @@ class App extends React.Component {
               App.log('#results', "<strong className='text-danger'>Miedo: </strong> " + faces[0].emotions.fear, function(key, val) {
                   return val.toFixed ? Number(val.toFixed(0)) : val;
               });
+              negativas += 1;
+              miedo += 1;
+
+              if((timestamp.toFixed(2) % 5) <= 1)
+              {
+                  reporte += "Miedo encontrado con un porcentaje de: " + faces[0].emotions.fear  + " en el minuto: " + ((timestamp/60).toFixed(2)) + ". \n";
+              }
           }
 
           if(faces[0].emotions.surprise > porcentajeAMostrar)
@@ -113,6 +173,14 @@ class App extends React.Component {
               App.log('#results', "<strong className='text-primary'>Sorpresa: </strong> " + faces[0].emotions.surprise, function(key, val) {
                   return val.toFixed ? Number(val.toFixed(0)) : val;
               });
+              positivas += 1;
+              sorpresa += 1;
+
+              if((timestamp.toFixed(2) % 5) <= 1)
+              {
+                  reporte += "Sorpresa encontrado con un porcentaje de: " + faces[0].emotions.surprise  + " en el minuto: " + ((timestamp/60).toFixed(2)) + ". \n";
+              }
+
           }
 
           App.log('#results', "Emoji acorde a la emocion detectada: " + faces[0].emojis.dominantEmoji);
@@ -176,6 +244,72 @@ class App extends React.Component {
     }
   }
 
+  descargarReporte() {
+      let count = 1;
+      let jsPDF = require('jspdf');
+      let doc = new jsPDF({
+          orientation: 'landscape',
+          unit: 'px',
+          format: [1920, 1080]
+      });
+
+      doc.setFontSize(35);
+
+      let imgData = title;
+      let posneg = list;
+      let emociones = percentage;
+      doc.addImage(imgData, 'PNG', 0, 0, 799, 312);
+      let contador = 350;
+      doc.addImage(posneg, 'PNG', 0, contador, 676, 88);
+        contador += 120;
+        doc.text('Porcentaje de emociones positivas en la sesion: ' + (positivas/(positivas + negativas))*100 + "%", 10, contador);
+        contador += 30;
+        doc.text('Porcentaje de emociones negativas en la sesion: ' + (negativas/(positivas + negativas))*100 + "%", 10, contador)
+        contador += 30;
+        doc.addImage(emociones, 'PNG', 0, contador, 720, 88);
+        contador += 100;
+        doc.setFontSize(27);
+        doc.text('Cantidad de veces que estuvo feliz: ' + felicidad + '.', 10, contador)
+        contador += 20;
+        doc.text('Cantidad de veces que estuvo triste: ' + tristeza + '.', 10, contador)
+        contador += 20;
+        doc.text('Cantidad de veces que estuvo enojado: ' + felicidad + '.', 10, contador)
+        contador += 20;
+        doc.text('Cantidad de veces que estuvo sorprendido: ' + sorpresa + '.', 10, contador)
+        contador += 20;
+        doc.text('Cantidad de veces que estuvo disgustado: ' + disgusto + '.', 10, contador)
+        contador += 20;
+        doc.text('Cantidad de veces que estuvo despreciable: ' + desprecio + '.', 10, contador)
+        contador += 20;
+        doc.text('Cantidad de veces que estuvo aterrado: ' + miedo + '.', 10, contador)
+        contador += 30;
+        doc.text('------------------------------------------------', 10, contador);
+        contador += 20;
+
+        let lineasReporte = reporte.split("\n");
+
+        for(let i = 0; i < lineasReporte.length; i++)
+        {
+            doc.text(lineasReporte[i], 10, contador);
+            contador += 20;
+            if(contador % 1000 == 0)
+            {
+                doc.setFontSize(50);
+                doc.text('Pagina [ ' + count + ' ]', 930, contador + 10);
+                doc.setFontSize(27);
+                count++;
+                contador = 80;
+                doc.addPage();
+
+            }
+        }
+
+        contador += 20;
+
+      doc.output('dataurlnewwindow');
+      doc.save('reporteX.pdf');
+    }
+
   render() {
     return (
         <div>
@@ -187,6 +321,7 @@ class App extends React.Component {
                 <button id="start" onClick={this.onStart.bind(this)}>Iniciar</button>
                 <button id="stop" onClick={this.onStop.bind(this)}>Parar</button>
                 <button id="reset" onClick={this.onReset.bind(this)}>Reiniciar</button>
+                  <button id="reporte" onClick={this.descargarReporte.bind(this)}>Descargar</button>
               </div>
               <div id="logs" />
       </div>
