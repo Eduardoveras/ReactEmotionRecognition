@@ -2,6 +2,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
+// import 'font-awesome/css/font-awesome.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.css';
+// import 'mdbreact/dist/css/mdb.css';
 import Menu from './components/fragments/Menu';
 
 import Root from './config/Root';

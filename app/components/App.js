@@ -4,6 +4,7 @@ import affdex from '../vendors/affdex';
 import title from '../assets/images/reports/title'
 import list from '../assets/images/reports/list'
 import percentage from '../assets/images/reports/percentage'
+import 'bootstrap/dist/css/bootstrap.css';
 
 let reporte = "";
 let positivas = 0;
@@ -81,7 +82,7 @@ class App extends React.Component {
           })}`);
           */
           if (faces[0].emotions.joy > porcentajeAMostrar){
-              App.log('#results', "<strong className='text-primary'>Felicidad: </strong> " + faces[0].emotions.joy, function (key, val) {
+              App.log('#results', "<strong> Felicidad: </strong> " + faces[0].emotions.joy, function (key, val) {
                   return val.toFixed ? Number(val.toFixed(2)) : val;
               });
 
@@ -312,22 +313,25 @@ class App extends React.Component {
 
   render() {
     return (
-        <div>
-            <div id="affdex_elements" ref="affElement" />
-            <div className="center-text" >
-              <div id="results" />
-              <div>
-                <h3>Logs del detector</h3>
-                <button id="start" onClick={this.onStart.bind(this)}>Iniciar</button>
-                <button id="stop" onClick={this.onStop.bind(this)}>Parar</button>
-                <button id="reset" onClick={this.onReset.bind(this)}>Reiniciar</button>
-                  <button id="reporte" onClick={this.descargarReporte.bind(this)}>Descargar</button>
-              </div>
-              <div id="logs" />
+      <div>
+        <div id="affdex_elements" ref="affElement" />
+        <div className="center-text" >
+          <div id="results" />
+          <div>
+            <h3>Logs del detector</h3>
+            <div className="btn-group btn-group-lg" role="group" aria-label="Basic example">
+            <button id="start" className="btn btn-primary" onClick={this.onStart.bind(this)}>Iniciar</button>
+            <button id="stop" className="btn btn-success" onClick={this.onStop.bind(this)}>Parar</button>
+            <button id="reset" className="btn btn-danger" onClick={this.onReset.bind(this)}>Reiniciar</button>
+            <button id="reporte" className="btn btn-warning" onClick={this.descargarReporte.bind(this)}>Descargar</button>
+            </div>
+          </div>
+          <div id="logs" />
+        </div>
       </div>
-    </div>
     );
   }
 }
 
 export default App;
+
