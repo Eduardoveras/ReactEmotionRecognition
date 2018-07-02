@@ -4,7 +4,6 @@ import affdex from '../vendors/affdex';
 import title from '../assets/images/reports/title'
 import list from '../assets/images/reports/list'
 import percentage from '../assets/images/reports/percentage'
-import 'bootstrap/dist/css/bootstrap.css';
 
 let reporte = "";
 let positivas = 0;
@@ -73,8 +72,11 @@ class App extends React.Component {
     // The faces object contains the list of the faces detected in an image.
     this.detector.addEventListener('onImageResultsSuccess', (faces, image, timestamp) => {
         let porcentajeAMostrar = 25;
+        const horas = Math.trunc(timestamp / 3600).toString().padStart(2, '0');
+        const minutos = Math.trunc((timestamp % 3600) / 60).toString().padStart(2, '0');
+        const segundos = Math.trunc(timestamp % 60).toString().padStart(2, '0');
       $('#results').html('');
-      App.log('#results', `Tiempo en la sesion: ${(timestamp.toFixed(2))/60}`);
+      App.log('#results', `<strong>Tiempo en la sesión: </strong>${horas}:${minutos}:${segundos} | HH:MM:SS`);
       if (faces.length > 0) {
           /*
           App.log('#results', `Emotions: ${JSON.stringify(faces[0].emotions, (key, val) => {
@@ -82,7 +84,7 @@ class App extends React.Component {
           })}`);
           */
           if (faces[0].emotions.joy > porcentajeAMostrar){
-              App.log('#results', "<strong> Felicidad: </strong> " + faces[0].emotions.joy, function (key, val) {
+              App.log('#results', "<strong class='text-primary'> Felicidad: </strong> " + faces[0].emotions.joy.toFixed(2), function (key, val) {
                   return val.toFixed ? Number(val.toFixed(2)) : val;
               });
 
@@ -98,7 +100,7 @@ class App extends React.Component {
 
           if(faces[0].emotions.sadness > porcentajeAMostrar)
           {
-              App.log('#results', "<strong className='text-danger'>Tristeza: </strong> " + faces[0].emotions.sadness, function(key, val) {
+              App.log('#results', "<strong class='text-danger'>Tristeza: </strong> " + faces[0].emotions.sadness.toFixed(2), function(key, val) {
                   return val.toFixed ? Number(val.toFixed(2)) : val;
               });
 
@@ -113,7 +115,7 @@ class App extends React.Component {
 
           if(faces[0].emotions.disgust > porcentajeAMostrar)
           {
-              App.log('#results', "<strong className='text-danger'>Disgusto: </strong> " + faces[0].emotions.disgust, function(key, val) {
+              App.log('#results', "<strong class='text-danger'>Disgusto: </strong> " + faces[0].emotions.disgust.toFixed(2), function(key, val) {
                   return val.toFixed ? Number(val.toFixed(0)) : val;
               });
               negativas += 1;
@@ -128,7 +130,7 @@ class App extends React.Component {
 
           if(faces[0].emotions.contempt > porcentajeAMostrar)
           {
-              App.log('#results', "<strong className='text-danger'>Desprecio: </strong> " + faces[0].emotions.contempt, function(key, val) {
+              App.log('#results', "<strong class='text-danger'>Desprecio: </strong> " + faces[0].emotions.contempt.toFixed(2), function(key, val) {
                   return val.toFixed ? Number(val.toFixed(0)) : val;
               });
               negativas += 1;
@@ -137,13 +139,13 @@ class App extends React.Component {
 
               if((timestamp.toFixed(2) % 5) <= 1)
               {
-                  reporte += "Desprecio encontrado con un porcentaje de: " + faces[0].emotions.contemp  + " en el minuto: " + ((timestamp/60).toFixed(2)) + ". \n";
+                  reporte += "Desprecio encontrado con un porcentaje de: " + faces[0].emotions.contempt  + " en el minuto: " + ((timestamp/60).toFixed(2)) + ". \n";
               }
           }
 
           if(faces[0].emotions.anger > porcentajeAMostrar)
           {
-              App.log('#results', "<strong className='text-danger'>Enojo: </strong> " + faces[0].emotions.anger, function(key, val) {
+              App.log('#results', "<strong class='text-danger'>Enojo: </strong> " + faces[0].emotions.anger.toFixed(2), function(key, val) {
                   return val.toFixed ? Number(val.toFixed(0)) : val;
               });
               negativas += 1;
@@ -157,7 +159,7 @@ class App extends React.Component {
 
           if(faces[0].emotions.fear > porcentajeAMostrar)
           {
-              App.log('#results', "<strong className='text-danger'>Miedo: </strong> " + faces[0].emotions.fear, function(key, val) {
+              App.log('#results', "<strong class='text-danger'>Miedo: </strong> " + faces[0].emotions.fear.toFixed(2), function(key, val) {
                   return val.toFixed ? Number(val.toFixed(0)) : val;
               });
               negativas += 1;
@@ -171,7 +173,7 @@ class App extends React.Component {
 
           if(faces[0].emotions.surprise > porcentajeAMostrar)
           {
-              App.log('#results', "<strong className='text-primary'>Sorpresa: </strong> " + faces[0].emotions.surprise, function(key, val) {
+              App.log('#results', "<strong class='text-primary'>Sorpresa: </strong> " + faces[0].emotions.surprise.toFixed(2), function(key, val) {
                   return val.toFixed ? Number(val.toFixed(0)) : val;
               });
               positivas += 1;
@@ -184,10 +186,10 @@ class App extends React.Component {
 
           }
 
-          App.log('#results', "Emoji acorde a la emocion detectada: " + faces[0].emojis.dominantEmoji);
+          App.log('#results', `Emoji acorde a la emoción detectada: </br><span style="font-size: 80px">${faces[0].emojis.dominantEmoji}</span>`);
           App.log("#results", " ");
           App.log("#results", "<h3><strong>Otros valores:</strong></h3>");
-          App.log('#results', "<strong className='text-primary'>Atencion a la camara: </strong> " + faces[0].emotions.engagement, function(key, val) {
+          App.log('#results', "<strong class='text-primary'>Atención a la cámara: </strong> " + faces[0].emotions.engagement.toFixed(2), function(key, val) {
               return val.toFixed ? Number(val.toFixed(0)) : val;
           });
 
@@ -314,20 +316,27 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <div id="affdex_elements" ref="affElement" />
-        <div className="center-text" >
-          <div id="results" />
-          <div>
-            <h3>Logs del detector</h3>
-            <div className="btn-group btn-group-lg" role="group" aria-label="Basic example">
-            <button id="start" className="btn btn-primary" onClick={this.onStart.bind(this)}>Iniciar</button>
-            <button id="stop" className="btn btn-success" onClick={this.onStop.bind(this)}>Parar</button>
-            <button id="reset" className="btn btn-danger" onClick={this.onReset.bind(this)}>Reiniciar</button>
-            <button id="reporte" className="btn btn-warning" onClick={this.descargarReporte.bind(this)}>Descargar</button>
-            </div>
+          <div className="col-md-8 app-column" >
+              <div id="affdex_elements" ref="affElement"></div>
+              <div className="center-text">
+                  <div className="btn-group btn-group-lg" role="group" aria-label="Basic example">
+                      <button id="start" className="btn btn-primary" onClick={this.onStart.bind(this)}>Iniciar</button>
+                      <button id="stop" className="btn btn-primary" onClick={this.onStop.bind(this)}>Parar</button>
+                      <button id="reset" className="btn btn-primary" onClick={this.onReset.bind(this)}>Reiniciar</button>
+                      <button id="reporte" className="btn btn-primary" onClick={this.descargarReporte.bind(this)}>Descargar</button>
+                  </div>
+                  <div>
+                      <h3><strong>Log's del detector</strong></h3>
+                  </div>
+                  <div id="logs"/>
+              </div>
           </div>
-          <div id="logs" />
-        </div>
+          <div className="col-md-5">
+              <div className="resultados">
+                  <h1><strong>Resultados Detectados</strong></h1>
+                  <div id="results" />
+              </div>
+          </div>
       </div>
     );
   }

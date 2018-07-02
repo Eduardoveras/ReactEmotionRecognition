@@ -1,13 +1,11 @@
 /* eslint-disable import/extensions,import/no-unresolved */
+import 'jquery';
+import 'bootstrap/dist/js/bootstrap';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-// import 'font-awesome/css/font-awesome.min.css';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/css/bootstrap.css';
-// import 'mdbreact/dist/css/mdb.css';
-import Menu from './components/fragments/Menu';
 
+import Menu from './components/fragments/Menu';
 import Root from './config/Root';
 
 const render = (Component) => {
@@ -17,9 +15,7 @@ const render = (Component) => {
         <Menu />
         <div className="container-fluid main">
           <div className="row border border-primary rounded main-box">
-            <div className="col-md-12 app-column" >
-              <Component />
-            </div>
+            <Component />
           </div>
         </div>
       </div>
