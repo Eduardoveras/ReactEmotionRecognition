@@ -3,6 +3,7 @@ import affdex from '../../vendors/affdex';
 import title from '../../assets/images/reports/title';
 import list from '../../assets/images/reports/list';
 import percentage from '../../assets/images/reports/percentage';
+import ActionCableService from '../../services/emotion_recognition/action_cable_service'
 
 
 
@@ -11,6 +12,8 @@ class EmotionRecognitionService {
 
 
   constructor(width, height ,affElement) {
+      this.videoId=null;
+      this.cable=null;
       this.reporte = '';
       this.positivas = 0;
       this.negativas = 0;
@@ -23,6 +26,7 @@ class EmotionRecognitionService {
       this.sorpresa = 0;
     this.width = width;
     this.height = height;
+
 
       // SDK Needs to create video and canvas nodes in the DOM in order to function
       // Here we are adding those nodes a predefined div.
@@ -75,6 +79,7 @@ class EmotionRecognitionService {
           const minutos = Math.trunc((timestamp % 3600) / 60).toString().padStart(2, '0');
           const segundos = Math.trunc(timestamp % 60).toString().padStart(2, '0');
           $('#results').html('');
+          this.cable.sendEvent(this.videoId,'0.1',1,"{}","{}","{}");
           EmotionRecognitionService.log('#results', `<strong>Tiempo en la sesión: </strong>${horas}:${minutos}:${segundos} | HH:MM:SS`);
           if (faces.length > 0) {
               /*
@@ -199,9 +204,15 @@ class EmotionRecognitionService {
 
 
     // function executes when Start button is pushed.
-    onStart() {
+    onStart(video_id) {
         if (this.detector && !this.detector.isRunning) {
             $('#logs').html('');
+
+            this.cable = new ActionCableService;
+            this.cable.createSocket();
+
+            console.log('Llego el id: '+video_id);
+            this.videoId=video_id;
             this.detector.start();
         }
         EmotionRecognitionService.log('#logs', 'Clickeado el boton de iniciar');

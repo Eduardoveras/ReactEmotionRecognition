@@ -1,6 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 import EmotionService from '../services/emotion_recognition/emotion_recognition_service'
+import axios from 'axios'
 
 
 class App extends React.Component {
@@ -16,7 +17,19 @@ class App extends React.Component {
   }
 
     onStart() {
-        this.emotionService.onStart();
+
+        const face_video_analysis = {
+            notes: 'THIS IS A TEST'
+        };
+
+        let video_id=null;
+        axios.post(`http://localhost:3000/face_video_analyses`, { face_video_analysis })
+            .then(res => {
+                console.log(res);
+                console.log(res.data.id);
+                video_id=res.data.id;
+                this.emotionService.onStart(video_id);
+            });
     }
 
     onStop() {
