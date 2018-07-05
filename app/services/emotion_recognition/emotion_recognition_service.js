@@ -79,7 +79,7 @@ class EmotionRecognitionService {
           const minutos = Math.trunc((timestamp % 3600) / 60).toString().padStart(2, '0');
           const segundos = Math.trunc(timestamp % 60).toString().padStart(2, '0');
           $('#results').html('');
-          this.cable.sendEvent(this.videoId,'0.1',1,"{}","{}","{}");
+          this.cable.sendEvent(this.videoId,timestamp,faces.length,JSON.stringify(faces[0].emotions),"{}","{}");
           EmotionRecognitionService.log('#results', `<strong>Tiempo en la sesión: </strong>${horas}:${minutos}:${segundos} | HH:MM:SS`);
           if (faces.length > 0) {
               /*
