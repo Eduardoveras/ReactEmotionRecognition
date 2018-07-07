@@ -1,4 +1,4 @@
-/* eslint-disable import/extensions,import/no-unresolved */
+/* eslint-disable import/extensions,import/no-unresolved, no-multi-assign */
 import 'jquery';
 import 'bootstrap/dist/js/bootstrap';
 import React from 'react';
@@ -7,6 +7,9 @@ import { AppContainer } from 'react-hot-loader';
 
 import Menu from './components/fragments/Menu';
 import Root from './config/Root';
+
+window.$ = window.jQuery = require('jquery');
+
 
 const render = (Component) => {
   ReactDOM.render(

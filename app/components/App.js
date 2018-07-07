@@ -1,6 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 import EmotionService from '../services/emotion_recognition/emotion_recognition_service'
+import axios from 'axios'
 
 
 class App extends React.Component {
@@ -16,7 +17,28 @@ class App extends React.Component {
   }
 
     onStart() {
-        this.emotionService.onStart();
+
+        const face_video_analysis = {
+            notes: 'THIS IS A TEST'
+        };
+        let URL=null;
+        if (location.hostname === "localhost" || location.hostname === "127.0.0.1")
+        {
+            URL = `http://localhost:3000/face_video_analyses`;
+        }
+        else {
+            URL= 'https://sdec-backend.herokuapp.com/face_video_analyses'
+        }
+
+        let video_id=null;
+
+        axios.post(URL, { face_video_analysis })
+            .then(res => {
+                console.log(res);
+                console.log(res.data.id);
+                video_id=res.data.id;
+                this.emotionService.onStart(video_id);
+            });
     }
 
     onStop() {

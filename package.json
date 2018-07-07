@@ -1,9 +1,15 @@
 {
   "name": "react-webpack-boilerplate",
   "version": "2.1.0",
+  "engines": {
+    "node": "10.4.1",
+    "npm": "6.1.0",
+    "yarn": "1.7.0"
+  },
   "description": "Minimalistic ES6 React boilerplate",
   "main": "index.js",
   "scripts": {
+    "heroku-postbuild": "npm run production",
     "start": "webpack-dev-server",
     "clean": "rimraf dist",
     "production": "cross-env npm run clean && webpack --config webpack.production.config.js --progress --profile --colors",
@@ -12,6 +18,7 @@
     "test:watch": "jest --watch",
     "coverage": "jest --coverage",
     "precommit": "cross-env npm run lint && npm test",
+    "prebuild": "npm run build:clean",
     "prepush": "cross-env npm run lint && npm test"
   },
   "author": "Kliment Petrov <kleopetroff@gmail.com>",
@@ -36,8 +43,10 @@
   },
   "dependencies": {
     "actioncable": "^5.2.0",
+    "axios": "^0.18.0",
     "bootstrap": "3.3.5",
     "cross-env": "5.2.0",
+    "express": "^4.16.3",
     "jquery": "^3.3.1",
     "jspdf": "^1.4.1",
     "mdbreact": "^4.5.0",
@@ -73,7 +82,6 @@
     "extract-text-webpack-plugin": "3.0.2",
     "file-loader": "1.1.10",
     "html-webpack-plugin": "3.2.0",
-    "husky": "0.15.0-rc.2",
     "jest": "22.1.0",
     "node-sass": "4.9.0",
     "open-browser-webpack-plugin": "0.0.5",
