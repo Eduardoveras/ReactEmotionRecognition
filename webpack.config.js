@@ -9,7 +9,7 @@ const config = {
 
   entry: [
     'react-hot-loader/patch',
-    'webpack-dev-server/client?http://localhost:8080',
+    'webpack-dev-server/client?http://localhost',
     'webpack/hot/only-dev-server',
     './main.js',
     './assets/scss/main.scss',
@@ -27,6 +27,7 @@ const config = {
     hot: true,
     contentBase: resolve(__dirname, 'build'),
     historyApiFallback: true,
+    port: process.env.PORT || 8080,
     publicPath: '/',
   },
   resolve: {
@@ -147,7 +148,7 @@ const config = {
     new webpack.ProvidePlugin({
       jQuery: 'jquery',
       $: 'jquery',
-      jquery: 'jquery'
+      jquery: 'jquery',
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new ExtractTextPlugin({ filename: './styles/style.css', disable: false, allChunks: true }),
