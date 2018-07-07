@@ -4,12 +4,13 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+const PORT = (process.env.PORT || 8080);
 const config = {
   devtool: 'cheap-module-eval-source-map',
 
   entry: [
     'react-hot-loader/patch',
-    'webpack-dev-server/client?http://localhost',
+    `webpack-dev-server/client?http://0.0.0.0:${PORT}`,
     'webpack/hot/only-dev-server',
     './main.js',
     './assets/scss/main.scss',
@@ -27,7 +28,7 @@ const config = {
     hot: true,
     contentBase: resolve(__dirname, 'build'),
     historyApiFallback: true,
-    port: process.env.PORT || 8080,
+    port: PORT,
     publicPath: '/',
   },
   resolve: {
