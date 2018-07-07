@@ -27,7 +27,7 @@ class App extends React.Component {
             URL = `http://localhost:3000/face_video_analyses`;
         }
         else {
-            URL= 'https://sdec.herokuapp.com/face_video_analyses'
+            URL= 'https://sdec-backend.herokuapp.com/face_video_analyses'
         }
 
         let video_id=null;
