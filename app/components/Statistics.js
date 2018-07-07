@@ -8,7 +8,7 @@ class Statistics extends React.Component {
   }
 
   createSocket() {
-    const cable = ActionCable.createConsumer('ws://localhost:3000/cable');
+    const cable = ActionCable.createConsumer('wss://localhost:3000/cable');
     this.chats = cable.subscriptions.create('EmotionChannel', {
       connected: () => {
         alert('connected!');

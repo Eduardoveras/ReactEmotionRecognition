@@ -10,7 +10,7 @@ class ActionCableService {
             URL = 'ws://localhost:3000/cable';
         }
         else {
-            URL= 'ws://sdec-backend.herokuapp.com/cable'
+            URL= 'wss://sdec-backend.herokuapp.com/cable'
         }
         const cable = ActionCable.createConsumer(URL);
         this.chats = cable.subscriptions.create('EmotionChannel', {
