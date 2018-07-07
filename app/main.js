@@ -1,10 +1,15 @@
-/* eslint-disable import/extensions,import/no-unresolved */
+/* eslint-disable import/extensions,import/no-unresolved, no-multi-assign */
+import 'jquery';
+import 'bootstrap/dist/js/bootstrap';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import Menu from './components/fragments/Menu';
 
+import Menu from './components/fragments/Menu';
 import Root from './config/Root';
+
+window.$ = window.jQuery = require('jquery');
+
 
 const render = (Component) => {
   ReactDOM.render(
@@ -13,9 +18,7 @@ const render = (Component) => {
         <Menu />
         <div className="container-fluid main">
           <div className="row border border-primary rounded main-box">
-            <div className="col-md-12 app-column" >
-              <Component />
-            </div>
+            <Component />
           </div>
         </div>
       </div>
