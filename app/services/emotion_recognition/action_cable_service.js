@@ -4,7 +4,15 @@ import ActionCable from 'actioncable';
 class ActionCableService {
 
     createSocket() {
-        const cable = ActionCable.createConsumer('ws://localhost:3000/cable');
+        let URL=null;
+        if (location.hostname === "localhost" || location.hostname === "127.0.0.1")
+        {
+            URL = 'ws://localhost:3000/cable';
+        }
+        else {
+            URL= 'ws://sdec.herokuapp.com/cable'
+        }
+        const cable = ActionCable.createConsumer(URL);
         this.chats = cable.subscriptions.create('EmotionChannel', {
             connected: () => {
                 alert('connected!');
