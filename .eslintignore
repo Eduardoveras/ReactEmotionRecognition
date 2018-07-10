@@ -1,4 +1,5 @@
 /app/vendors/
 /app/components/App.js
 /app/components/Reports.js
+/app/components/*
 /app/services/

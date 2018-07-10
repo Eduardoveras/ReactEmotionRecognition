@@ -1,13 +1,21 @@
 /* eslint-disable react/prefer-stateless-function,no-console,no-restricted-globals,class-methods-use-this */
 import React from 'react';
 import axios from 'axios/index';
-import PropTypes from "prop-types";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Typography from "@material-ui/core/es/Typography/Typography";
+import Button from "@material-ui/core/es/Button/Button";
+
+const paperStyle = {
+    padding: '20px',
+    textAlign: 'center',
+    height: '87vh'
+};
 
 class Reports extends React.Component {
     constructor(props){
@@ -40,38 +48,45 @@ class Reports extends React.Component {
 
         let renderReportList = () => {
             return this.reportList.map((n) => {
+                let created = new Date(n.created_at)
                 return (
                     <TableRow key={n.id}>
-                        <TableCell component="th" scope="row">
+                        <TableCell>
                             {n.id}
                         </TableCell>
+                        <TableCell><Button href="https://www.google.com">Pepito Pepe</Button></TableCell>
                         <TableCell>{n.notes}</TableCell>
+                        <TableCell>{created.toLocaleDateString('es-DO')}</TableCell>
                     </TableRow>
                 );
             });
         };
         return (
-            <div>
-                <h3> Reports</h3>
+            <div className='container'>
+                <Typography variant="display1" gutterBottom>
+                    Reportes
+                </Typography>
 
+                <Grid container spacing={24} >
+                    <Grid item xs={9}>
+                        <Paper style={paperStyle}>
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell numeric>ID</TableCell>
+                                        <TableCell >Persona</TableCell>
+                                        <TableCell >Notas</TableCell>
+                                        <TableCell >Fecha</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {this.reportList ? renderReportList():null}
+                                </TableBody>
+                            </Table>
+                        </Paper>
 
-                <Paper>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Dessert (100g serving)</TableCell>
-                                <TableCell numeric>Calories</TableCell>
-                                <TableCell numeric>Fat (g)</TableCell>
-                                <TableCell numeric>Carbs (g)</TableCell>
-                                <TableCell numeric>Protein (g)</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {this.reportList ?
-                                <div>{renderReportList()}</div>:null}
-                        </TableBody>
-                    </Table>
-                </Paper>
+                    </Grid>
+                </Grid>
             </div>
         );
     }
