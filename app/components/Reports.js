@@ -54,7 +54,7 @@ class Reports extends React.Component {
                         <TableCell>
                             {n.id}
                         </TableCell>
-                        <TableCell><Button href="https://www.google.com">Pepito Pepe</Button></TableCell>
+                        <TableCell><Button href={"/reports/"+n.id}>Pepito Pepe</Button></TableCell>
                         <TableCell>{n.notes}</TableCell>
                         <TableCell>{created.toLocaleDateString('es-DO')}</TableCell>
                     </TableRow>

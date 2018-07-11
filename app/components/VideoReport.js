@@ -9,7 +9,7 @@ import Button from "@material-ui/core/es/Button/Button";
 class VideoReport extends React.Component {
     constructor(props){
         super(props);
-        this.reportID= window.location.href.slice(-1);
+        this.reportID= window.location.href.split('/').pop();
         this.api_data=[];
         this.joy_data=[];
         this.sadness_data=[];
@@ -151,7 +151,7 @@ class VideoReport extends React.Component {
                 <Typography variant="display1" gutterBottom>
                     Reporte ID: {this.reportID} <Button variant="outlined" color="primary" onClick={() => { window.print(); }}> Descargar</Button>
                 </Typography>
-                <Line data={data} />
+                {this.api_data && <Line data={data} />}
             </div>
         );
     }
