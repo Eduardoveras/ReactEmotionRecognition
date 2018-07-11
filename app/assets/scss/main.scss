@@ -1,8 +1,9 @@
-@import "~bootstrap/dist/css/bootstrap.min.css";
+//@import "~bootstrap/dist/css/bootstrap.min.css";
 
-body {
-  font-family: 'Open Sans', sans-serif;
-  background-color: rgb(238, 236, 236);
+.container{
+  padding: 42px;
+  flex-grow: 1;
+
 }
 .center-text{
   text-align: center;
@@ -26,69 +27,31 @@ body {
 
 #affdex_elements{
   height: 100%;
-  margin-top: 14px;
+  min-height: 35vh;
 }
 
-.app-column{
-  width: 680px;
-  height: 520px;
+#face_video_canvas,#face_video{
+  width: 85%;
+  border: 5px solid;
+  text-align:center;
+}
+.emoji{
+  font-size: 100px;
+  margin: 90px;
 }
 
-.sidenav {
-  width: 150px;
-  position: fixed;
-  z-index: 1;
-  top: 20px;
-  left: 10px;
-  background: #eee;
-  overflow-x: hidden;
-  padding: 8px 0;
+.log_msg{
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 1.125rem;
+  font-weight: 400;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  line-height: 1.20588em;
 }
 
-.sidenav a {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #2196F3;
-  display: block;
+canvas {
+  display: inline !important;
 }
 
-.block {
-  display: inline-block;
-  margin: 10px 10px;
-  overflow: hidden;
-}
-
-.sidenav a:hover {
-  color: #064579;
-}
-
-.col-centered {
-  float: none;
-  margin: 0 auto;
-}
-
-.main {
-  margin-left: 140px;
-  /* Same width as the sidebar + left position in px */
-  font-size: 28px;
-  /* Increased text to enable scrolling */
-  padding: 0px 10px;
-}
-
-#face_video_canvas{
-  border-radius: 50px;
-}
-
-.main-box {
-
-  background-color: white;
-  margin: 21px 21px 0 21px;
-  border: 1px solid;
-  border-radius: 16px;
-  border-color: lightgray;
-  padding-bottom: 100px;
-}
 
 @media screen and (max-height: 450px) {
   .sidenav {
