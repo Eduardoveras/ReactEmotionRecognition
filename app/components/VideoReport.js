@@ -3,6 +3,7 @@ import React from 'react';
 import Typography from "@material-ui/core/es/Typography/Typography";
 import axios from "axios/index";
 import {Line} from 'react-chartjs-2';
+import Button from "@material-ui/core/es/Button/Button";
 
 
 class VideoReport extends React.Component {
@@ -148,7 +149,7 @@ class VideoReport extends React.Component {
         return (
             <div className='container'>
                 <Typography variant="display1" gutterBottom>
-                    Reporte ID: {this.reportID}
+                    Reporte ID: {this.reportID} <Button variant="outlined" color="primary" onClick={() => { window.print(); }}> Descargar</Button>
                 </Typography>
                 <Line data={data} />
             </div>
