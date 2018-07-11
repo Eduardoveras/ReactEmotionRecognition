@@ -21,9 +21,9 @@ class VideoReport extends React.Component {
     componentWillMount() {
         let URL = null;
         if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
-            URL = 'http://localhost:3000/emotions/13';
+            URL = 'http://localhost:3000/emotions/'+this.reportID;
         } else {
-            URL = 'https://sdec-backend.herokuapp.com/emotions/13';
+            URL = 'https://sdec-backend.herokuapp.com/emotions/'+this.reportID;
         }
         axios.get(URL)
             .then((response) => {
