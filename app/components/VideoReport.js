@@ -151,7 +151,7 @@ class VideoReport extends React.Component {
 
             ]
         };
-        let cantidadFelicidad = 0;
+        let cantidadFelicidad = 1;
         this.joyLength = this.joy_data.reduce(function(anterior, siguiente) {
             if(siguiente > 10){
                  cantidadFelicidad += 1;
@@ -159,7 +159,7 @@ class VideoReport extends React.Component {
             return anterior + siguiente;
         }, 0);
 
-        let cantidadTristeza = 0;
+        let cantidadTristeza = 1;
         this.sadnessLength = this.sadness_data.reduce(function(anterior, siguiente) {
             if(siguiente > 10){
                 cantidadTristeza += 1;
@@ -167,7 +167,7 @@ class VideoReport extends React.Component {
             return anterior + siguiente;
         }, 0);
 
-        let cantidadEnojo = 0;
+        let cantidadEnojo = 1;
         this.angerLength = this.anger_data.reduce(function(anterior, siguiente) {
             if(siguiente > 10){
                 cantidadEnojo += 1;
@@ -175,7 +175,7 @@ class VideoReport extends React.Component {
             return anterior + siguiente;
         }, 0);
 
-        let cantidadMiedo = 0;
+        let cantidadMiedo = 1;
         this.fearLength = this.fear_data.reduce(function(anterior, siguiente) {
             if(siguiente > 10){
                 cantidadMiedo += 1;
@@ -183,7 +183,7 @@ class VideoReport extends React.Component {
             return anterior + siguiente;
         }, 0);
 
-        var data2 = {
+        let data2 = {
             labels: ['Joy', 'Sadness', 'Anger', 'Fear'],
                 datasets: [{
                 data: [this.joyLength / cantidadFelicidad, this.sadnessLength / cantidadTristeza, this.angerLength / cantidadEnojo, this.fearLength / cantidadMiedo],
@@ -205,7 +205,7 @@ class VideoReport extends React.Component {
             }]
         };
 
-        var data3 = {
+        let data3 = {
             labels: ['Joy', 'Sadness', 'Anger', 'Fear'],
             datasets: [{
                 label: 'Promedio de porcentaje de la emocion X',
