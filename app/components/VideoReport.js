@@ -3,8 +3,7 @@ import React from 'react';
 import Typography from "@material-ui/core/es/Typography/Typography";
 import axios from "axios/index";
 import {Line} from 'react-chartjs-2';
-import {Doughnut} from 'react-chartjs-2';
-import {Bar} from 'react-chartjs-2';
+import {Doughnut, Bar} from 'react-chartjs-2';
 import Button from "@material-ui/core/es/Button/Button";
 
 class VideoReport extends React.Component {
@@ -80,7 +79,7 @@ class VideoReport extends React.Component {
         });
 
 
-        let data = {
+        let data_line_chart = {
             labels: this.timestamps,
             datasets: [
                 {
@@ -321,7 +320,7 @@ class VideoReport extends React.Component {
             this.contemptLength = 0;
         }
 
-        let data2 = {
+        let data_circle_char = {
             labels: ['Joy', 'Sadness', 'Anger', 'Fear', 'Surprise', 'Disgust', 'Contempt'],
                 datasets: [{
                 data: [this.joyLength / cantidadFelicidad, this.sadnessLength / cantidadTristeza, this.angerLength / cantidadEnojo, this.fearLength / cantidadMiedo, this.surpriseLength / cantidadSorpresa, this.disgustLength / cantidadDisgusto, this.contemptLength / cantidadContempt],
@@ -347,7 +346,7 @@ class VideoReport extends React.Component {
             }]
         };
 
-        let data3 = {
+        let data_bar_char = {
             labels: ['Joy', 'Sadness', 'Anger', 'Fear', 'Surprise', 'Disgust', 'Contempt'],
             datasets: [{
                 label: 'Promedio de porcentaje de la emocion X',
@@ -383,15 +382,15 @@ class VideoReport extends React.Component {
                 <Typography variant="title" gutterBottom>
                     <strong>Emociones detectadas con sus porcentajes en el tiempo</strong>
                 </Typography>
-                {this.api_data && <Line data={data} />}
+                {this.api_data && <Line data={data_line_chart} />}
                 <Typography variant="title" gutterBottom>
                     <strong>Promedios de porcentajes en forma de circulo</strong>
                 </Typography>
-                {this.api_data && <Doughnut data={data2}/>}
+                {this.api_data && <Doughnut data={data_circle_char}/>}
                 <Typography variant="title" gutterBottom>
                     <strong>Promedios de porcentajes en barra</strong>
                 </Typography>
-                {this.api_data && <Bar data={data3}/>}
+                {this.api_data && <Bar data={data_bar_char}/>}
             </div>
         );
     }
