@@ -21,6 +21,12 @@ class VideoReport extends React.Component {
         this.fear_data=[];
         this.fearLength = 0;
         this.timestamps=[];
+        this.disgust_data=[];
+        this.disgustLength = 0;
+        this.contempt_data=[];
+        this.contemptLength = 0;
+        this.surprise_data=[];
+        this.surpriseLength=0;
     }
 
     componentWillMount() {
@@ -60,6 +66,19 @@ class VideoReport extends React.Component {
         this.fear_data = this.api_data.map(function(e) {
             return e.emotions.fear;
         });
+
+        this.disgust_data = this.api_data.map(function(e) {
+            return e.emotions.disgust;
+        });
+
+        this.contempt_data = this.api_data.map(function(e) {
+            return e.emotions.contempt;
+        });
+
+        this.surprise_data = this.api_data.map(function(e) {
+            return e.emotions.surprise;
+        });
+
 
         let data = {
             labels: this.timestamps,
@@ -110,17 +129,17 @@ class VideoReport extends React.Component {
                     label: 'Anger',
                     fill: true,
                     lineTension: 0.1,
-                    backgroundColor: 'rgba(0,0,192,0.4)',
-                    borderColor: 'rgba(75,192,192,1)',
+                    backgroundColor: 'rgba(196,212,17,0.4)',
+                    borderColor: 'rgba(196,212,17,1)',
                     borderCapStyle: 'butt',
                     borderDash: [],
                     borderDashOffset: 0.0,
                     borderJoinStyle: 'miter',
-                    pointBorderColor: 'rgba(75,192,192,1)',
+                    pointBorderColor: 'rgba(196,212,17,1)',
                     pointBackgroundColor: '#fff',
                     pointBorderWidth: 1,
                     pointHoverRadius: 5,
-                    pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+                    pointHoverBackgroundColor: 'rgba(196,212,17,1)',
                     pointHoverBorderColor: 'rgba(220,220,220,1)',
                     pointHoverBorderWidth: 2,
                     pointRadius: 1,
@@ -147,6 +166,71 @@ class VideoReport extends React.Component {
                     pointRadius: 1,
                     pointHitRadius: 10,
                     data: this.fear_data
+                },
+                {
+                    label: 'Surprise',
+                    fill: true,
+                    lineTension: 0.1,
+                    backgroundColor: 'rgba(17,98,212,0.4)',
+                    borderColor: 'rgba(17,98,212,1)',
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: 'rgba(17,98,212,1)',
+                    pointBackgroundColor: '#fff',
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: 'rgba(17,98,212,1)',
+                    pointHoverBorderColor: 'rgba(220,220,220,1)',
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: this.surprise_data
+                },
+
+                {
+                    label: 'Contempt',
+                    fill: true,
+                    lineTension: 0.1,
+                    backgroundColor: 'rgba(6,85,45,0.4)',
+                    borderColor: 'rgba(6,85,45,1)',
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: 'rgba(6,85,45,1)',
+                    pointBackgroundColor: '#fff',
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: 'rgba(6,85,45,1)',
+                    pointHoverBorderColor: 'rgba(220,220,220,1)',
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: this.contempt_data
+                },
+
+                {
+                    label: 'Disgust',
+                    fill: true,
+                    lineTension: 0.1,
+                    backgroundColor: 'rgba(212,37,17,0.4)',
+                    borderColor: 'rgba(212,37,17,1)',
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: 'rgba(212,37,17,1)',
+                    pointBackgroundColor: '#fff',
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: 'rgba(212,37,17,1)',
+                    pointHoverBorderColor: 'rgba(220,220,220,1)',
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: this.disgust_data
                 }
 
             ]
@@ -183,46 +267,108 @@ class VideoReport extends React.Component {
             return anterior + siguiente;
         }, 0);
 
+        let cantidadSorpresa = 1;
+        this.surpriseLength = this.surprise_data.reduce(function(anterior, siguiente) {
+            if(siguiente > 10){
+                cantidadSorpresa += 1;
+            }
+            return anterior + siguiente;
+        }, 0);
+
+        let cantidadDisgusto = 1;
+        this.disgustLength = this.disgust_data.reduce(function(anterior, siguiente) {
+            if(siguiente > 10){
+                cantidadDisgusto += 1;
+            }
+            return anterior + siguiente;
+        }, 0);
+
+
+        let cantidadContempt = 1;
+        this.contemptLength = this.contempt_data.reduce(function(anterior, siguiente) {
+            if(siguiente > 10){
+                cantidadContempt += 1;
+            }
+            return anterior + siguiente;
+        }, 0);
+
+
+        if(cantidadFelicidad <= 1){
+            this.joyLength = 0;
+        }
+
+        if(cantidadTristeza <= 1){
+            this.sadnessLength = 0;
+        }
+
+        if(cantidadEnojo <= 1){
+            this.angerLength = 0;
+        }
+
+        if(cantidadMiedo <= 1){
+            this.fearLength = 0;
+        }
+
+        if(cantidadSorpresa <= 1){
+            this.surpriseLength = 0;
+        }
+
+        if(cantidadDisgusto <= 1){
+            this.disgustLength = 0;
+        }
+
+        if(cantidadContempt === 1){
+            this.contemptLength = 0;
+        }
+
         let data2 = {
-            labels: ['Joy', 'Sadness', 'Anger', 'Fear'],
+            labels: ['Joy', 'Sadness', 'Anger', 'Fear', 'Surprise', 'Disgust', 'Contempt'],
                 datasets: [{
-                data: [this.joyLength / cantidadFelicidad, this.sadnessLength / cantidadTristeza, this.angerLength / cantidadEnojo, this.fearLength / cantidadMiedo],
+                data: [this.joyLength / cantidadFelicidad, this.sadnessLength / cantidadTristeza, this.angerLength / cantidadEnojo, this.fearLength / cantidadMiedo, this.surpriseLength / cantidadSorpresa, this.disgustLength / cantidadDisgusto, this.contemptLength / cantidadContempt],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)'
+                    'rgba(75,192,192, 0.4)',
+                    'rgba(75,0,192,0.4)',
+                    'rgba(196,212,17,0.4)',
+                    'rgba(75,0,0,0.4)',
+                    'rgba(17,98,212,0.4)',
+                    'rgba(212,37,17,0.4)',
+                    'rgba(6,85,45,0.4)'
                 ],
                 borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)'
+                    'rgba(75,192,192, 1)',
+                    'rgba(75,0,192,1)',
+                    'rgba(196,212,17,1)',
+                    'rgba(75,0,0,1)',
+                    'rgba(17,98,212,1)',
+                    'rgba(212,37,17,1)',
+                    'rgba(6,85,45,1)'
                 ],
                 borderWidth: 1
             }]
         };
 
         let data3 = {
-            labels: ['Joy', 'Sadness', 'Anger', 'Fear'],
+            labels: ['Joy', 'Sadness', 'Anger', 'Fear', 'Surprise', 'Disgust', 'Contempt'],
             datasets: [{
                 label: 'Promedio de porcentaje de la emocion X',
-                data: [this.joyLength / cantidadFelicidad, this.sadnessLength / cantidadTristeza, this.angerLength / cantidadEnojo, this.fearLength / cantidadMiedo],
+                data: [this.joyLength / cantidadFelicidad, this.sadnessLength / cantidadTristeza, this.angerLength / cantidadEnojo, this.fearLength / cantidadMiedo, this.surpriseLength / cantidadSorpresa, this.disgustLength / cantidadDisgusto, this.contemptLength / cantidadContempt],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)'
+                    'rgba(75,192,192, 0.4)',
+                    'rgba(75,0,192,0.4)',
+                    'rgba(196,212,17,0.4)',
+                    'rgba(75,0,0,0.4)',
+                    'rgba(17,98,212,0.4)',
+                    'rgba(212,37,17,0.4)',
+                    'rgba(6,85,45,0.4)'
                 ],
                 borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)'
+                    'rgba(75,192,192, 1)',
+                    'rgba(75,0,192,1)',
+                    'rgba(196,212,17,1)',
+                    'rgba(75,0,0,1)',
+                    'rgba(17,98,212,1)',
+                    'rgba(212,37,17,1)',
+                    'rgba(6,85,45,1)'
                 ],
                 borderWidth: 1
             }]
