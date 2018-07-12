@@ -9,8 +9,6 @@ import ActionCableService from '../../services/emotion_recognition/action_cable_
 
 class EmotionRecognitionService {
 
-
-
   constructor(width, height ,affElement) {
       this.videoId=null;
       this.cable=null;
@@ -27,7 +25,6 @@ class EmotionRecognitionService {
     this.width = width;
     this.height = height;
 
-
       // SDK Needs to create video and canvas nodes in the DOM in order to function
       // Here we are adding those nodes a predefined div.
       this.affRef = affElement
@@ -39,6 +36,7 @@ class EmotionRecognitionService {
           this.height,
           this.faceMode,
       );
+
       // Enable detection of all Expressions, Emotions and Emojis classifiers.
       this.detector.detectAllEmotions();
       this.detector.detectAllExpressions();
