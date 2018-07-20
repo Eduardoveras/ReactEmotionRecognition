@@ -7,7 +7,6 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-
 const paperStyle = {
     padding: '20px',
     textAlign: 'center',
@@ -60,10 +59,14 @@ class App extends React.Component {
         this.emotionService.descargarReporte();
     }
 
+    capturarPantalla(){
+        this.emotionService.capturarPantalla();
+    }
+
 
     render() {
         return (
-            <div className='container'>
+            <div className='container' id='container'>
                 <Grid container spacing={24}>
                     <Grid item xs={7}>
                         <Paper style={paperStyle}>
@@ -77,6 +80,8 @@ class App extends React.Component {
                                         <Button id="reset" onClick={this.onReset.bind(this)}>Reiniciar</Button>
                                         <Button id="reporte"
                                                 onClick={this.descargarReporte.bind(this)}>Descargar</Button>
+                                        <Button id="capturar"
+                                                onClick={this.capturarPantalla.bind(this)}>Capturar</Button>
                                     </div>
                                     <div>
                                         <Typography variant="headline" gutterBottom>

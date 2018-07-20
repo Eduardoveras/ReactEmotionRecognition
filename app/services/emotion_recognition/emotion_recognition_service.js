@@ -4,8 +4,8 @@ import title from '../../assets/images/reports/title';
 import list from '../../assets/images/reports/list';
 import percentage from '../../assets/images/reports/percentage';
 import ActionCableService from '../../services/emotion_recognition/action_cable_service'
-
-
+import domtoimage from "dom-to-image";
+import FileSaver from "file-saver";
 
 class EmotionRecognitionService {
 
@@ -96,6 +96,7 @@ class EmotionRecognitionService {
 
                   if((timestamp.toFixed(2) % 5) <= 1)
                   {
+                      this.capturarPantalla();
                       this.reporte += "Felicidad encontrada con un porcentaje de: " + faces[0].emotions.joy + " en el minuto: " + ((timestamp/60).toFixed(2)) + ". \n";
                   }
               }
@@ -216,6 +217,29 @@ class EmotionRecognitionService {
         }
         EmotionRecognitionService.log('#logs', 'Clickeado el boton de iniciar');
     }
+
+    capturarPantalla(){
+        var node = document.getElementById('container');
+
+        domtoimage.toBlob(node).then(function (blob) {
+            FileSaver.saveAs(blob, 'my-node.png');
+        });
+
+        console.log("ENTRO");
+
+        // domtoimage.toPng(node)
+        //     .then(function (dataUrl) {
+        //         var img = new Image();
+        //         img.src = dataUrl;
+        //         window.open(img.src, 'Image', {'width': 1920});
+        //     })
+        //     .catch(function (error) {
+        //         console.error('oops, something went wrong!', error);
+        //     });
+
+        console.log("salio");
+    }
+
 
     // function executes when the Stop button is pushed.
     onStop() {
