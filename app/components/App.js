@@ -7,7 +7,6 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-
 const paperStyle = {
     padding: '20px',
     textAlign: 'center',
@@ -63,7 +62,7 @@ class App extends React.Component {
 
     render() {
         return (
-            <div className='container'>
+            <div className='container' id='container'>
                 <Grid container spacing={24}>
                     <Grid item xs={7}>
                         <Paper style={paperStyle}>
@@ -75,8 +74,6 @@ class App extends React.Component {
                                                 onClick={this.onStart.bind(this)}>Iniciar</Button>
                                         <Button id="stop" onClick={this.onStop.bind(this)}>Parar</Button>
                                         <Button id="reset" onClick={this.onReset.bind(this)}>Reiniciar</Button>
-                                        <Button id="reporte"
-                                                onClick={this.descargarReporte.bind(this)}>Descargar</Button>
                                     </div>
                                     <div>
                                         <Typography variant="headline" gutterBottom>

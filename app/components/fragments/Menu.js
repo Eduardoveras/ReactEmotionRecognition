@@ -5,7 +5,8 @@ const Menu = () => {
   return (
     <div className="sidenav">
       <img alt="yolo" className="logo" src={logo} />
-      <a href="/" >Home</a>
+      <a href="/" >Login</a>
+      <a href="/home" >Home</a>
       <a href="/reports">Reportes</a>
       <a href="/statistics">Estadisticas</a>
       <a href="/">Manuales</a>

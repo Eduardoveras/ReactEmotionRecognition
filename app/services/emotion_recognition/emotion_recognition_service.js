@@ -5,8 +5,6 @@ import list from '../../assets/images/reports/list';
 import percentage from '../../assets/images/reports/percentage';
 import ActionCableService from '../../services/emotion_recognition/action_cable_service'
 
-
-
 class EmotionRecognitionService {
 
   constructor(width, height ,affElement) {
