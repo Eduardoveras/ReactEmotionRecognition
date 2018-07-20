@@ -59,10 +59,6 @@ class App extends React.Component {
         this.emotionService.descargarReporte();
     }
 
-    capturarPantalla(){
-        this.emotionService.capturarPantalla();
-    }
-
 
     render() {
         return (
@@ -78,10 +74,6 @@ class App extends React.Component {
                                                 onClick={this.onStart.bind(this)}>Iniciar</Button>
                                         <Button id="stop" onClick={this.onStop.bind(this)}>Parar</Button>
                                         <Button id="reset" onClick={this.onReset.bind(this)}>Reiniciar</Button>
-                                        <Button id="reporte"
-                                                onClick={this.descargarReporte.bind(this)}>Descargar</Button>
-                                        <Button id="capturar"
-                                                onClick={this.capturarPantalla.bind(this)}>Capturar</Button>
                                     </div>
                                     <div>
                                         <Typography variant="headline" gutterBottom>
