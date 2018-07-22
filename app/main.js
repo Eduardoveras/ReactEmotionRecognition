@@ -5,8 +5,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { ToastContainer } from 'react-toastify';
 import Root from './config/Root';
-import ButtonAppBar from './components/fragments/appBar'
+import ButtonAppBar from './components/fragments/appBar';
 
 window.$ = window.jQuery = require('jquery');
 
@@ -18,6 +19,7 @@ const render = (Component) => {
         <CssBaseline />
         <ButtonAppBar />
         <div className="container-fluid main">
+          <ToastContainer />
           <div className="row border border-primary rounded main-box">
             <Component />
           </div>

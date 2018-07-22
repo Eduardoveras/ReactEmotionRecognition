@@ -6,6 +6,8 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { withRouter } from 'react-router-dom'
+
 
 const paperStyle = {
     padding: '20px',
@@ -16,6 +18,8 @@ const paperStyle = {
 class App extends React.Component {
     constructor(props) {
         super(props);
+        this.showFinishButton=false;
+        this.video_id=null;
 
     }
 
@@ -36,29 +40,25 @@ class App extends React.Component {
             URL = 'https://sdec-backend.herokuapp.com/face_video_analyses'
         }
 
-        let video_id = null;
-
         axios.post(URL, {face_video_analysis})
             .then(res => {
                 console.log(res);
                 console.log(res.data.id);
-                video_id = res.data.id;
-                this.emotionService.onStart(video_id);
+                this.video_id = res.data.id;
+                this.emotionService.onStart(this.video_id);
+                this.showFinishButton=true;
+                this.forceUpdate();
             });
     }
 
     onStop() {
         this.emotionService.onStop();
+        window.location.pathname='/reports/'+this.video_id;
     }
 
     onReset() {
         this.emotionService.onReset();
     }
-
-    descargarReporte() {
-        this.emotionService.descargarReporte();
-    }
-
 
     render() {
         return (
@@ -70,15 +70,8 @@ class App extends React.Component {
                                 <div id="affdex_elements" ref="affElement"/>
                                 <div className="center-text">
                                     <div className="btn-group btn-group-lg" role="group" aria-label="Basic example">
-                                        <Button id="start" color="primary"
-                                                onClick={this.onStart.bind(this)}>Iniciar</Button>
-                                        <Button id="stop" onClick={this.onStop.bind(this)}>Parar</Button>
-                                        <Button id="reset" onClick={this.onReset.bind(this)}>Reiniciar</Button>
-                                    </div>
-                                    <div>
-                                        <Typography variant="headline" gutterBottom>
-                                            Log's del detector
-                                        </Typography>
+                                        {this.showFinishButton?<Button id="stop" onClick={this.onStop.bind(this)}>Terminar sesion</Button>:<Button id="start" color="primary"
+                                                                                                                                                   onClick={this.onStart.bind(this)}>Iniciar</Button> }
                                     </div>
                                     <div id="logs"/>
                                 </div>

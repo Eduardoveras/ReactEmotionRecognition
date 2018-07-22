@@ -60,3 +60,7 @@ npm-debug.log
 # coverage
 
 /coverage
+
+# heroku deploy...
+
+package-lock.json
