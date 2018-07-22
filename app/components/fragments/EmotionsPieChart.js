@@ -56,7 +56,7 @@ class EmotionsPieChart extends React.Component {
 
         let cantidadFelicidad = 1;
         this.joyLength = this.joy_data.reduce(function (anterior, siguiente) {
-            if (siguiente > 10) {
+            if (siguiente > 0) {
                 cantidadFelicidad += 1;
             }
             return anterior + siguiente;
@@ -64,7 +64,7 @@ class EmotionsPieChart extends React.Component {
 
         let cantidadTristeza = 1;
         this.sadnessLength = this.sadness_data.reduce(function (anterior, siguiente) {
-            if (siguiente > 10) {
+            if (siguiente > 0) {
                 cantidadTristeza += 1;
             }
             return anterior + siguiente;
@@ -72,7 +72,7 @@ class EmotionsPieChart extends React.Component {
 
         let cantidadEnojo = 1;
         this.angerLength = this.anger_data.reduce(function (anterior, siguiente) {
-            if (siguiente > 10) {
+            if (siguiente > 0) {
                 cantidadEnojo += 1;
             }
             return anterior + siguiente;
@@ -80,7 +80,7 @@ class EmotionsPieChart extends React.Component {
 
         let cantidadMiedo = 1;
         this.fearLength = this.fear_data.reduce(function (anterior, siguiente) {
-            if (siguiente > 10) {
+            if (siguiente > 0) {
                 cantidadMiedo += 1;
             }
             return anterior + siguiente;
@@ -88,7 +88,7 @@ class EmotionsPieChart extends React.Component {
 
         let cantidadSorpresa = 1;
         this.surpriseLength = this.surprise_data.reduce(function (anterior, siguiente) {
-            if (siguiente > 10) {
+            if (siguiente > 0) {
                 cantidadSorpresa += 1;
             }
             return anterior + siguiente;
@@ -96,7 +96,7 @@ class EmotionsPieChart extends React.Component {
 
         let cantidadDisgusto = 1;
         this.disgustLength = this.disgust_data.reduce(function (anterior, siguiente) {
-            if (siguiente > 10) {
+            if (siguiente > 0) {
                 cantidadDisgusto += 1;
             }
             return anterior + siguiente;
@@ -105,7 +105,7 @@ class EmotionsPieChart extends React.Component {
 
         let cantidadContempt = 1;
         this.contemptLength = this.contempt_data.reduce(function (anterior, siguiente) {
-            if (siguiente > 10) {
+            if (siguiente > 0) {
                 cantidadContempt += 1;
             }
             return anterior + siguiente;

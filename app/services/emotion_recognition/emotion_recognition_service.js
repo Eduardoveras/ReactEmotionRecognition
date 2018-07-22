@@ -4,6 +4,8 @@ import title from '../../assets/images/reports/title';
 import list from '../../assets/images/reports/list';
 import percentage from '../../assets/images/reports/percentage';
 import ActionCableService from '../../services/emotion_recognition/action_cable_service'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class EmotionRecognitionService {
 
@@ -76,7 +78,7 @@ class EmotionRecognitionService {
           const segundos = Math.trunc(timestamp % 60).toString().padStart(2, '0');
           $('#results').html('');
           console.log(faces[0])
-          this.cable.sendEvent(this.videoId,timestamp,faces.length,faces[0].appearance,faces[0].emotions,faces[0].expressions);
+          this.cable.sendEvent(this.videoId,timestamp,faces.length,faces[0].appearance,faces[0].emotions,faces[0].expressions,faces[0].measurements,faces[0].featurePoints);
           EmotionRecognitionService.log('#results', `<strong>Tiempo en la sesión: </strong>${horas}:${minutos}:${segundos} | HH:MM:SS`);
           if (faces.length > 0) {
               /*
@@ -235,7 +237,14 @@ class EmotionRecognitionService {
     }
 
     static log(nodeName, msg) {
-        $(nodeName).append(`<span class="log_msg">${msg}</span><br />`);
+        if(nodeName==="#logs")
+        {
+            toast.info("Message: "+ msg);
+        }
+        else {
+            $(nodeName).append(`<span class="log_msg">${msg}</span><br />`);
+
+        }
     }
 
     static drawFeaturePoints(img, featurePoints) {

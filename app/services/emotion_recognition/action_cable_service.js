@@ -1,5 +1,7 @@
 /* eslint-disable react/prefer-stateless-function */
 import ActionCable from 'actioncable';
+import { toast } from 'react-toastify';
+
 
 class ActionCableService {
 
@@ -15,12 +17,12 @@ class ActionCableService {
         const cable = ActionCable.createConsumer(URL);
         this.chats = cable.subscriptions.create('EmotionChannel', {
             connected: () => {
-                alert('connected!');
+                toast.info('connected!');
             },
             received: (data) => {
-                console.log(data);
+                //console.log(data);
             },
-            create(id,time, fc, appear, emot, express) {
+            create(id,time, fc, appear, emot, express, measure,fp) {
                 this.perform('create', {
                     video_id: id,
                     timeStamp: time,
@@ -28,12 +30,14 @@ class ActionCableService {
                     appearance: appear,
                     emotions: emot,
                     expressions: express,
+                    measurements: measure,
+                    featurePoints: fp
                 });
             },
         });
     }
 
-    sendEvent(id,timeStamp,facesCount,appearance,emotions,expressions) {
+    sendEvent(id,timeStamp,facesCount,appearance,emotions,expressions,measurements,featurePoints) {
         this.chats.create(
             id,
             timeStamp,
@@ -41,6 +45,8 @@ class ActionCableService {
             appearance,
             emotions,
             expressions,
+            measurements,
+            featurePoints
         );
     }
 }
