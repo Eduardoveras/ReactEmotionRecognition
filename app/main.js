@@ -6,24 +6,35 @@ import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ToastContainer } from 'react-toastify';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import blue from '@material-ui/core/colors/blue';
+
 import Root from './config/Root';
 import ButtonAppBar from './components/fragments/appBar';
 
 window.$ = window.jQuery = require('jquery');
 
+const theme = createMuiTheme({
+  palette: {
+    primary: blue,
+    secondary: { main: '#11cb5f' },
+  },
+});
 
 const render = (Component) => {
   ReactDOM.render(
     <AppContainer>
       <div>
         <CssBaseline />
-        <ButtonAppBar />
-        <div className="container-fluid main">
-          <ToastContainer />
-          <div className="row border border-primary rounded main-box">
-            <Component />
+        <MuiThemeProvider theme={theme}>
+          <ButtonAppBar />
+          <div className="container-fluid main">
+            <ToastContainer />
+            <div className="row border border-primary rounded main-box">
+              <Component />
+            </div>
           </div>
-        </div>
+        </MuiThemeProvider>
       </div>
     </AppContainer>,
     document.getElementById('root'),

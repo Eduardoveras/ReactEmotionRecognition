@@ -13,21 +13,30 @@ import PositiveNegativeChart from './fragments/PositiveNegativeEmotionsChart'
 class VideoReport extends React.Component {
     constructor(props) {
         super(props);
-        this.reportID = window.location.href.split('/').pop();
-        this.api_data = [];
+        this.state = {
+            api_data: [],
+            report_id: window.location.href.split('/').pop(),
+            notes: ''
+        };
     }
 
     componentWillMount() {
         let URL = null;
         if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
-            URL = 'http://localhost:3000/emotions/' + this.reportID;
+            URL = 'http://localhost:3000';
         } else {
-            URL = 'https://sdec-backend.herokuapp.com/emotions/' + this.reportID;
+            URL = 'https://sdec-backend.herokuapp.com' ;
         }
-        axios.get(URL)
+        axios.get(URL+'/emotions/'+this.state.report_id)
             .then((response) => {
-                this.api_data = response.data;
-                this.forceUpdate()
+                this.setState({api_data:response.data});
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        axios.get(URL+'/face_video_analyses/'+this.state.report_id)
+            .then((response) => {
+                this.setState({notes: response.data.notes});
             })
             .catch((error) => {
                 console.log(error);
@@ -39,27 +48,28 @@ class VideoReport extends React.Component {
         return (
             <div className='container'>
                 <Typography variant="display1" gutterBottom>
-                    Reporte ID: {this.reportID} <Button variant="outlined" color="primary" onClick={() => {
+                    Reporte ID: {this.state.report_id} <Button variant="outlined" color="primary" onClick={() => {
                     window.print();
                 }}> Descargar</Button>
                 </Typography>
-                {this.api_data===[]?<p>Loading...</p>:<Grid container spacing={32}>
+                <Typography variant="display1" gutterBottom>
+                    Notas del reporte: {this.state.notes}
+                </Typography>
+                <Grid container spacing={32}>
                     <Grid item xs={12}>
-                        <TimelineChart data={this.api_data}/>
+                        <TimelineChart data={this.state.api_data}/>
                     </Grid>
 
                     <Grid item xs={6}>
-                        <EmotionsPieChart data={this.api_data}/>
+                        <EmotionsPieChart data={this.state.api_data}/>
                     </Grid>
                     <Grid item xs={6}>
-                        <EmotionsBarChart data={this.api_data}/>
+                        <EmotionsBarChart data={this.state.api_data}/>
                     </Grid>
                     <Grid item xs={6}>
-                        <PositiveNegativeChart data={this.api_data}/>
+                        <PositiveNegativeChart data={this.state.api_data}/>
                     </Grid>
-                </Grid>}
-
-
+                </Grid>
             </div>
         );
     }
