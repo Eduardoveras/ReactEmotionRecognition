@@ -10,6 +10,13 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from "@material-ui/core/es/Typography/Typography";
 import Button from "@material-ui/core/es/Button/Button";
+import TablePagination from "@material-ui/core/es/TablePagination/TablePagination";
+import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
+import {createMuiTheme} from "@material-ui/core/styles/index";
+import purple from "@material-ui/core/colors/purple";
+import { withTheme } from '@material-ui/core/styles'
+import TableFooter from "@material-ui/core/es/TableFooter/TableFooter";
+
 
 const paperStyle = {
     padding: '20px',
@@ -17,15 +24,34 @@ const paperStyle = {
     height: '87vh'
 };
 
+const theme = createMuiTheme({
+    palette: {
+        primary: { main: purple[500] }, // Purple and green play nicely together.
+        secondary: { main: '#11cb5f' }, // This is just green.A700 as hex.
+    },
+});
+
 class Reports extends React.Component {
     constructor(props){
         super(props);
         this.reportList=[];
+        this.state = {
+            data: [],
+            page: 0,
+            rowsPerPage: 10
+        };
     }
+    handleChangePage = (event, page) => {
+        this.setState({ page });
+    };
+
+    handleChangeRowsPerPage = event => {
+        this.setState({ rowsPerPage: event.target.value });
+    };
+
 
 
     componentWillMount() {
-        console.log('Component will mount with reports: '+this.reportList);
         let URL = null;
         if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
             URL = 'http://localhost:3000/face_video_analyses';
@@ -34,9 +60,7 @@ class Reports extends React.Component {
         }
         axios.get(URL)
             .then((response) => {
-                this.reportList = response.data;
-                console.log('Component will mount with reports: '+this.reportList);
-                this.forceUpdate()
+                this.setState({ data: response.data });
             })
             .catch((error) => {
                 console.log(error);
@@ -44,23 +68,10 @@ class Reports extends React.Component {
     }
 
     render() {
+        const { data, rowsPerPage, page } = this.state;
+        const emptyRows =
+            rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
-
-        let renderReportList = () => {
-            return this.reportList.map((n) => {
-                let created = new Date(n.created_at)
-                return (
-                    <TableRow key={n.id}>
-                        <TableCell>
-                            {n.id}
-                        </TableCell>
-                        <TableCell><Button href={"/reports/"+n.id}>Pepito Pepe</Button></TableCell>
-                        <TableCell>{n.notes}</TableCell>
-                        <TableCell>{created.toLocaleDateString('es-DO')}</TableCell>
-                    </TableRow>
-                );
-            });
-        };
         return (
             <div className='container'>
                 <Typography variant="display1" gutterBottom>
@@ -69,22 +80,57 @@ class Reports extends React.Component {
 
                 <Grid container spacing={24} >
                     <Grid item xs={9}>
-                        <Paper style={paperStyle}>
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell numeric>ID</TableCell>
-                                        <TableCell >Persona</TableCell>
-                                        <TableCell >Notas</TableCell>
-                                        <TableCell >Fecha</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {this.reportList ? renderReportList():null}
-                                </TableBody>
-                            </Table>
-                        </Paper>
+                        <Paper>
+                            <div>
+                                <Table>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell numeric>ID</TableCell>
+                                            <TableCell >Persona</TableCell>
+                                            <TableCell >Notas</TableCell>
+                                            <TableCell >Fecha</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {data
+                                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                            .map(n => {
+                                                let created = new Date(n.created_at)
+                                                return (
+                                                    <TableRow key={n.id}>
+                                                        <TableCell component="th" scope="row">
+                                                            {n.id}
+                                                        </TableCell>
+                                                        <TableCell >Persona Personica</TableCell>
+                                                        <TableCell >{n.notes}</TableCell>
 
+                                                        <TableCell numeric>{created.toLocaleDateString('es-DO')}</TableCell>
+                                                    </TableRow>
+                                                );
+                                            })}
+                                        {emptyRows > 0 && (
+                                            <TableRow style={{ height: 48 * emptyRows }}>
+                                                <TableCell colSpan={6} />
+                                            </TableRow>
+                                        )}
+                                    </TableBody>
+                                    <MuiThemeProvider theme={theme}>
+                                        <TableFooter>
+                                            <TableRow>
+                                                <TablePagination
+                                                    colSpan={3}
+                                                    count={data.length}
+                                                    rowsPerPage={rowsPerPage}
+                                                    page={page}
+                                                    onChangePage={this.handleChangePage}
+                                                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                                                />
+                                            </TableRow>
+                                        </TableFooter>
+                                    </MuiThemeProvider>
+                                </Table>
+                            </div>
+                        </Paper>
                     </Grid>
                 </Grid>
             </div>
@@ -92,4 +138,4 @@ class Reports extends React.Component {
     }
 }
 
-export default Reports;
+export default withTheme()(Reports);

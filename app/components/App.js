@@ -6,7 +6,6 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { withRouter } from 'react-router-dom'
 
 
 const paperStyle = {
@@ -16,12 +15,21 @@ const paperStyle = {
 };
 
 class App extends React.Component {
+    state = {
+        name: '',
+    };
+
     constructor(props) {
         super(props);
-        this.showFinishButton=false;
-        this.video_id=null;
+        this.showFinishButton = false;
+        this.video_id = null;
 
     }
+
+
+    handleChange = event => {
+        this.setState({name: event.target.value});
+    };
 
     componentDidMount() {
         this.emotionService = new EmotionService(640, 480, $(this.refs.affElement)[0]);
@@ -30,7 +38,7 @@ class App extends React.Component {
     onStart() {
 
         const face_video_analysis = {
-            notes: 'THIS IS A TEST'
+            notes: this.state.name
         };
         let URL = null;
         if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
@@ -46,14 +54,14 @@ class App extends React.Component {
                 console.log(res.data.id);
                 this.video_id = res.data.id;
                 this.emotionService.onStart(this.video_id);
-                this.showFinishButton=true;
+                this.showFinishButton = true;
                 this.forceUpdate();
             });
     }
 
     onStop() {
         this.emotionService.onStop();
-        window.location.pathname='/reports/'+this.video_id;
+        window.location.pathname = '/reports/' + this.video_id;
     }
 
     onReset() {
@@ -61,6 +69,10 @@ class App extends React.Component {
     }
 
     render() {
+        const inputProps = {
+            step: 300,
+        };
+
         return (
             <div className='container' id='container'>
                 <Grid container spacing={24}>
@@ -70,8 +82,13 @@ class App extends React.Component {
                                 <div id="affdex_elements" ref="affElement"/>
                                 <div className="center-text">
                                     <div className="btn-group btn-group-lg" role="group" aria-label="Basic example">
-                                        {this.showFinishButton?<Button id="stop" onClick={this.onStop.bind(this)}>Terminar sesion</Button>:<Button id="start" color="primary"
-                                                                                                                                                   onClick={this.onStart.bind(this)}>Iniciar</Button> }
+                                        <label>
+                                            Notes:
+                                            <input type="text" name="name" onChange={this.handleChange}/>
+                                        </label>
+                                        {this.showFinishButton ? <Button id="stop" onClick={this.onStop.bind(this)}>Terminar
+                                            sesion</Button> : <Button id="start" color="primary"
+                                                                      onClick={this.onStart.bind(this)}>Iniciar</Button>}
                                     </div>
                                     <div id="logs"/>
                                 </div>
