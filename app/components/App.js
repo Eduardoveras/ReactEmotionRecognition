@@ -83,9 +83,12 @@ class App extends React.Component {
                                 <div className="center-text">
                                     <div className="btn-group btn-group-lg" role="group" aria-label="Basic example">
                                         <label>
-                                            Notes:
+                                            <Typography gutterBottom>
+                                                Notas:
                                             <input type="text" name="name" onChange={this.handleChange}/>
+                                            </Typography>
                                         </label>
+                                        <br/>
                                         {this.showFinishButton ? <Button id="stop" onClick={this.onStop.bind(this)}>Terminar
                                             sesion</Button> : <Button id="start" color="primary"
                                                                       onClick={this.onStart.bind(this)}>Iniciar</Button>}

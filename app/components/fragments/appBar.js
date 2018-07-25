@@ -32,10 +32,9 @@ function ButtonAppBar(props) {
           <Typography variant="title" color="inherit" className={classes.flex}>
                         S.D.E.C
           </Typography>
-          <Button color="inherit" href="/home">Home</Button>
+          <Button color="inherit" href="/home">Inicio</Button>
           <Button color="inherit" href="/reports">Reportes</Button>
-          <Button color="inherit"href="/statistics">Estadisticas</Button>
-          <Button color="inherit" href="/">Manuales</Button>
+          <Button color="inherit" href="/home">Manuales</Button>
         </Toolbar>
       </AppBar>
     </div>
