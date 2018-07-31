@@ -17,7 +17,10 @@ const paperStyle = {
 class App extends React.Component {
     state = {
         name: '',
+        isButtonDisabled: false
     };
+
+
 
     constructor(props) {
         super(props);
@@ -36,6 +39,10 @@ class App extends React.Component {
     }
 
     onStart() {
+
+        this.setState({
+            isButtonDisabled: true
+        });
 
         const face_video_analysis = {
             notes: this.state.name
@@ -90,8 +97,8 @@ class App extends React.Component {
                                         </label>
                                         <br/>
                                         {this.showFinishButton ? <Button id="stop" onClick={this.onStop.bind(this)}>Terminar
-                                            sesion</Button> : <Button id="start" color="primary"
-                                                                      onClick={this.onStart.bind(this)}>Iniciar</Button>}
+                                            sesion</Button> : <Button onClick={this.onStart.bind(this)} disabled={this.state.isButtonDisabled}>
+                                            Iniciar </Button>}
                                     </div>
                                     <div id="logs"/>
                                 </div>
