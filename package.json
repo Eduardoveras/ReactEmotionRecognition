@@ -2,9 +2,9 @@
   "name": "react-webpack-boilerplate",
   "version": "2.1.0",
   "engines": {
-    "node": "10.4.1",
+    "node": "^8.11.3",
     "npm": "6.1.0",
-    "yarn": "1.7.0"
+    "yarn": "^1.7.0"
   },
   "description": "Minimalistic ES6 React boilerplate",
   "main": "index.js",

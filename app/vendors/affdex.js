@@ -11,7 +11,14 @@ affdex.getAffdexDotJsLocation = function() {
     }
   }
   // return affdexJS;
-    return 'https://download.affectiva.com/js/3.2/';
+    let URL = null;
+    if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+        URL = `http://localhost:3000/`;
+    }
+    else {
+        URL = 'https://sdec-backend.herokuapp.com/'
+    }
+    return URL;
 };
 
 affdex.FaceDetectorMode = {

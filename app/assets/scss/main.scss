@@ -36,11 +36,17 @@
   min-height: 35vh;
 }
 
-#face_video_canvas,#face_video{
+#face_video{
+  width: 85%;
+  text-align:center;
+}
+
+#face_video_canvas{
   width: 85%;
   border: 5px solid;
   text-align:center;
 }
+
 .emoji{
   font-size: 100px;
   margin: 90px;
@@ -66,6 +72,10 @@
 
 canvas {
   display: inline !important;
+}
+
+video {
+  display: none;
 }
 
 
