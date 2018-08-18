@@ -17,22 +17,39 @@ const paperStyle = {
 class App extends React.Component {
     state = {
         name: '',
-        isButtonDisabled: false
+        isButtonDisabled: false,
+        emojiVisible: true,
+        textVisible: true
     };
-
-
 
     constructor(props) {
         super(props);
+        this.handleEmojiVisible = this.handleEmojiVisible.bind(this);
+        this.handleTextVisible = this.handleTextVisible.bind(this);
         this.showFinishButton = false;
         this.video_id = null;
 
     }
 
-
     handleChange = event => {
         this.setState({name: event.target.value});
     };
+
+    handleEmojiVisible() {
+        this.setState((prevState) => {
+            return {
+                emojiVisible: !prevState.emojiVisible
+            };
+        });
+    }
+
+    handleTextVisible() {
+        this.setState((prevState) => {
+            return {
+                textVisible: !prevState.textVisible
+            };
+        });
+    }
 
     componentDidMount() {
         this.emotionService = new EmotionService(640, 480, $(this.refs.affElement)[0]);
@@ -99,6 +116,8 @@ class App extends React.Component {
                                         {this.showFinishButton ? <Button id="stop" onClick={this.onStop.bind(this)}>Terminar
                                             sesion</Button> : <Button onClick={this.onStart.bind(this)} disabled={this.state.isButtonDisabled}>
                                             Iniciar </Button>}
+                                        <Button onClick={this.handleTextVisible}>{this.state.textVisible ? "Ocultar texto" : "Mostrar texto"}</Button>
+                                        <Button onClick={this.handleEmojiVisible}>{this.state.emojiVisible ? "Ocultar emoji" : "Mostrar emoji"}</Button>
                                     </div>
                                     <div id="logs"/>
                                 </div>
@@ -113,7 +132,8 @@ class App extends React.Component {
                                         Resultados detectados
                                     </Typography>
                                     <Typography gutterBottom>
-                                        <div id="results"/>
+                                        {this.state.textVisible && <div id="results"/>}
+                                        {this.state.emojiVisible && <div id="emoji"/>}
                                     </Typography>
                                 </div>
                             </div>
