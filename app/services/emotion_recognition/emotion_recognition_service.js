@@ -77,6 +77,7 @@ class EmotionRecognitionService {
           const minutos = Math.trunc((timestamp % 3600) / 60).toString().padStart(2, '0');
           const segundos = Math.trunc(timestamp % 60).toString().padStart(2, '0');
           $('#results').html('');
+          $('#emoji').html('');
           console.log(faces[0])
           this.cable.sendEvent(this.videoId,timestamp,faces.length,faces[0].appearance,faces[0].emotions,faces[0].expressions,faces[0].measurements,faces[0].featurePoints);
           EmotionRecognitionService.log('#results', `<strong>Tiempo en la sesión: </strong>${horas}:${minutos}:${segundos} | HH:MM:SS`);
@@ -189,7 +190,7 @@ class EmotionRecognitionService {
 
               }
 
-              EmotionRecognitionService.log('#results', `Emoji acorde a la emoción detectada: </br></br></br></br></br></br></br><div class="emoji">${faces[0].emojis.dominantEmoji}</div>`);
+              EmotionRecognitionService.log('#emoji', `</br>Emoji acorde a la emoción detectada: </br></br><div class="emoji">${faces[0].emojis.dominantEmoji}</div>`);
               EmotionRecognitionService.log("#results", " ");
               EmotionRecognitionService.log("#results", "<h3><strong>Otros valores:</strong></h3>");
               EmotionRecognitionService.log('#results', "<strong class='text-primary'>Atención a la cámara: </strong> " + faces[0].emotions.engagement.toFixed(2), function(key, val) {
