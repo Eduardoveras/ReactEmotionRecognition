@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { LOCAL_URL, DEVELOPMENT_URL } from '../config/constants';
-import paperStyle from '../assets/scss/reports.scss';
+import paperStyle from '../assets/scss/app/reports.scss';
 
 class App extends React.Component {
     state = {

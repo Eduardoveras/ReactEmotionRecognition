@@ -8,6 +8,7 @@ import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
 import {createMuiTheme} from "@material-ui/core/styles/index";
 import purple from "@material-ui/core/colors/purple";
 import TableFooter from "@material-ui/core/es/TableFooter/TableFooter";
+import '../assets/scss/app/reports.scss'
 
 const theme = createMuiTheme({
     palette: {
