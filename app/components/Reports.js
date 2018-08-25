@@ -1,28 +1,13 @@
 /* eslint-disable react/prefer-stateless-function,no-console,no-restricted-globals,class-methods-use-this */
 import React from 'react';
 import axios from 'axios/index';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
+import {Table, TableBody, TableCell,TableHead, TableRow, withTheme, Paper, Grid} from '@material-ui/core/';
 import Typography from "@material-ui/core/es/Typography/Typography";
-import Button from "@material-ui/core/es/Button/Button";
 import TablePagination from "@material-ui/core/es/TablePagination/TablePagination";
 import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
 import {createMuiTheme} from "@material-ui/core/styles/index";
 import purple from "@material-ui/core/colors/purple";
-import { withTheme } from '@material-ui/core/styles'
 import TableFooter from "@material-ui/core/es/TableFooter/TableFooter";
-
-
-const paperStyle = {
-    padding: '20px',
-    textAlign: 'center',
-    height: '87vh'
-};
 
 const theme = createMuiTheme({
     palette: {
@@ -48,8 +33,6 @@ class Reports extends React.Component {
     handleChangeRowsPerPage = event => {
         this.setState({ rowsPerPage: event.target.value });
     };
-
-
 
     componentWillMount() {
         let URL = null;
