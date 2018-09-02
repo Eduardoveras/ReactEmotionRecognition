@@ -1,84 +1,59 @@
 import React from 'react';
-import Typography from "@material-ui/core/es/Typography/Typography";
-import Button from "@material-ui/core/es/Button/Button";
-import TextField from "@material-ui/core/es/TextField/TextField";
-import Card from "@material-ui/core/es/Card/Card";
-import CardContent from "@material-ui/core/es/CardContent/CardContent";
-import CardActions from "@material-ui/core/es/CardActions/CardActions";
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import firebase from 'firebase';
+
+// Configure Firebase.
+const config = {
+    apiKey: "AIzaSyB1mWTY9UZvone47npIeYcmNbxDzwU1JDg",
+    authDomain: "vue-path-maker.firebaseapp.com",
+    databaseURL: "https://vue-path-maker.firebaseio.com",
+    projectId: "vue-path-maker",
+    storageBucket: "vue-path-maker.appspot.com",
+    messagingSenderId: "813989253785"
+
+};
+firebase.initializeApp(config);
+
+// Configure FirebaseUI.
+const uiConfig = {
+    // Popup signin flow rather than redirect flow.
+    signInFlow: 'popup',
+    // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
+    signInSuccessUrl: '/home',
+    // We will display Google and Facebook as auth providers.
+    signInOptions: [
+        firebase.auth.EmailAuthProvider.PROVIDER_ID,
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID
+    ]
+};
+
 
 
 class Login extends React.Component {
-    constructor(props) {
+
+    constructor (props) {
         super(props);
-        this.state = {
-            username: '',
-            password: ''
-        };
-        this.verifyData = this.verifyData.bind(this);
+        this.state = { loaded: false }
     }
 
-    verifyData() {
-        if (this.state.username.length > 0 && this.state.password.length > 0) {
-            window.location.href = "/home";
-        }
+
+
+    componentDidMount(){
+        let fuckJavascript=this;
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(
+            function() {
+                console.log("yolooooooooooooo");
+                fuckJavascript.setState({loaded: true});
+            }
+        );
     }
-
-    handlePasswordChange = event => {
-        this.setState({password: event.target.value});
-    };
-
-    handleUserChange = event => {
-        this.setState({username: event.target.value});
-    };
-
 
     render() {
-        const inputStyle = {
-            margin: '18px',
-        };
-        const cardStyle = {
-            margin: '58px 200px',
-        };
 
         return (
             <div>
-                <br/>
-                <Card style={cardStyle}>
-                    <CardContent>
-
-                        <div>
-                            <Typography variant="display1" gutterBottom>
-                                Iniciar Sesion
-                            </Typography>
-                            <div className="login-up">
-                                <TextField
-                                    style={inputStyle}
-                                    label="Usuario"
-                                    onChange={this.handleUserChange}
-                                    required
-                                />
-                                <br/>
-                                <TextField
-                                    style={inputStyle}
-                                    label="Contraseña"
-                                    type="password"
-                                    onChange={this.handlePasswordChange}
-                                    required
-                                />
-                                <br/>
-                                <br/>
-                                <Button variant="contained" color="primary"
-                                        onClick={this.verifyData}>Iniciar Session</Button>
-                            </div>
-                        </div>
-
-
-                    </CardContent>
-                    <CardActions>
-                        <Button size="small">Recuperar contraseña</Button>
-                    </CardActions>
-                </Card>
-
+                <br/><br/><br/><br/><br/>
+                {this.state.loaded ? <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/> : <p>Loading</p>}
             </div>
         );
     }
