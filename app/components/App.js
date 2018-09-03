@@ -6,13 +6,8 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-
-
-const paperStyle = {
-    padding: '20px',
-    textAlign: 'center',
-    height: '87vh'
-};
+import { LOCAL_URL, DEVELOPMENT_URL } from '../config/constants';
+import paperStyle from '../assets/scss/app/reports.scss';
 
 class App extends React.Component {
     state = {
@@ -28,7 +23,6 @@ class App extends React.Component {
         this.handleTextVisible = this.handleTextVisible.bind(this);
         this.showFinishButton = false;
         this.video_id = null;
-
     }
 
     handleChange = event => {
@@ -57,19 +51,17 @@ class App extends React.Component {
 
     onStart() {
 
-        this.setState({
-            isButtonDisabled: true
-        });
-
-        const face_video_analysis = {
-            notes: this.state.name
-        };
+        this.setState({ isButtonDisabled: true });
+        const face_video_analysis = { notes: this.state.name };
         let URL = null;
-        if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
-            URL = `http://localhost:3000/face_video_analyses`;
+
+        if (location.hostname === "localhost" || location.hostname === "127.0.0.1")
+        {
+            URL = `${LOCAL_URL}/face_video_analyses`;
         }
-        else {
-            URL = 'https://sdec-backend.herokuapp.com/face_video_analyses'
+        else 
+        {
+            URL = `${DEVELOPMENT_URL}/face_video_analyses`;
         }
 
         axios.post(URL, {face_video_analysis})
@@ -140,8 +132,6 @@ class App extends React.Component {
                         </Paper>
                     </Grid>
                 </Grid>
-
-
             </div>
         );
     }

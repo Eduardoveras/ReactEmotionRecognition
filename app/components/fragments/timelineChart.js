@@ -1,11 +1,6 @@
 /* eslint-disable react/prefer-stateless-function,no-console,no-restricted-globals,class-methods-use-this */
 import React from 'react';
-import Typography from "@material-ui/core/es/Typography/Typography";
-import axios from "axios/index";
 import {Line} from 'react-chartjs-2';
-import {Doughnut, Bar} from 'react-chartjs-2';
-import Button from "@material-ui/core/es/Button/Button";
-import Grid from "@material-ui/core/es/Grid/Grid";
 
 class timelineChart extends React.Component {
     constructor(props) {
