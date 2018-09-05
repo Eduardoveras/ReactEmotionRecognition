@@ -1,18 +1,9 @@
 import React from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase';
+import { authConfig } from '../constants';
 
-// Configure Firebase.
-const config = {
-    apiKey: "AIzaSyB1mWTY9UZvone47npIeYcmNbxDzwU1JDg",
-    authDomain: "vue-path-maker.firebaseapp.com",
-    databaseURL: "https://vue-path-maker.firebaseio.com",
-    projectId: "vue-path-maker",
-    storageBucket: "vue-path-maker.appspot.com",
-    messagingSenderId: "813989253785"
-
-};
-firebase.initializeApp(config);
+firebase.initializeApp(authConfig);
 
 // Configure FirebaseUI.
 const uiConfig = {
@@ -36,8 +27,6 @@ class Login extends React.Component {
         this.state = { loaded: false }
     }
 
-
-
     componentDidMount(){
         let fuckJavascript=this;
         firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(
@@ -49,7 +38,6 @@ class Login extends React.Component {
     }
 
     render() {
-
         return (
             <div>
                 <br/><br/><br/><br/><br/>

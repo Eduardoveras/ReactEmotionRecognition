@@ -9,20 +9,13 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from "@material-ui/core/es/Typography/Typography";
-import Button from "@material-ui/core/es/Button/Button";
 import TablePagination from "@material-ui/core/es/TablePagination/TablePagination";
 import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
-import {createMuiTheme} from "@material-ui/core/styles/index";
+import { createMuiTheme } from "@material-ui/core/styles/index";
 import purple from "@material-ui/core/colors/purple";
 import { withTheme } from '@material-ui/core/styles'
 import TableFooter from "@material-ui/core/es/TableFooter/TableFooter";
-
-
-const paperStyle = {
-    padding: '20px',
-    textAlign: 'center',
-    height: '87vh'
-};
+import { URL_PATH } from '../constants';
 
 const theme = createMuiTheme({
     palette: {
@@ -49,16 +42,9 @@ class Reports extends React.Component {
         this.setState({ rowsPerPage: event.target.value });
     };
 
-
-
     componentWillMount() {
-        let URL = null;
-        if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
-            URL = 'http://localhost:3000/face_video_analyses';
-        } else {
-            URL = 'https://sdec-backend.herokuapp.com/face_video_analyses';
-        }
-        axios.get(URL)
+      let URL = URL_PATH;
+      axios.get(URL)
             .then((response) => {
                 this.setState({ data: response.data });
             })
