@@ -7,6 +7,16 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { URL_PATH } from '../constants';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faPlayCircle, faStopCircle, faEyeSlash, faEye, faMeh, faGrinAlt} from '@fortawesome/free-solid-svg-icons';
+
+library.add(faPlayCircle);
+library.add(faStopCircle);
+library.add(faEyeSlash);
+library.add(faEye);
+library.add(faMeh);
+library.add(faGrinAlt);
 
 const paperStyle = {
     padding: '20px',
@@ -106,11 +116,11 @@ class App extends React.Component {
                                             </Typography>
                                         </label>
                                         <br/>
-                                        {this.showFinishButton ? <Button id="stop" onClick={this.onStop.bind(this)}>Terminar
+                                        {this.showFinishButton ? <Button id="stop" onClick={this.onStop.bind(this)}><FontAwesomeIcon icon="stop-circle" style={{color: "grey"}}/> &nbsp;Terminar
                                             sesion</Button> : <Button onClick={this.onStart.bind(this)} disabled={this.state.isButtonDisabled}>
-                                            Iniciar </Button>}
-                                        <Button onClick={this.handleTextVisible}>{this.state.textVisible ? "Ocultar texto" : "Mostrar texto"}</Button>
-                                        <Button onClick={this.handleEmojiVisible}>{this.state.emojiVisible ? "Ocultar emoji" : "Mostrar emoji"}</Button>
+                                            <FontAwesomeIcon icon="play-circle" style={{color: "grey"}}/> &nbsp;Iniciar </Button>}
+                                        {this.state.textVisible ?  <Button onClick={this.handleTextVisible}><FontAwesomeIcon icon="eye-slash" style={{color: "grey"}}/> &nbsp;Ocultar texto</Button> : <Button onClick={this.handleTextVisible}><FontAwesomeIcon icon="eye" style={{color: "grey"}}/> &nbsp;Mostrar texto</Button>}
+                                        {this.state.emojiVisible ? <Button onClick={this.handleEmojiVisible}><FontAwesomeIcon icon="meh" style={{color: "grey"}}/> &nbsp;Ocultar emoji</Button> : <Button onClick={this.handleEmojiVisible}><FontAwesomeIcon icon="grin-alt" style={{color: "grey"}}/> &nbsp;Mostrar emoji</Button>}
                                     </div>
                                     <div id="logs"/>
                                 </div>

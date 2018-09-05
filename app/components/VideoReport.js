@@ -12,6 +12,14 @@ import TimelineChart from './fragments/timelineChart'
 import EmotionsBarChart from './fragments/EmotionsBarChart'
 import EmotionsPieChart from './fragments/EmotionsPieChart'
 import PositiveNegativeChart from './fragments/PositiveNegativeEmotionsChart'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faChartBar, faFileAlt, faEyeSlash, faDownload} from '@fortawesome/free-solid-svg-icons'
+
+library.add(faChartBar);
+library.add(faFileAlt);
+library.add(faEyeSlash);
+library.add(faDownload);
 
 class VideoReport extends React.Component {
     constructor(props) {
@@ -72,13 +80,11 @@ class VideoReport extends React.Component {
         return (
             <div className='container'>
                 <Typography variant="display1" gutterBottom>
-                    Reporte ID: {this.state.report_id} <Button variant="outlined" color="primary" onClick={() => {
+                    Reporte ID: {this.state.report_id} <Button color="primary" onClick={() => {
                     window.print();
-                }}> Descargar</Button> /
-                    <Button variant="outlined" color="primary" onClick={this.handleGraphsVisible}>
-                        {this.state.graphsVisible ? " Ocultar gráficas" : " Mostrar graficas"}</Button> /
-                    <Button variant="outlined" color="primary" onClick={this.handleTextVisible}>
-                        {this.state.textVisible ? " Ocultar summary" : " Mostrar summary"}</Button>
+                }}> <FontAwesomeIcon icon="download" style={{color: "grey"}}/> &nbsp;Descargar</Button> /
+                    {this.state.graphsVisible ? <Button color="primary" onClick={this.handleGraphsVisible}><FontAwesomeIcon icon="eye-slash" style={{color: "grey"}}/> &nbsp;Ocultar gráficas</Button>: <Button color="primary" onClick={this.handleGraphsVisible}><FontAwesomeIcon icon="chart-bar" style={{color: "grey"}}/> &nbsp;Mostrar graficas</Button>} /
+                    {this.state.textVisible ? <Button  color="primary" onClick={this.handleTextVisible}><FontAwesomeIcon icon="eye-slash" style={{color: "grey"}}/> &nbsp;Ocultar resumen</Button>: <Button color="primary" onClick={this.handleTextVisible}><FontAwesomeIcon icon="file-alt" style={{color: "grey"}}/> &nbsp;Mostrar resumen</Button>}
                 </Typography>
                 <Typography variant="display1" gutterBottom>
                     Notas del reporte: {this.state.notes}
