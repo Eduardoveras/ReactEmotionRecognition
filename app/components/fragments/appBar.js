@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faHome, faChartBar, faFileAlt} from '@fortawesome/free-solid-svg-icons'
+import firebase from 'firebase';
 
 library.add(faHome);
 library.add(faChartBar);
@@ -29,6 +30,12 @@ const styles = {
 };
 
 function ButtonAppBar(props) {
+
+  let infoUser = localStorage.getItem(localStorage.key(0));
+  infoUser = infoUser.split(',');
+  infoUser = infoUser[0].split(':');
+  infoUser.slice(1, infoUser.length - 2);
+  console.log(infoUser[1]);
   const { classes } = props;
   return (
     <div className={classes.root}>
