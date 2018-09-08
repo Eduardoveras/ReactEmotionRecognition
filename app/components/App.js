@@ -19,10 +19,22 @@ library.add(faMeh);
 library.add(faGrinAlt);
 
 const paperStyle = {
-    padding: '20px',
+    padding: "20px",
     textAlign: 'center',
     height: '87vh'
 };
+
+const resultStyle = {
+    paddingTop: "10px",
+    textAlign: 'center',
+    height: '50vh'
+};
+
+const emojiStyle = {
+    textAlign: 'center',
+    height: '37vh'
+};
+
 
 class App extends React.Component {
     state = {
@@ -127,8 +139,8 @@ class App extends React.Component {
                             </div>
                         </Paper>
                     </Grid>
-                    <Grid item xs>
-                        <Paper style={paperStyle}>
+                    <Grid item xs={5}>
+                        <Paper style={resultStyle}>
                             <div className="col-md-5">
                                 <div className="resultados">
                                     <Typography variant="display1" gutterBottom>
@@ -136,15 +148,20 @@ class App extends React.Component {
                                     </Typography>
                                     <Typography gutterBottom>
                                         {this.state.textVisible && <div id="results"/>}
-                                        {this.state.emojiVisible && <div id="emoji"/>}
                                     </Typography>
                                 </div>
                             </div>
                         </Paper>
+                        <Paper style={emojiStyle}>
+                            <Typography variant="display1" gutterBottom>
+                                Emoji
+                            </Typography>
+                            <Typography>
+                                {this.state.emojiVisible && <div id="emoji"/>}
+                            </Typography>
+                        </Paper>
                     </Grid>
                 </Grid>
-
-
             </div>
         );
     }

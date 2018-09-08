@@ -190,7 +190,7 @@ class EmotionRecognitionService {
 
               }
 
-              EmotionRecognitionService.log('#emoji', `</br>Emoji acorde a la emoción detectada: </br></br><div class="emoji">${faces[0].emojis.dominantEmoji}</div>`);
+              EmotionRecognitionService.log('#emoji', `<div class="emoji">${faces[0].emojis.dominantEmoji}</div>`);
               EmotionRecognitionService.log("#results", " ");
               EmotionRecognitionService.log("#results", "<h3><strong>Otros valores:</strong></h3>");
               EmotionRecognitionService.log('#results', "<strong class='text-primary'>Atención a la cámara: </strong> " + faces[0].emotions.engagement.toFixed(2), function(key, val) {

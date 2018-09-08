@@ -64,8 +64,8 @@ class Reports extends React.Component {
                     Reportes
                 </Typography>
 
-                <Grid container spacing={24} >
-                    <Grid item xs={9}>
+                <Grid container spacing={32} >
+                    <Grid item xs={12}>
                         <Paper>
                             <div>
                                 <Table>
