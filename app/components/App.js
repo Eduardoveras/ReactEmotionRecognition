@@ -21,18 +21,24 @@ library.add(faGrinAlt);
 const paperStyle = {
     padding: "20px",
     textAlign: 'center',
-    height: '87vh'
+    height: '87vh',
+    marginBottom: "35px"
 };
 
 const resultStyle = {
     paddingTop: "10px",
     textAlign: 'center',
-    height: '50vh'
+    height: '30vh'
 };
 
 const emojiStyle = {
     textAlign: 'center',
     height: '37vh'
+};
+
+const atencionStyle = {
+    textAlign: 'center',
+    height: '20vh'
 };
 
 
@@ -151,6 +157,12 @@ class App extends React.Component {
                                     </Typography>
                                 </div>
                             </div>
+                        </Paper>
+                        <Paper style={atencionStyle}>
+                            <Typography variant="display1" gutterBottom>
+                                Atención a la cámara
+                            </Typography>
+                                <div id="atencion"/>
                         </Paper>
                         <Paper style={emojiStyle}>
                             <Typography variant="display1" gutterBottom>
