@@ -1,5 +1,6 @@
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
+import Redirect from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -54,6 +55,11 @@ function ButtonAppBar(props) {
       logueado = true;
   } catch(e){
     console.log(e.toString());
+  }
+
+  console.log(window.location.href);
+  if(logueado === true && window.location.href === "http://localhost:8080/"){
+      window.location.href = "/home";
   }
 
   const { classes } = props;
