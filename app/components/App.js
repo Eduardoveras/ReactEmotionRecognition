@@ -149,7 +149,7 @@ class App extends React.Component {
                         <Paper style={resultStyle}>
                             <div className="col-md-5">
                                 <div className="resultados">
-                                    <Typography variant="display1" gutterBottom>
+                                    <Typography variant="headline" gutterBottom>
                                         Resultados detectados
                                     </Typography>
                                     <Typography gutterBottom>
@@ -159,13 +159,13 @@ class App extends React.Component {
                             </div>
                         </Paper>
                         <Paper style={atencionStyle}>
-                            <Typography variant="display1" gutterBottom>
+                            <Typography variant="title" gutterBottom>
                                 Atención a la cámara
                             </Typography>
                                 <div id="atencion"/>
                         </Paper>
                         <Paper style={emojiStyle}>
-                            <Typography variant="display1" gutterBottom>
+                            <Typography variant="title" gutterBottom>
                                 Emoji
                             </Typography>
                             <Typography>
