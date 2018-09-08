@@ -65,12 +65,12 @@ function ButtonAppBar(props) {
           <Typography variant="title" color="inherit" className={classes.flex}>
               S.D.E.C
           </Typography>
-            <img src={userPhoto} style={{width: 42, borderRadius: "50%", border: '1px solid white'}}/>
-            <Typography color="inherit" variant="caption">&nbsp; | &nbsp; {infoUser[1] != null && infoUser[1]}</Typography>
-            <Typography color="inherit" variant="button"> &nbsp; | &nbsp;</Typography>
-            <Button color="inherit" href="/home"> <FontAwesomeIcon icon="home"/> &nbsp;Inicio</Button>
-            <Button color="inherit" href="/reports"><FontAwesomeIcon icon="chart-bar"/> &nbsp;Reportes</Button>
-            <Button color="inherit" href="/home"><FontAwesomeIcon icon="file-alt"/>&nbsp;Manuales</Button>
+            {logueado && <img src={userPhoto} style={{width: 42, borderRadius: "50%", border: '1px solid white'}}/>}
+            {logueado && <Typography color="inherit" variant="caption">&nbsp; | &nbsp; {infoUser[1] != null && infoUser[1]}</Typography>}
+            {logueado &&  <Typography color="inherit" variant="button"> &nbsp; | &nbsp;</Typography>}
+            {logueado && <Button color="inherit" href="/home"> <FontAwesomeIcon icon="home"/> &nbsp;Inicio</Button>}
+            {logueado && <Button color="inherit" href="/reports"><FontAwesomeIcon icon="chart-bar"/> &nbsp;Reportes</Button>}
+            {logueado && <Button color="inherit" href="/home"><FontAwesomeIcon icon="file-alt"/>&nbsp;Manuales</Button>}
             {logueado && <Button color="inherit" href="/" onClick={clearStorageLogout}><FontAwesomeIcon icon="sign-out-alt"/>&nbsp;Salir</Button>}
         </Toolbar>
       </AppBar>
