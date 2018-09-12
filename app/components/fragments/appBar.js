@@ -71,10 +71,6 @@ class ButtonAppBar extends React.Component {
       }
 
       console.log(window.location.href);
-      if(this.state.logueado === true && window.location.href === "http://localhost:8080/"){
-          window.location.href = "/home";
-      }
-
 
       for(let i = 0; i < this.state.administradores.length; i++){
           if(this.state.administradores[i] === usuario){
@@ -84,6 +80,11 @@ class ButtonAppBar extends React.Component {
   }
 
   render(){
+
+      if(this.state.logueado && window.location.href === "http://localhost:8080/"){
+          window.location.href = "/home";
+      }
+
       let adminEmail = "";
       let userNormalEmail = "";
       let adminPhoto = "";
