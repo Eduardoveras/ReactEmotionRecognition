@@ -1,8 +1,5 @@
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
-import Redirect from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -10,12 +7,13 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faHome, faChartBar, faFileAlt, faSignOutAlt} from '@fortawesome/free-solid-svg-icons'
+import {faHome, faChartBar, faFileAlt, faSignOutAlt, faUserSecret} from '@fortawesome/free-solid-svg-icons'
 
 library.add(faHome);
 library.add(faChartBar);
 library.add(faFileAlt);
 library.add(faSignOutAlt);
+library.add(faUserSecret);
 
 const root = {
     flexGrow: 1
@@ -36,21 +34,24 @@ class ButtonAppBar extends React.Component {
         super(props);
         this.infoUser = "";
         this.userPhoto = "";
-        this.logueado = false;
     }
 
     state = {
         admin: false,
-        administradores : ["oscardns96@gmail.com", "twindark1@gmail.com", "eduardo.storm@gmail.com"]
+        administradores: ["oscardns96@gmail.com", "twindark1@gmail.com", "eduardo.storm@gmail.com"],
+        logueado: false
     };
 
+    componentDidMount() {
+       this.definirUsuario();
+    }
 
-
-  clearStorageLogout(){
+    clearStorageLogout(){
         localStorage.clear();
-  }
+    }
   definirUsuario(){
-      try{
+      let usuario = "";
+        try{
           this.infoUser = localStorage.getItem(localStorage.key(0));
           this.infoUser = this.infoUser.split(',');
           this.infoUser = this.infoUser[0].split(':');
@@ -63,26 +64,41 @@ class ButtonAppBar extends React.Component {
           this.userPhoto = this.userPhoto[2].split('"');
           this.userPhoto = "https:" + this.userPhoto[0];
           console.log(this.userPhoto);
-          this.logueado = true;
+          this.setState({logueado: true});
+          usuario = this.infoUser[1];
       } catch(e){
           console.log(e.toString());
       }
 
       console.log(window.location.href);
-      if(this.logueado === true && window.location.href === "http://localhost:8080/"){
+      if(this.state.logueado === true && window.location.href === "http://localhost:8080/"){
           window.location.href = "/home";
       }
 
-      const that = this;
-      this.state.administradores.forEach(function (administrador) {
-          if(administrador === that.infoUser){
+
+      for(let i = 0; i < this.state.administradores.length; i++){
+          if(this.state.administradores[i] === usuario){
               this.setState({admin: true});
           }
-      });
+      }
   }
 
   render(){
-      this.definirUsuario();
+      let adminEmail = "";
+      let userNormalEmail = "";
+      let adminPhoto = "";
+      let userNormalPhoto = "";
+      try {
+          adminEmail = <Typography color="inherit" variant="caption" style={{textShadow: "2px 1px 2px yellow, 0 0 25px yellow, 0 0 20px yellow"}}> &nbsp; | &nbsp; {this.infoUser[1] != null && this.infoUser[1] + " (admin)"}</Typography>;
+          userNormalEmail = <Typography color="inherit" variant="caption">&nbsp; | &nbsp; {this.infoUser[1] != null && this.infoUser[1]}</Typography>;
+          adminPhoto = <img src={this.userPhoto} style={{width: 42, borderRadius: "50%", border: '1px solid white', boxShadow: "1px 1px 1px yellow, 0 0 5px yellow, 0 0 5px yellow"}}/> ;
+          userNormalPhoto = <img src={this.userPhoto} style={{width: 42, borderRadius: "50%", border: '1px solid white'}}/>;
+      }catch(e){
+          console.log(e.toString())
+      }
+      console.log("ES ADMIN? : " + this.state.admin);
+      console.log("ESTA LOGUEADO? : " + this.state.logueado);
+
       return(
         <div className={root}>
           <AppBar position="static">
@@ -91,13 +107,15 @@ class ButtonAppBar extends React.Component {
               <Typography variant="title" color="inherit" className={flex}>
                   S.D.E.C
               </Typography>
-                {this.logueado && <img src={this.userPhoto} style={{width: 42, borderRadius: "50%", border: '1px solid white'}}/>}
-                {this.logueado && <Typography color="inherit" variant="caption">&nbsp; | &nbsp; {this.infoUser[1] != null && this.infoUser[1]}</Typography>}
-                {this.logueado && <Typography color="inherit" variant="button"> &nbsp; | &nbsp;</Typography>}
-                {this.logueado && <Button color="inherit" href="/home"> <FontAwesomeIcon icon="home"/> &nbsp;Inicio</Button>}
-                {this.logueado && <Button color="inherit" href="/reports"><FontAwesomeIcon icon="chart-bar"/> &nbsp;Reportes</Button>}
-                {this.logueado && <Button color="inherit" href="/home"><FontAwesomeIcon icon="file-alt"/>&nbsp;Manuales</Button>}
-                {this.logueado && <Button color="inherit" href="/" onClick={this.clearStorageLogout}><FontAwesomeIcon icon="sign-out-alt"/>&nbsp;Salir</Button>}
+                {this.state.logueado && this.state.admin && adminPhoto}
+                {this.state.logueado && this.state.admin && adminEmail}
+                {this.state.logueado && this.state.admin === false && userNormalPhoto}
+                {this.state.logueado && this.state.admin === false && userNormalEmail}
+                {this.state.logueado && <Typography color="inherit" variant="button"> &nbsp; | &nbsp;</Typography>}
+                {this.state.logueado && <Button color="inherit" href="/home"> <FontAwesomeIcon icon="home"/> &nbsp;Inicio</Button>}
+                {this.state.logueado && <Button color="inherit" href="/reports"><FontAwesomeIcon icon="chart-bar"/> &nbsp;Reportes</Button>}
+                {this.state.logueado && <Button color="inherit" href="/home"><FontAwesomeIcon icon="file-alt"/>&nbsp;Manuales</Button>}
+                {this.state.logueado && <Button color="inherit" href="/" onClick={this.clearStorageLogout}><FontAwesomeIcon icon="sign-out-alt"/>&nbsp;Salir</Button>}
             </Toolbar>
           </AppBar>
         </div>
