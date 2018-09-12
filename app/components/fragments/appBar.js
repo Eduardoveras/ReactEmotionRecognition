@@ -17,75 +17,91 @@ library.add(faChartBar);
 library.add(faFileAlt);
 library.add(faSignOutAlt);
 
-const styles = {
-  root: {
-    flexGrow: 1,
-  },
-  flex: {
-    flex: 1,
-  },
-  menuButton: {
+const root = {
+    flexGrow: 1
+};
+
+const flex = {
+    flex: 1
+};
+
+const menuButton = {
     marginLeft: -12,
     marginRight: 20,
-  },
 };
 
-function clearStorageLogout(){
-  localStorage.clear();
-}
+class ButtonAppBar extends React.Component {
 
-function ButtonAppBar(props) {
-    let infoUser = "";
-    let userPhoto = "";
-    let logueado = false;
+    constructor(props) {
+        super(props);
+        this.infoUser = "";
+        this.userPhoto = "";
+        this.logueado = false;
+    }
 
-    try{
-      infoUser = localStorage.getItem(localStorage.key(0));
-      infoUser = infoUser.split(',');
-      infoUser = infoUser[0].split(':');
-      infoUser = infoUser[1].split('"');
-      console.log(infoUser);
+    state = {
+        admin: false,
+        administradores : ["oscardns96@gmail.com", "twindark1@gmail.com", "eduardo.storm@gmail.com"]
+    };
 
-      userPhoto = localStorage.getItem(localStorage.key(0));
-      userPhoto = userPhoto.split(',');
-      userPhoto = userPhoto[2].split(':');
-      userPhoto = userPhoto[2].split('"');
-      userPhoto = "https:" + userPhoto[0];
-      console.log(userPhoto);
-      logueado = true;
-  } catch(e){
-    console.log(e.toString());
+
+
+  clearStorageLogout(){
+        localStorage.clear();
+  }
+  definirUsuario(){
+      try{
+          this.infoUser = localStorage.getItem(localStorage.key(0));
+          this.infoUser = this.infoUser.split(',');
+          this.infoUser = this.infoUser[0].split(':');
+          this.infoUser = this.infoUser[1].split('"');
+          console.log(this.infoUser);
+
+          this.userPhoto = localStorage.getItem(localStorage.key(0));
+          this.userPhoto = this.userPhoto.split(',');
+          this.userPhoto = this.userPhoto[2].split(':');
+          this.userPhoto = this.userPhoto[2].split('"');
+          this.userPhoto = "https:" + this.userPhoto[0];
+          console.log(this.userPhoto);
+          this.logueado = true;
+      } catch(e){
+          console.log(e.toString());
+      }
+
+      console.log(window.location.href);
+      if(this.logueado === true && window.location.href === "http://localhost:8080/"){
+          window.location.href = "/home";
+      }
+
+      const that = this;
+      this.state.administradores.forEach(function (administrador) {
+          if(administrador === that.infoUser){
+              this.setState({admin: true});
+          }
+      });
   }
 
-  console.log(window.location.href);
-  if(logueado === true && window.location.href === "http://localhost:8080/"){
-      window.location.href = "/home";
-  }
-
-  const { classes } = props;
-  return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" />
-          <Typography variant="title" color="inherit" className={classes.flex}>
-              S.D.E.C
-          </Typography>
-            {logueado && <img src={userPhoto} style={{width: 42, borderRadius: "50%", border: '1px solid white'}}/>}
-            {logueado && <Typography color="inherit" variant="caption">&nbsp; | &nbsp; {infoUser[1] != null && infoUser[1]}</Typography>}
-            {logueado &&  <Typography color="inherit" variant="button"> &nbsp; | &nbsp;</Typography>}
-            {logueado && <Button color="inherit" href="/home"> <FontAwesomeIcon icon="home"/> &nbsp;Inicio</Button>}
-            {logueado && <Button color="inherit" href="/reports"><FontAwesomeIcon icon="chart-bar"/> &nbsp;Reportes</Button>}
-            {logueado && <Button color="inherit" href="/home"><FontAwesomeIcon icon="file-alt"/>&nbsp;Manuales</Button>}
-            {logueado && <Button color="inherit" href="/" onClick={clearStorageLogout}><FontAwesomeIcon icon="sign-out-alt"/>&nbsp;Salir</Button>}
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+  render(){
+      this.definirUsuario();
+      return(
+        <div className={root}>
+          <AppBar position="static">
+            <Toolbar>
+              <IconButton className={menuButton} color="inherit" aria-label="Menu" />
+              <Typography variant="title" color="inherit" className={flex}>
+                  S.D.E.C
+              </Typography>
+                {this.logueado && <img src={this.userPhoto} style={{width: 42, borderRadius: "50%", border: '1px solid white'}}/>}
+                {this.logueado && <Typography color="inherit" variant="caption">&nbsp; | &nbsp; {this.infoUser[1] != null && this.infoUser[1]}</Typography>}
+                {this.logueado && <Typography color="inherit" variant="button"> &nbsp; | &nbsp;</Typography>}
+                {this.logueado && <Button color="inherit" href="/home"> <FontAwesomeIcon icon="home"/> &nbsp;Inicio</Button>}
+                {this.logueado && <Button color="inherit" href="/reports"><FontAwesomeIcon icon="chart-bar"/> &nbsp;Reportes</Button>}
+                {this.logueado && <Button color="inherit" href="/home"><FontAwesomeIcon icon="file-alt"/>&nbsp;Manuales</Button>}
+                {this.logueado && <Button color="inherit" href="/" onClick={this.clearStorageLogout}><FontAwesomeIcon icon="sign-out-alt"/>&nbsp;Salir</Button>}
+            </Toolbar>
+          </AppBar>
+        </div>
+      )
+    }
 }
-
-ButtonAppBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(ButtonAppBar);
+export default ButtonAppBar;
