@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faHome, faChartBar, faFileAlt, faSignOutAlt, faUserSecret} from '@fortawesome/free-solid-svg-icons'
+import { loginURL } from '../../constants';
 
 library.add(faHome);
 library.add(faChartBar);
@@ -81,7 +82,7 @@ class ButtonAppBar extends React.Component {
 
   render(){
 
-      if(this.state.logueado && window.location.href === "http://localhost:8080/"){
+      if(this.state.logueado && window.location.href === loginURL){
           window.location.href = "/home";
       }
 
