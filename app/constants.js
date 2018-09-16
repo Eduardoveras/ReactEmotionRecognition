@@ -2,6 +2,8 @@ export const localPath = 'http://localhost:3000';
 export const developmentPath = 'https://sdec-backend.herokuapp.com';
 // export const URL_PATH = `${window.location.hostname}`;
 
+export const loginURL = 'http://localhost:8080/';
+
 export const authConfig = {
   apiKey: 'AIzaSyB1mWTY9UZvone47npIeYcmNbxDzwU1JDg',
   authDomain: 'vue-path-maker.firebaseapp.com',
