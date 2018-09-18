@@ -98,15 +98,15 @@ class ButtonAppBar extends React.Component {
       }catch(e){
           console.log(e.toString())
       }
-      console.log("ES ADMIN? : " + this.state.admin);
-      console.log("ESTA LOGUEADO? : " + this.state.logueado);
+      //console.log("ES ADMIN? : " + this.state.admin);
+      //console.log("ESTA LOGUEADO? : " + this.state.logueado);
 
       return(
         <div className={root}>
           <AppBar position="static">
             <Toolbar>
-              <IconButton className={menuButton} color="inherit" aria-label="Menu" />
-              <Typography variant="title" color="inherit" className={flex}>
+              <IconButton style={menuButton} color="inherit" aria-label="Menu" />
+              <Typography variant="title" color="inherit" style={flex}>
                   S.D.E.C
               </Typography>
                 {this.state.logueado && this.state.admin && adminPhoto}

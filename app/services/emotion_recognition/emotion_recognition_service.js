@@ -79,8 +79,10 @@ class EmotionRecognitionService {
           $('#results').html('');
           $('#emoji').html('');
           $('#atencion').html('');
-          console.log(faces[0])
-          this.cable.sendEvent(this.videoId,timestamp,faces.length,faces[0].appearance,faces[0].emotions,faces[0].expressions,faces[0].measurements,faces[0].featurePoints);
+          //console.log(faces[0])
+          if(faces[0]){
+              this.cable.sendEvent(this.videoId,timestamp,faces.length,faces[0].appearance,faces[0].emotions,faces[0].expressions,faces[0].measurements,faces[0].featurePoints);
+          }
           EmotionRecognitionService.log('#results', `<strong>Tiempo en la sesión: </strong>${horas}:${minutos}:${segundos} | HH:MM:SS`);
           if (faces.length > 0) {
               /*
