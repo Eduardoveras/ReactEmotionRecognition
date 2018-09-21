@@ -10,14 +10,22 @@ import { URL_PATH } from '../constants';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faPlayCircle} from '@fortawesome/free-solid-svg-icons';
+var GifPlayer = require('react-gif-player');
 
 library.add(faPlayCircle);
 
 const paperStyle = {
     padding: "20px",
     textAlign: 'center',
-    height: '87vh',
-    marginBottom: "35px"
+    height: '57vh',
+    marginBottom: "10px"
+};
+
+const welcomeStyle = {
+    padding: "20px",
+    textAlign: 'center',
+    marginRight: "20%",
+    marginLeft: "20%"
 };
 
 class Manuales extends React.Component {
@@ -28,12 +36,41 @@ class Manuales extends React.Component {
         return (
             <div className='container' id='container'>
                 <Grid container spacing={24}>
-                    <Grid item xs={7}>
-                        <Paper style={paperStyle}>
-
+                    <Grid item xs={12}>
+                        <Paper style={welcomeStyle}>
+                            <Typography variant="body1" color="inherit">Bienvenido a la sección de manuales, da click encima de una imagen y se reproducirá la imagen animada correspondiente al título.</Typography>
                         </Paper>
                     </Grid>
                 </Grid>
+                <Grid container spacing={24}>
+                    <Grid item xs={6}>
+                        <Paper style={paperStyle}>
+                            <Typography variant="title" color="inherit">¿Cómo loguearse?</Typography>
+                            <GifPlayer gif="https://i.imgur.com/63SPRXA.gif" style={{marginTop: "10px", width: "100%"}}/>
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Paper style={paperStyle}>
+                            <Typography variant="title" color="inherit">¿Cómo detectar emociones?</Typography>
+                            <GifPlayer gif=" https://i.imgur.com/YCyzT8A.gif" style={{marginTop: "10px", width: "100%"}}/>
+                        </Paper>
+                    </Grid>
+                </Grid>
+                <Grid container spacing={24}>
+                    <Grid item xs={6}>
+                        <Paper style={paperStyle}>
+                            <Typography variant="title" color="inherit">¿Cómo interactuar con los reportes?</Typography>
+                            <GifPlayer gif="https://i.imgur.com/4xp7ak2.gif" style={{marginTop: "10px", width: "100%"}}/>
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Paper style={paperStyle}>
+                            <Typography variant="title" color="inherit">Otro a poner luego</Typography>
+                            <GifPlayer gif="#" style={{marginTop: "10px", width: "100%"}}/>
+                        </Paper>
+                    </Grid>
+                </Grid>
+
             </div>
         );
     }
