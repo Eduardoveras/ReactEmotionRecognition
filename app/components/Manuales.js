@@ -17,7 +17,7 @@ library.add(faPlayCircle);
 const paperStyle = {
     padding: "20px",
     textAlign: 'center',
-    height: '57vh',
+    height: '61vh',
     marginBottom: "10px"
 };
 
@@ -46,13 +46,15 @@ class Manuales extends React.Component {
                     <Grid item xs={6}>
                         <Paper style={paperStyle}>
                             <Typography variant="title" color="inherit">¿Cómo loguearse?</Typography>
-                            <GifPlayer gif="https://i.imgur.com/63SPRXA.gif" style={{marginTop: "10px", width: "100%"}}/>
+                            <GifPlayer gif="https://i.imgur.com/63SPRXA.gif" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
+                            <Button variant="contained" color="primary" target="_blank" href="https://i.imgur.com/63SPRXA.gif">Ver en grande (loguearse)</Button>
                         </Paper>
                     </Grid>
                     <Grid item xs={6}>
                         <Paper style={paperStyle}>
                             <Typography variant="title" color="inherit">¿Cómo detectar emociones?</Typography>
-                            <GifPlayer gif=" https://i.imgur.com/YCyzT8A.gif" style={{marginTop: "10px", width: "100%"}}/>
+                            <GifPlayer gif="https://i.imgur.com/YCyzT8A.gif" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
+                            <Button variant="contained" color="primary" target="_blank" href="https://i.imgur.com/YCyzT8A.gif">Ver en grande (detectar emociones)</Button>
                         </Paper>
                     </Grid>
                 </Grid>
@@ -60,13 +62,15 @@ class Manuales extends React.Component {
                     <Grid item xs={6}>
                         <Paper style={paperStyle}>
                             <Typography variant="title" color="inherit">¿Cómo interactuar con los reportes?</Typography>
-                            <GifPlayer gif="https://i.imgur.com/4xp7ak2.gif" style={{marginTop: "10px", width: "100%"}}/>
+                            <GifPlayer gif="https://i.imgur.com/4xp7ak2.gif" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
+                            <Button variant="contained" color="primary" target="_blank" href="https://i.imgur.com/4xp7ak2.gif">Ver en grande (reportes)</Button>
                         </Paper>
                     </Grid>
                     <Grid item xs={6}>
                         <Paper style={paperStyle}>
                             <Typography variant="title" color="inherit">Otro a poner luego</Typography>
-                            <GifPlayer gif="#" style={{marginTop: "10px", width: "100%"}}/>
+                            <GifPlayer gif="#" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
+                            <Button variant="contained" color="primary" target="_blank" href="#">Ver en grande (otro)</Button>
                         </Paper>
                     </Grid>
                 </Grid>
