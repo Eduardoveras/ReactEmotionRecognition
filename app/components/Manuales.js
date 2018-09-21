@@ -9,10 +9,10 @@ import Typography from '@material-ui/core/Typography';
 import { URL_PATH } from '../constants';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faPlayCircle} from '@fortawesome/free-solid-svg-icons';
+import {faSearchPlus} from '@fortawesome/free-solid-svg-icons';
 var GifPlayer = require('react-gif-player');
 
-library.add(faPlayCircle);
+library.add(faSearchPlus);
 
 const paperStyle = {
     padding: "20px",
@@ -47,14 +47,14 @@ class Manuales extends React.Component {
                         <Paper style={paperStyle}>
                             <Typography variant="title" color="inherit">¿Cómo loguearse?</Typography>
                             <GifPlayer gif="https://i.imgur.com/63SPRXA.gif" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
-                            <Button variant="contained" color="primary" target="_blank" href="https://i.imgur.com/63SPRXA.gif">Ver en grande (loguearse)</Button>
+                            <Button variant="contained" color="primary" target="_blank" href="https://i.imgur.com/63SPRXA.gif"> <FontAwesomeIcon icon="search-plus"/> &nbsp;Ver en grande (loguearse)</Button>
                         </Paper>
                     </Grid>
                     <Grid item xs={6}>
                         <Paper style={paperStyle}>
                             <Typography variant="title" color="inherit">¿Cómo detectar emociones?</Typography>
                             <GifPlayer gif="https://i.imgur.com/YCyzT8A.gif" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
-                            <Button variant="contained" color="primary" target="_blank" href="https://i.imgur.com/YCyzT8A.gif">Ver en grande (detectar emociones)</Button>
+                            <Button variant="contained" color="primary" target="_blank" href="https://i.imgur.com/YCyzT8A.gif"> <FontAwesomeIcon icon="search-plus"/> &nbsp;Ver en grande (detectar emociones)</Button>
                         </Paper>
                     </Grid>
                 </Grid>
@@ -63,14 +63,14 @@ class Manuales extends React.Component {
                         <Paper style={paperStyle}>
                             <Typography variant="title" color="inherit">¿Cómo interactuar con los reportes?</Typography>
                             <GifPlayer gif="https://i.imgur.com/4xp7ak2.gif" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
-                            <Button variant="contained" color="primary" target="_blank" href="https://i.imgur.com/4xp7ak2.gif">Ver en grande (reportes)</Button>
+                            <Button variant="contained" color="primary" target="_blank" href="https://i.imgur.com/4xp7ak2.gif"> <FontAwesomeIcon icon="search-plus"/> &nbsp;Ver en grande (reportes)</Button>
                         </Paper>
                     </Grid>
                     <Grid item xs={6}>
                         <Paper style={paperStyle}>
                             <Typography variant="title" color="inherit">Otro a poner luego</Typography>
                             <GifPlayer gif="#" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
-                            <Button variant="contained" color="primary" target="_blank" href="#">Ver en grande (otro)</Button>
+                            <Button variant="contained" color="primary" target="_blank" href="#"><FontAwesomeIcon icon="search-plus"/> &nbsp;Ver en grande (otro)</Button>
                         </Paper>
                     </Grid>
                 </Grid>
