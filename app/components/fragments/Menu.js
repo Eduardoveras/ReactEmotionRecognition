@@ -9,7 +9,7 @@ const Menu = () => {
       <a href="/home" >Home</a>
       <a href="/reports">Reportes</a>
       <a href="/statistics">Estadisticas</a>
-      <a href="/">Manuales</a>
+      <a href="/manuales">Manuales</a>
     </div>
   );
 };
