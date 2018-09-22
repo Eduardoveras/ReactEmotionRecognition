@@ -6,10 +6,10 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { URL_PATH } from '../constants';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faPlayCircle, faStopCircle, faEyeSlash, faEye, faMeh, faGrinAlt} from '@fortawesome/free-solid-svg-icons';
+import {URL_PATH} from '../constants';
+import {library} from '@fortawesome/fontawesome-svg-core'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faEye, faEyeSlash, faGrinAlt, faMeh, faPlayCircle, faStopCircle} from '@fortawesome/free-solid-svg-icons';
 
 library.add(faPlayCircle);
 library.add(faStopCircle);
@@ -41,6 +41,8 @@ const atencionStyle = {
     height: '20vh'
 };
 
+let recordedBlobs=[];
+
 
 class App extends React.Component {
     state = {
@@ -56,11 +58,56 @@ class App extends React.Component {
         this.handleTextVisible = this.handleTextVisible.bind(this);
         this.showFinishButton = false;
         this.video_id = null;
+        this.canvas=null;
+        this.video=null;
+        this.mediaRecorder=null;
+        //this.recordedBlobs=[];
+
     }
 
     handleChange = event => {
         this.setState({name: event.target.value});
     };
+
+    handleDataAvailable(event) {
+        if (recordedBlobs==null){
+            recordedBlobs=[];
+
+        }
+        if (event.data && event.data.size > 0) {
+            recordedBlobs.push(event.data);
+        }
+    }
+
+    startRecording() {
+        //this.recordedBlobs = [];
+
+        try {
+            this.mediaRecorder = new MediaRecorder(this.canvas.captureStream(), {mimeType: 'video/webm;codecs=vp9'});
+        } catch (e) {
+            console.error('Exception while creating MediaRecorder:', e);
+            return;
+        }
+
+        console.log('Created MediaRecorder', this.mediaRecorder, 'with options', {mimeType: 'video/webm;codecs=vp9'});
+        this.mediaRecorder.onstop = (event) => {
+            console.log('Recorder stopped: ', event);
+        };
+        this.mediaRecorder.ondataavailable = this.handleDataAvailable;
+        this.mediaRecorder.start(10); // collect 10ms of data
+        console.log('MediaRecorder started', this.mediaRecorder);
+    }
+
+    stopRecording() {
+       this.mediaRecorder.stop();
+        console.log('Recorded Blobs: ', recordedBlobs);
+        const superBuffer = new Blob(recordedBlobs, {type: 'video/webm'});
+        this.video.src = null;
+        this.video.srcObject = null;
+        this.video.src = window.URL.createObjectURL(superBuffer);
+        this.video.controls = true;
+        this.video.play();
+    }
 
     handleEmojiVisible() {
         this.setState((prevState) => {
@@ -95,18 +142,24 @@ class App extends React.Component {
 
         axios.post(URL, {face_video_analysis})
             .then(res => {
-                console.log(res);
-                console.log(res.data.id);
+
                 this.video_id = res.data.id;
                 this.emotionService.onStart(this.video_id);
                 this.showFinishButton = true;
                 this.forceUpdate();
+
+                this.canvas = document.querySelector('canvas');
+                this.video = document.querySelector('video#testing_video');
+
+
+                this.startRecording();
             });
     }
 
     onStop() {
         this.emotionService.onStop();
-        window.location.pathname = '/reports/' + this.video_id;
+        this.stopRecording();
+        //window.location.pathname = '/reports/' + this.video_id;
     }
 
     onReset() {
@@ -125,6 +178,7 @@ class App extends React.Component {
                         <Paper style={paperStyle}>
                             <div>
                                 <div id="affdex_elements" ref="affElement"/>
+                                <video id="testing_video" autoPlay playsInline muted/>
                                 <div className="center-text">
                                     <div className="btn-group btn-group-lg" role="group" aria-label="Basic example">
                                         <label>
@@ -153,7 +207,7 @@ class App extends React.Component {
                                         Resultados detectados
                                     </Typography>
                                     <Typography gutterBottom>
-                                        {this.state.textVisible && <div id="results"/>}
+                                        {this.state.textVisible && <spam id="results"/>}
                                     </Typography>
                                 </div>
                             </div>
