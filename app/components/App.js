@@ -7,9 +7,11 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {URL_PATH} from '../constants';
+import {BASE_URL_PATH} from '../constants';
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEye, faEyeSlash, faGrinAlt, faMeh, faPlayCircle, faStopCircle} from '@fortawesome/free-solid-svg-icons';
+import blobToBase64 from 'blob-to-base64'
 
 library.add(faPlayCircle);
 library.add(faStopCircle);
@@ -45,23 +47,27 @@ let recordedBlobs=[];
 
 
 class App extends React.Component {
-    state = {
-        name: '',
-        isButtonDisabled: false,
-        emojiVisible: true,
-        textVisible: true
-    };
 
     constructor(props) {
         super(props);
-        this.handleEmojiVisible = this.handleEmojiVisible.bind(this);
-        this.handleTextVisible = this.handleTextVisible.bind(this);
+
         this.showFinishButton = false;
-        this.video_id = null;
         this.canvas=null;
         this.video=null;
         this.mediaRecorder=null;
-        //this.recordedBlobs=[];
+
+        this.state = {
+            name: '',
+            isButtonDisabled: false,
+            emojiVisible: true,
+            textVisible: true,
+            video_id:1
+        };
+
+        this.handleEmojiVisible = this.handleEmojiVisible.bind(this);
+        this.handleTextVisible = this.handleTextVisible.bind(this);
+        this.stopRecording= this.stopRecording.bind(this);
+        this.startRecording= this.startRecording.bind(this);
 
     }
 
@@ -80,8 +86,6 @@ class App extends React.Component {
     }
 
     startRecording() {
-        //this.recordedBlobs = [];
-
         try {
             this.mediaRecorder = new MediaRecorder(this.canvas.captureStream(), {mimeType: 'video/webm;codecs=vp9'});
         } catch (e) {
@@ -107,6 +111,21 @@ class App extends React.Component {
         this.video.src = window.URL.createObjectURL(superBuffer);
         this.video.controls = true;
         this.video.play();
+        let video_id_hack=this.state.video_id;
+        console.log("video id hack:"+video_id_hack);
+        blobToBase64(superBuffer, function (error, base64) {
+            if (!error) {
+                axios.post(BASE_URL_PATH+'/add_video/'+video_id_hack, { video_file: base64 })
+                    .then(function(response){
+                        console.log('Video saved correctly')
+                    });
+            }else {
+                console.log("Error converting to base64");
+
+            }
+        })
+
+
     }
 
     handleEmojiVisible() {
@@ -142,9 +161,9 @@ class App extends React.Component {
 
         axios.post(URL, {face_video_analysis})
             .then(res => {
-
                 this.video_id = res.data.id;
-                this.emotionService.onStart(this.video_id);
+                this.setState({video_id: res.data.id});
+                this.emotionService.onStart(this.state.video_id);
                 this.showFinishButton = true;
                 this.forceUpdate();
 

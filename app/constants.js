@@ -23,4 +23,15 @@ function getCorrectUrl() {
   return auxURL;
 }
 
+function getCorrectBaseUrl() {
+  let auxURL = null;
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    auxURL = `${localPath}`;
+  } else {
+    auxURL = `${developmentPath}`;
+  }
+  return auxURL;
+}
+export const BASE_URL_PATH = getCorrectBaseUrl();
+
 export const URL_PATH = getCorrectUrl();

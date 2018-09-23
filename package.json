@@ -49,6 +49,7 @@
     "actioncable": "^5.2.0",
     "add": "^2.0.6",
     "axios": "^0.18.0",
+    "blob-to-base64": "^1.0.1",
     "bootstrap": "3.3.5",
     "chart.js": "^2.7.2",
     "cross-env": "5.2.0",
