@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 import Typography from "@material-ui/core/es/Typography/Typography";
 import TablePagination from "@material-ui/core/es/TablePagination/TablePagination";
 import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
@@ -16,6 +17,7 @@ import purple from "@material-ui/core/colors/purple";
 import { withTheme } from '@material-ui/core/styles'
 import TableFooter from "@material-ui/core/es/TableFooter/TableFooter";
 import { URL_PATH } from '../constants';
+import {BASE_URL_PATH} from '../constants';
 
 const theme = createMuiTheme({
     palette: {
@@ -37,6 +39,24 @@ class Reports extends React.Component {
     handleChangePage = (event, page) => {
         this.setState({ page });
     };
+
+    deleteReport(id){
+        let decision = confirm("Are you sure you want to delete the report?\nthis cant be undone.");
+        if (decision){
+            axios.delete(BASE_URL_PATH+'/face_video_analyses/'+id)
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .then(function () {
+                    window.location.reload();
+                });
+        }
+
+
+    }
 
     handleChangeRowsPerPage = event => {
         this.setState({ rowsPerPage: event.target.value });
@@ -75,6 +95,7 @@ class Reports extends React.Component {
                                             <TableCell >Persona</TableCell>
                                             <TableCell >Notas</TableCell>
                                             <TableCell >Fecha</TableCell>
+                                            <TableCell >Acciones</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -91,6 +112,14 @@ class Reports extends React.Component {
                                                         <TableCell >{n.notes}</TableCell>
 
                                                         <TableCell numeric>{created.toLocaleDateString('es-DO')}</TableCell>
+                                                        <TableCell>
+                                                            <Button variant="contained" color="primary" href={"/reports/"+n.id}>
+                                                                View
+                                                            </Button>
+                                                            <Button variant="contained" color="secondary" onClick={this.deleteReport.bind(this, n.id)}>
+                                                                Delete
+                                                            </Button>
+                                                        </TableCell>
                                                     </TableRow>
                                                 );
                                             })}
