@@ -18,6 +18,14 @@ import { withTheme } from '@material-ui/core/styles'
 import TableFooter from "@material-ui/core/es/TableFooter/TableFooter";
 import { URL_PATH } from '../constants';
 import {BASE_URL_PATH} from '../constants';
+import {faChartBar, faFileAlt, faHome, faSignOutAlt, faUserSecret} from "@fortawesome/free-solid-svg-icons/index";
+import {library} from "@fortawesome/fontawesome-svg-core/index";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faTrash, faEye} from '@fortawesome/free-solid-svg-icons'
+
+library.add(faTrash);
+library.add(faEye);
+
 
 const theme = createMuiTheme({
     palette: {
@@ -41,7 +49,7 @@ class Reports extends React.Component {
     };
 
     deleteReport(id){
-        let decision = confirm("Are you sure you want to delete the report?\nthis cant be undone.");
+        let decision = confirm("Estás seguro de que quieres borrar este reporte?\nEsta acción no puede ser deshecha.");
         if (decision){
             axios.delete(BASE_URL_PATH+'/face_video_analyses/'+id)
                 .then(function (response) {
@@ -114,10 +122,10 @@ class Reports extends React.Component {
                                                         <TableCell numeric>{created.toLocaleDateString('es-DO')}</TableCell>
                                                         <TableCell>
                                                             <Button variant="contained" color="primary" href={"/reports/"+n.id}>
-                                                                View
-                                                            </Button>
-                                                            <Button variant="contained" color="secondary" onClick={this.deleteReport.bind(this, n.id)}>
-                                                                Delete
+                                                                <FontAwesomeIcon icon="eye"/> &nbsp;Ver
+                                                            </Button>&nbsp; &nbsp;
+                                                            <Button variant="contained" color="secondary" style={{color: "white"}} onClick={this.deleteReport.bind(this, n.id)}>
+                                                                <FontAwesomeIcon icon="trash"/> &nbsp;Borrar
                                                             </Button>
                                                         </TableCell>
                                                     </TableRow>
