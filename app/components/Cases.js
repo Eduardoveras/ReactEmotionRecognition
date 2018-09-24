@@ -73,6 +73,23 @@ class Cases extends React.Component {
             });
     }
 
+    createNewCase(){
+        let URL = BASE_URL_PATH+'/cases';
+        console.log(URL);
+        axios.post(URL,
+            { case:
+                {
+                    notes: ''
+                }
+        })
+            .then((response) => {
+                window.location.pathname = '/casos/' + response.data.id;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
     render() {
         const { data, rowsPerPage, page } = this.state;
         const emptyRows =
@@ -82,6 +99,9 @@ class Cases extends React.Component {
             <div className='container'>
                 <Typography variant="display1" gutterBottom>
                     Casos
+                    <Button variant="contained" color="primary" aria-label="Add" onClick={this.createNewCase.bind(this)}>
+                        Nuevo
+                    </Button>
                 </Typography>
 
                 <Grid container spacing={32} >

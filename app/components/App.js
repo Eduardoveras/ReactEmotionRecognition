@@ -154,7 +154,9 @@ class App extends React.Component {
         });
 
         const face_video_analysis = {
-            notes: this.state.name
+            notes: this.state.name,
+            case_id: 2
+
         };
 
         let URL = URL_PATH;
