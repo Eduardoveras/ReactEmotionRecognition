@@ -9,6 +9,11 @@ import Card from "@material-ui/core/Card/Card";
 import CardContent from "@material-ui/core/CardContent/CardContent";
 import CardActions from "@material-ui/core/CardActions/CardActions";
 import Button from "@material-ui/core/Button/Button";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faFileVideo} from '@fortawesome/free-solid-svg-icons'
+
+library.add(faFileVideo);
 
 const cardStyle = {
     width: "25rem"
@@ -70,11 +75,8 @@ class Cases extends React.Component {
                                 </CardContent>
 
                                 <CardActions>
-                                    <Button href={'/reports/'+d.id} size="small" color="primary">
-                                        View Report
-                                    </Button>
-                                    <Button size="small" color="primary">
-                                        Share
+                                    <Button href={'/reports/'+d.id} variant="contained" size="small" color="primary">
+                                        <FontAwesomeIcon icon="file-video"/> &nbsp; Ver Reporte
                                     </Button>
                                 </CardActions>
                             </Card>

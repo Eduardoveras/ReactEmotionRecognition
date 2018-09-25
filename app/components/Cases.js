@@ -18,6 +18,13 @@ import { withTheme } from '@material-ui/core/styles'
 import TableFooter from "@material-ui/core/es/TableFooter/TableFooter";
 import { URL_PATH } from '../constants';
 import {BASE_URL_PATH} from '../constants';
+import {library} from "@fortawesome/fontawesome-svg-core/index";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faPlus, faTrash, faEye} from '@fortawesome/free-solid-svg-icons'
+
+library.add(faTrash);
+library.add(faEye);
+library.add(faPlus);
 
 const theme = createMuiTheme({
     palette: {
@@ -40,7 +47,7 @@ class Cases extends React.Component {
     };
 
     deleteCase(id){
-        let decision = confirm("Are you sure you want to delete the Case?\nthis cant be undone.");
+        let decision = confirm("Estás seguro de que quieres borrar este caso?\nEsta acción no puede ser deshecha.");
         if (decision){
             axios.delete(BASE_URL_PATH+'/cases/'+id)
                 .then(function (response) {
@@ -98,9 +105,9 @@ class Cases extends React.Component {
         return (
             <div className='container'>
                 <Typography variant="display1" gutterBottom>
-                    Casos
-                    <Button variant="contained" color="primary" aria-label="Add" onClick={this.createNewCase.bind(this)}>
-                        Nuevo
+                    Casos {'  '}
+                    <Button variant="fab" color="primary" aria-label="Add" onClick={this.createNewCase.bind(this)}>
+                        <FontAwesomeIcon icon="plus"/>
                     </Button>
                 </Typography>
 
@@ -134,10 +141,10 @@ class Cases extends React.Component {
                                                         <TableCell numeric>{created.toLocaleDateString('es-DO')}</TableCell>
                                                         <TableCell>
                                                             <Button variant="contained" color="primary" href={"/casos/"+n.id}>
-                                                                View
-                                                            </Button>
-                                                            <Button variant="contained" color="secondary" onClick={this.deleteCase.bind(this, n.id)}>
-                                                                Delete
+                                                                <FontAwesomeIcon icon="eye"/> &nbsp; Ver
+                                                            </Button> {'  '}
+                                                            <Button variant="contained" color="secondary" style={{color: "white"}} onClick={this.deleteCase.bind(this, n.id)}>
+                                                                <FontAwesomeIcon icon="trash"/> &nbsp; Borrar
                                                             </Button>
                                                         </TableCell>
                                                     </TableRow>
