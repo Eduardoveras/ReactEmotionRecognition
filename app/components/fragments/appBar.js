@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faHome, faChartBar, faFileAlt, faSignOutAlt, faUserSecret} from '@fortawesome/free-solid-svg-icons'
+import {faHome, faChartBar, faFileAlt, faSignOutAlt, faUserSecret, faFileVideo} from '@fortawesome/free-solid-svg-icons'
 import { loginURL } from '../../constants';
 
 library.add(faHome);
@@ -15,6 +15,7 @@ library.add(faChartBar);
 library.add(faFileAlt);
 library.add(faSignOutAlt);
 library.add(faUserSecret);
+library.add(faFileVideo);
 
 const root = {
     flexGrow: 1
@@ -116,6 +117,7 @@ class ButtonAppBar extends React.Component {
                 {this.state.logueado && <Typography color="inherit" variant="button"> &nbsp; | &nbsp;</Typography>}
                 {this.state.logueado && <Button color="inherit" href="/home"> <FontAwesomeIcon icon="home"/> &nbsp;Inicio</Button>}
                 {this.state.logueado && <Button color="inherit" href="/reports"><FontAwesomeIcon icon="chart-bar"/> &nbsp;Reportes</Button>}
+                {this.state.logueado && <Button color="inherit" href="/casos"><FontAwesomeIcon icon="file-video"/> &nbsp;Casos</Button>}
                 {this.state.logueado && <Button color="inherit" href="/manuales"><FontAwesomeIcon icon="file-alt"/>&nbsp;Manuales</Button>}
                 {this.state.logueado && <Button color="inherit" href="/" onClick={this.clearStorageLogout}><FontAwesomeIcon icon="sign-out-alt"/>&nbsp;Salir</Button>}
             </Toolbar>
