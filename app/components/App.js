@@ -6,6 +6,10 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import {URL_PATH} from '../constants';
 import {BASE_URL_PATH} from '../constants';
 import {library} from '@fortawesome/fontawesome-svg-core'
@@ -61,7 +65,9 @@ class App extends React.Component {
             isButtonDisabled: false,
             emojiVisible: true,
             textVisible: true,
-            video_id:1
+            video_id:-1,
+            cases: [],
+            selected_case: 1
         };
 
         this.handleEmojiVisible = this.handleEmojiVisible.bind(this);
@@ -70,10 +76,6 @@ class App extends React.Component {
         this.startRecording= this.startRecording.bind(this);
 
     }
-
-    handleChange = event => {
-        this.setState({name: event.target.value});
-    };
 
     handleDataAvailable(event) {
         if (recordedBlobs==null){
@@ -148,6 +150,17 @@ class App extends React.Component {
         this.emotionService = new EmotionService(640, 480, $(this.refs.affElement)[0]);
     }
 
+    componentWillMount(){
+        axios.get(BASE_URL_PATH+'/cases')
+            .then((response) => {
+                this.setState({ cases: response.data });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+    }
+
     onStart() {
         this.setState({
             isButtonDisabled: true
@@ -155,8 +168,7 @@ class App extends React.Component {
 
         const face_video_analysis = {
             notes: this.state.name,
-            case_id: 2
-
+            case_id: this.state.selected_case
         };
 
         let URL = URL_PATH;
@@ -183,15 +195,16 @@ class App extends React.Component {
         //window.location.pathname = '/reports/' + this.video_id;
     }
 
+    handleChange = event => {
+        this.setState({ [event.target.name]: event.target.value });
+    };
+
     onReset() {
         this.emotionService.onReset();
     }
 
     render() {
-        const inputProps = {
-            step: 300,
-        };
-
+        const { cases} = this.state;
         return (
             <div className='container' id='container'>
                 <Grid container spacing={24}>
@@ -207,6 +220,25 @@ class App extends React.Component {
                                                 Notas:
                                             <input type="text" name="name" onChange={this.handleChange}/>
                                             </Typography>
+                                            <FormControl >
+                                                <Select
+                                                    name="selected_case"
+                                                    value={this.state.selected_case}
+                                                    onChange={this.handleChange}
+                                                    displayEmpty
+
+                                                >
+                                                    <MenuItem value="" disabled>
+                                                        Seleccione el caso
+                                                    </MenuItem>
+                                                    {cases.map(function(d){return (
+                                                        <MenuItem key={d.id} value={d.id}>{d.id}</MenuItem>
+                                                        )})}
+                                                </Select>
+                                                <FormHelperText>Caso</FormHelperText>
+                                            </FormControl>
+
+
                                         </label>
                                         <br/>
                                         {this.showFinishButton ? <Button id="stop" onClick={this.onStop.bind(this)}><FontAwesomeIcon icon="stop-circle" style={{color: "grey"}}/> &nbsp;Terminar
