@@ -64,7 +64,7 @@ class createCriminal extends React.Component {
                     }
             })
             .then((response) => {
-                alert("Criminal creado correctamente.");
+                alert("Persona a interrogar creada correctamente.");
                 this.props.action();
                 this.setState({open: false, name:''});
 
@@ -84,7 +84,7 @@ class createCriminal extends React.Component {
 
         return (
             <div className={root}>
-                <Button onClick={this.handleOpen}><FontAwesomeIcon icon="user-circle" style={{color: "grey"}}/>&nbsp;Crear un nuevo criminal</Button>
+                <Button onClick={this.handleOpen}><FontAwesomeIcon icon="user-circle" style={{color: "grey"}}/>&nbsp;Crear una nueva persona</Button>
                 <Modal
                     aria-labelledby="simple-modal-title"
                     aria-describedby="simple-modal-description"
@@ -93,10 +93,10 @@ class createCriminal extends React.Component {
                 >
                     <div style={getModalStyle()}>
                         <Typography variant="title" id="modal-title">
-                            Crea un nuevo criminal
+                            Crea una nueva persona
                         </Typography>
                         <Typography variant="subheading" id="simple-modal-description">
-                            Escribe el nombre del criminal aquí:
+                            Escribe el nombre de la persona interrogada aqui:
                         </Typography>
                         <TextField
                             onChange={this.handleChange}
@@ -106,7 +106,7 @@ class createCriminal extends React.Component {
                             margin="normal"
                             variant="outlined"
                         /><br/>
-                        <Button variant="contained" color="primary" onClick={this.handleCreateCriminal}><FontAwesomeIcon icon="user-circle"/>&nbsp;Crear criminal</Button>
+                        <Button variant="contained" color="primary" onClick={this.handleCreateCriminal}><FontAwesomeIcon icon="user-circle"/>&nbsp;Crear persona</Button>
 
                     </div>
                 </Modal>
