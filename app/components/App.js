@@ -16,6 +16,7 @@ import {library} from '@fortawesome/fontawesome-svg-core'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEye, faEyeSlash, faGrinAlt, faMeh, faPlayCircle, faStopCircle} from '@fortawesome/free-solid-svg-icons';
 import blobToBase64 from 'blob-to-base64'
+import CreateCriminal from './fragments/createCriminal'
 
 library.add(faPlayCircle);
 library.add(faStopCircle);
@@ -67,13 +68,16 @@ class App extends React.Component {
             textVisible: true,
             video_id:-1,
             cases: [],
-            selected_case: 1
+            selected_case: 1,
+            criminals: [],
+            selected_criminal:1
         };
 
         this.handleEmojiVisible = this.handleEmojiVisible.bind(this);
         this.handleTextVisible = this.handleTextVisible.bind(this);
         this.stopRecording= this.stopRecording.bind(this);
         this.startRecording= this.startRecording.bind(this);
+        this.updateData = this.updateData.bind(this);
 
     }
 
@@ -151,9 +155,22 @@ class App extends React.Component {
     }
 
     componentWillMount(){
+        this.updateData();
+
+
+    }
+
+    updateData(){
         axios.get(BASE_URL_PATH+'/cases')
             .then((response) => {
                 this.setState({ cases: response.data });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        axios.get(BASE_URL_PATH+'/criminals')
+            .then((response) => {
+                this.setState({ criminals: response.data });
             })
             .catch((error) => {
                 console.log(error);
@@ -168,7 +185,8 @@ class App extends React.Component {
 
         const face_video_analysis = {
             notes: this.state.name,
-            case_id: this.state.selected_case
+            case_id: this.state.selected_case,
+            criminal_id: this.state.selected_criminal,
         };
 
         let URL = URL_PATH;
@@ -204,7 +222,7 @@ class App extends React.Component {
     }
 
     render() {
-        const { cases} = this.state;
+        const { cases,criminals} = this.state;
         return (
             <div className='container' id='container'>
                 <Grid container spacing={24}>
@@ -237,6 +255,24 @@ class App extends React.Component {
                                                 </Select>
                                                 <FormHelperText>Caso</FormHelperText>
                                             </FormControl>
+                                            <FormControl >
+                                                <Select
+                                                    name="selected_criminal"
+                                                    value={this.state.selected_criminal}
+                                                    onChange={this.handleChange}
+                                                    displayEmpty
+
+                                                >
+                                                    <MenuItem value="" disabled>
+                                                        Seleccione persona interrogada
+                                                    </MenuItem>
+                                                    {criminals.map(function(d){return (
+                                                        <MenuItem key={d.id} value={d.name}>{d.name}</MenuItem>
+                                                    )})}
+                                                </Select>
+                                                <FormHelperText>Criminal</FormHelperText>
+                                            </FormControl>
+                                            <CreateCriminal action={this.updateData}/>
 
 
                                         </label>
@@ -260,7 +296,7 @@ class App extends React.Component {
                                         Resultados detectados
                                     </Typography>
                                     <Typography gutterBottom>
-                                        {this.state.textVisible && <spam id="results"/>}
+                                        {this.state.textVisible && <span id="results"/>}
                                     </Typography>
                                 </div>
                             </div>
