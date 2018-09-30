@@ -112,21 +112,18 @@ class App extends React.Component {
        this.mediaRecorder.stop();
         console.log('Recorded Blobs: ', recordedBlobs);
         const superBuffer = new Blob(recordedBlobs, {type: 'video/webm'});
-        this.video.src = null;
-        this.video.srcObject = null;
-        this.video.src = window.URL.createObjectURL(superBuffer);
-        this.video.controls = true;
-        this.video.play();
-        let video_id_hack=this.state.video_id;
-        console.log("video id hack:"+video_id_hack);
+        const {video_id, selected_case }= this.state;
+        console.log("video id hack:"+video_id);
         blobToBase64(superBuffer, function (error, base64) {
             if (!error) {
-                axios.post(BASE_URL_PATH+'/add_video/'+video_id_hack, { video_file: base64 })
+                axios.post(BASE_URL_PATH+'/add_video/'+video_id, { video_file: base64 })
                     .then(function(response){
-                        console.log('Video saved correctly')
+                        console.log('Video saved correctly');
+                        window.location.href = '/casos/' + selected_case;
                     });
             }else {
                 console.log("Error converting to base64");
+                alert('There was an error saving the video');
 
             }
         })
