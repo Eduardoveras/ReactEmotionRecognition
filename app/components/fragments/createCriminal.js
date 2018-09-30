@@ -6,7 +6,11 @@ import Button from '@material-ui/core/Button';
 import axios from "axios";
 import {BASE_URL_PATH} from '../../constants';
 import TextField from "@material-ui/core/TextField/TextField";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faUserCircle} from '@fortawesome/free-solid-svg-icons'
 
+library.add(faUserCircle);
 
 function getModalStyle() {
     return {
@@ -60,7 +64,7 @@ class createCriminal extends React.Component {
                     }
             })
             .then((response) => {
-                alert("Created Correctly");
+                alert("Criminal creado correctamente.");
                 this.props.action();
                 this.setState({open: false, name:''});
 
@@ -80,7 +84,7 @@ class createCriminal extends React.Component {
 
         return (
             <div className={root}>
-                <Button onClick={this.handleOpen}>Create New Person</Button>
+                <Button onClick={this.handleOpen}><FontAwesomeIcon icon="user-circle" style={{color: "grey"}}/>&nbsp;Crear un nuevo criminal</Button>
                 <Modal
                     aria-labelledby="simple-modal-title"
                     aria-describedby="simple-modal-description"
@@ -89,20 +93,20 @@ class createCriminal extends React.Component {
                 >
                     <div style={getModalStyle()}>
                         <Typography variant="title" id="modal-title">
-                            Text in a modal
+                            Crea un nuevo criminal
                         </Typography>
                         <Typography variant="subheading" id="simple-modal-description">
-                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                            Escribe el nombre del criminal aquí:
                         </Typography>
                         <TextField
                             onChange={this.handleChange}
                             value={this.state.name}
-                            label="Name"
+                            label="Nombre"
                             name="name"
                             margin="normal"
                             variant="outlined"
                         /><br/>
-                        <Button onClick={this.handleCreateCriminal}>Create New Person</Button>
+                        <Button variant="contained" color="primary" onClick={this.handleCreateCriminal}><FontAwesomeIcon icon="user-circle"/>&nbsp;Crear criminal</Button>
 
                     </div>
                 </Modal>
