@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
+import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import {URL_PATH} from '../constants';
 import {BASE_URL_PATH} from '../constants';
@@ -233,14 +234,20 @@ class App extends React.Component {
                         <Paper style={paperStyle}>
                             <div>
                                 <div id="affdex_elements" ref="affElement"/>
-                                <video id="testing_video" autoPlay playsInline muted/>
+                                {/*<video id="testing_video" autoPlay playsInline muted/>*/}
                                 <div className="center-text">
                                     <div className="btn-group btn-group-lg" role="group" aria-label="Basic example">
                                         <label>
-                                            <Typography gutterBottom>
-                                                Notas:
-                                            <input type="text" name="name" onChange={this.handleChange}/>
-                                            </Typography>
+                                            <TextField type="text" name="name" onChange={this.handleChange}
+                                                       id="outlined-full-width"
+                                                       label="Notas"
+                                                       style={{marginRight: "5%"}}
+                                                       placeholder="Notas de la sesión"
+                                                       margin="normal"
+                                                       variant="outlined"
+                                                       InputLabelProps={{
+                                                           shrink: true,
+                                                       }}/>
                                             <FormControl >
                                                 <Select
                                                     name="selected_case"
@@ -273,11 +280,9 @@ class App extends React.Component {
                                                 </Select>
                                                 <FormHelperText>Criminal</FormHelperText>
                                             </FormControl>
-                                            <CreateCriminal action={this.updateData}/>
-
-
                                         </label>
-                                        <br/>
+                                    <br/>
+                                        <CreateCriminal action={this.updateData} style={{margin: 0, padding: 0, display: "inline"}}/>
                                         {this.showFinishButton ? <Button id="stop" onClick={this.onStop.bind(this)}><FontAwesomeIcon icon="stop-circle" style={{color: "grey"}}/> &nbsp;Terminar
                                             sesion</Button> : <Button onClick={this.onStart.bind(this)} disabled={this.state.isButtonDisabled}>
                                             <FontAwesomeIcon icon="play-circle" style={{color: "grey"}}/> &nbsp;Iniciar </Button>}
