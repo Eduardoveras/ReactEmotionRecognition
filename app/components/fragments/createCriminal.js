@@ -84,7 +84,7 @@ class createCriminal extends React.Component {
 
         return (
             <div className={root}>
-                <Button onClick={this.handleOpen}><FontAwesomeIcon icon="user-circle" style={{color: "grey"}}/>&nbsp;Crear una nueva persona</Button>
+                <Button onClick={this.handleOpen}><FontAwesomeIcon icon="user-circle" style={{color: "grey"}}/>&nbsp;Crear persona</Button>
                 <Modal
                     aria-labelledby="simple-modal-title"
                     aria-describedby="simple-modal-description"
