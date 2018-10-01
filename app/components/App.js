@@ -70,7 +70,8 @@ class App extends React.Component {
             cases: [],
             selected_case: 1,
             criminals: [],
-            selected_criminal:1
+            selected_criminal:'',
+            selected_criminal_id:0
         };
 
         this.handleEmojiVisible = this.handleEmojiVisible.bind(this);
@@ -183,7 +184,7 @@ class App extends React.Component {
         const face_video_analysis = {
             notes: this.state.name,
             case_id: this.state.selected_case,
-            criminal_id: this.state.selected_criminal,
+            criminal_id: this.state.selected_criminal_id,
         };
 
         let URL = URL_PATH;
@@ -207,11 +208,16 @@ class App extends React.Component {
     onStop() {
         this.emotionService.onStop();
         this.stopRecording();
-        //window.location.pathname = '/reports/' + this.video_id;
     }
 
     handleChange = event => {
         this.setState({ [event.target.name]: event.target.value });
+    };
+
+    handleChangeSelect = (event, index, value) => {
+        console.log(index.key);
+        this.setState({ [event.target.name]: event.target.value });
+        this.setState({ selected_criminal_id: parseInt(index.key, 10) });
     };
 
     onReset() {
@@ -241,7 +247,6 @@ class App extends React.Component {
                                                     value={this.state.selected_case}
                                                     onChange={this.handleChange}
                                                     displayEmpty
-
                                                 >
                                                     <MenuItem value="" disabled>
                                                         Seleccione el caso
@@ -256,9 +261,8 @@ class App extends React.Component {
                                                 <Select
                                                     name="selected_criminal"
                                                     value={this.state.selected_criminal}
-                                                    onChange={this.handleChange}
+                                                    onChange={this.handleChangeSelect}
                                                     displayEmpty
-
                                                 >
                                                     <MenuItem value="" disabled>
                                                         Seleccione persona interrogada
