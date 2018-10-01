@@ -67,7 +67,7 @@ class Cases extends React.Component {
                                                 type="video/webm"/>
                                     </video>
                                     <Typography gutterBottom variant="headline" component="h2">
-                                        {d.criminal.name}
+                                        {d.criminal && d.criminal.name?d.criminal.name:'No se especifico nombre.'}
                                     </Typography>
                                     <Typography component="p">
                                         {d.notes===''||d.notes==null?'No notes':d.notes}
