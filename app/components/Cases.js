@@ -16,7 +16,6 @@ import { createMuiTheme } from "@material-ui/core/styles/index";
 import purple from "@material-ui/core/colors/purple";
 import { withTheme } from '@material-ui/core/styles'
 import TableFooter from "@material-ui/core/es/TableFooter/TableFooter";
-import { URL_PATH } from '../constants';
 import {BASE_URL_PATH} from '../constants';
 import {library} from "@fortawesome/fontawesome-svg-core/index";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

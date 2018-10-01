@@ -3,9 +3,7 @@ import React from 'react';
 import Typography from "@material-ui/core/es/Typography/Typography";
 import Card from "@material-ui/core/es/Card/Card";
 import CardContent from "@material-ui/core/es/CardContent/CardContent";
-import CardActions from "@material-ui/core/es/CardActions/CardActions";
 import axios from "axios/index";
-import {Doughnut, Bar} from 'react-chartjs-2';
 import Button from "@material-ui/core/es/Button/Button";
 import Grid from "@material-ui/core/es/Grid/Grid";
 import TimelineChart from './fragments/timelineChart'

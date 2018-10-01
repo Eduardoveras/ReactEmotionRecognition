@@ -1,12 +1,8 @@
 import React from 'react';
-import $ from 'jquery';
-import EmotionService from '../services/emotion_recognition/emotion_recognition_service';
-import axios from 'axios';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { URL_PATH } from '../constants';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faSearchPlus} from '@fortawesome/free-solid-svg-icons';
