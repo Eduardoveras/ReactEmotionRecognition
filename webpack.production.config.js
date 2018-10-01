@@ -34,7 +34,7 @@ const config = {
       minimize: true,
       debug: false,
     }),
-    new MinifyPlugin(),
+    //new MinifyPlugin(),
     new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify('production') } }),
     new ExtractTextPlugin({ filename: './styles/style.css', disable: false, allChunks: true }),
     new CopyWebpackPlugin([{ from: './vendors', to: 'vendors' }]),
@@ -51,7 +51,7 @@ const config = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
-          presets: ['es2015'],
+          presets: ['es2015', 'react', 'stage-0'],
         },
       },
       {

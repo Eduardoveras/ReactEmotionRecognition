@@ -16,6 +16,7 @@ import {library} from '@fortawesome/fontawesome-svg-core'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEye, faEyeSlash, faGrinAlt, faMeh, faPlayCircle, faStopCircle} from '@fortawesome/free-solid-svg-icons';
 import blobToBase64 from 'blob-to-base64'
+import CreateCriminal from './fragments/createCriminal'
 
 library.add(faPlayCircle);
 library.add(faStopCircle);
@@ -67,13 +68,17 @@ class App extends React.Component {
             textVisible: true,
             video_id:-1,
             cases: [],
-            selected_case: 1
+            selected_case: 1,
+            criminals: [],
+            selected_criminal:'',
+            selected_criminal_id:0
         };
 
         this.handleEmojiVisible = this.handleEmojiVisible.bind(this);
         this.handleTextVisible = this.handleTextVisible.bind(this);
         this.stopRecording= this.stopRecording.bind(this);
         this.startRecording= this.startRecording.bind(this);
+        this.updateData = this.updateData.bind(this);
 
     }
 
@@ -108,21 +113,18 @@ class App extends React.Component {
        this.mediaRecorder.stop();
         console.log('Recorded Blobs: ', recordedBlobs);
         const superBuffer = new Blob(recordedBlobs, {type: 'video/webm'});
-        this.video.src = null;
-        this.video.srcObject = null;
-        this.video.src = window.URL.createObjectURL(superBuffer);
-        this.video.controls = true;
-        this.video.play();
-        let video_id_hack=this.state.video_id;
-        console.log("video id hack:"+video_id_hack);
+        const {video_id, selected_case }= this.state;
+        console.log("video id hack:"+video_id);
         blobToBase64(superBuffer, function (error, base64) {
             if (!error) {
-                axios.post(BASE_URL_PATH+'/add_video/'+video_id_hack, { video_file: base64 })
+                axios.post(BASE_URL_PATH+'/add_video/'+video_id, { video_file: base64 })
                     .then(function(response){
-                        console.log('Video saved correctly')
+                        console.log('Video saved correctly');
+                        window.location.href = '/casos/' + selected_case;
                     });
             }else {
                 console.log("Error converting to base64");
+                alert('There was an error saving the video');
 
             }
         })
@@ -151,9 +153,22 @@ class App extends React.Component {
     }
 
     componentWillMount(){
+        this.updateData();
+
+
+    }
+
+    updateData(){
         axios.get(BASE_URL_PATH+'/cases')
             .then((response) => {
                 this.setState({ cases: response.data });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        axios.get(BASE_URL_PATH+'/criminals')
+            .then((response) => {
+                this.setState({ criminals: response.data });
             })
             .catch((error) => {
                 console.log(error);
@@ -168,7 +183,8 @@ class App extends React.Component {
 
         const face_video_analysis = {
             notes: this.state.name,
-            case_id: this.state.selected_case
+            case_id: this.state.selected_case,
+            criminal_id: this.state.selected_criminal_id,
         };
 
         let URL = URL_PATH;
@@ -192,11 +208,16 @@ class App extends React.Component {
     onStop() {
         this.emotionService.onStop();
         this.stopRecording();
-        //window.location.pathname = '/reports/' + this.video_id;
     }
 
     handleChange = event => {
         this.setState({ [event.target.name]: event.target.value });
+    };
+
+    handleChangeSelect = (event, index, value) => {
+        console.log(index.key);
+        this.setState({ [event.target.name]: event.target.value });
+        this.setState({ selected_criminal_id: parseInt(index.key, 10) });
     };
 
     onReset() {
@@ -204,7 +225,7 @@ class App extends React.Component {
     }
 
     render() {
-        const { cases} = this.state;
+        const { cases,criminals} = this.state;
         return (
             <div className='container' id='container'>
                 <Grid container spacing={24}>
@@ -226,7 +247,6 @@ class App extends React.Component {
                                                     value={this.state.selected_case}
                                                     onChange={this.handleChange}
                                                     displayEmpty
-
                                                 >
                                                     <MenuItem value="" disabled>
                                                         Seleccione el caso
@@ -237,6 +257,23 @@ class App extends React.Component {
                                                 </Select>
                                                 <FormHelperText>Caso</FormHelperText>
                                             </FormControl>
+                                            <FormControl >
+                                                <Select
+                                                    name="selected_criminal"
+                                                    value={this.state.selected_criminal}
+                                                    onChange={this.handleChangeSelect}
+                                                    displayEmpty
+                                                >
+                                                    <MenuItem value="" disabled>
+                                                        Seleccione persona interrogada
+                                                    </MenuItem>
+                                                    {criminals.map(function(d){return (
+                                                        <MenuItem key={d.id} value={d.name}>{d.name}</MenuItem>
+                                                    )})}
+                                                </Select>
+                                                <FormHelperText>Criminal</FormHelperText>
+                                            </FormControl>
+                                            <CreateCriminal action={this.updateData}/>
 
 
                                         </label>
@@ -260,7 +297,7 @@ class App extends React.Component {
                                         Resultados detectados
                                     </Typography>
                                     <Typography gutterBottom>
-                                        {this.state.textVisible && <spam id="results"/>}
+                                        {this.state.textVisible && <span id="results"/>}
                                     </Typography>
                                 </div>
                             </div>
