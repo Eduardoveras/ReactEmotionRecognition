@@ -41,12 +41,12 @@ const resultStyle = {
 
 const emojiStyle = {
     textAlign: 'center',
-    height: '37vh'
+    height: '47vh'
 };
 
 const atencionStyle = {
     textAlign: 'center',
-    height: '20vh'
+    height: '10vh'
 };
 
 let recordedBlobs=[];
@@ -318,6 +318,7 @@ class App extends React.Component {
                                 Emoji
                             </Typography>
                             <Typography>
+                                <br/>
                                 {this.state.emojiVisible && <div id="emoji"/>}
                             </Typography>
                         </Paper>
