@@ -72,7 +72,7 @@ class EmotionRecognitionService {
       // Add a callback to receive the results from processing an image.
       // The faces object contains the list of the faces detected in an image.
       this.detector.addEventListener('onImageResultsSuccess', (faces, image, timestamp) => {
-          let porcentajeAMostrar = 25;
+          let porcentajeAMostrar = 1;
           const horas = Math.trunc(timestamp / 3600).toString().padStart(2, '0');
           const minutos = Math.trunc((timestamp % 3600) / 60).toString().padStart(2, '0');
           const segundos = Math.trunc(timestamp % 60).toString().padStart(2, '0');
@@ -95,6 +95,8 @@ class EmotionRecognitionService {
                       return val.toFixed ? Number(val.toFixed(2)) : val;
                   });
 
+                  EmotionRecognitionService.log('#emoji', `<div class="emoji">😃</div>`);
+
                   this.positivas += 1;
                   this.felicidad += 1;
 
@@ -111,6 +113,7 @@ class EmotionRecognitionService {
                       return val.toFixed ? Number(val.toFixed(2)) : val;
                   });
 
+                  EmotionRecognitionService.log('#emoji', `<div class="emoji">😢</div>`);
                   this.negativas += 1;
                   this.tristeza += 1;
 
@@ -125,6 +128,9 @@ class EmotionRecognitionService {
                   EmotionRecognitionService.log('#results', "<strong class='text-danger'>Disgusto: </strong> " + faces[0].emotions.disgust.toFixed(2), function(key, val) {
                       return val.toFixed ? Number(val.toFixed(0)) : val;
                   });
+
+                  EmotionRecognitionService.log('#emoji', `<div class="emoji">😫</div>`);
+
                   this.negativas += 1;
                   this.disgusto += 1;
 
@@ -140,6 +146,8 @@ class EmotionRecognitionService {
                   EmotionRecognitionService.log('#results', "<strong class='text-danger'>Desprecio: </strong> " + faces[0].emotions.contempt.toFixed(2), function(key, val) {
                       return val.toFixed ? Number(val.toFixed(0)) : val;
                   });
+
+                  EmotionRecognitionService.log('#emoji', `<div class="emoji">😕</div>`);
                   this.negativas += 1;
                   this.desprecio += 1;
 
@@ -155,6 +163,9 @@ class EmotionRecognitionService {
                   EmotionRecognitionService.log('#results', "<strong class='text-danger'>Enojo: </strong> " + faces[0].emotions.anger.toFixed(2), function(key, val) {
                       return val.toFixed ? Number(val.toFixed(0)) : val;
                   });
+
+                  EmotionRecognitionService.log('#emoji', `<div class="emoji">😡</div>`);
+
                   this.negativas += 1;
                   this.enojo += 1;
 
@@ -172,6 +183,8 @@ class EmotionRecognitionService {
                   this.negativas += 1;
                   this.miedo += 1;
 
+                  EmotionRecognitionService.log('#emoji', `<div class="emoji">😱</div>`);
+
                   if((timestamp.toFixed(2) % 5) <= 1)
                   {
                       this.reporte += "Miedo encontrado con un porcentaje de: " + faces[0].emotions.fear  + " en el minuto: " + ((timestamp/60).toFixed(2)) + ". \n";
@@ -186,6 +199,8 @@ class EmotionRecognitionService {
                   this.positivas += 1;
                   this.sorpresa += 1;
 
+                  EmotionRecognitionService.log('#emoji', `<div class="emoji">😲</div>`)
+
                   if((timestamp.toFixed(2) % 5) <= 1)
                   {
                       this.reporte += "Sorpresa encontrado con un porcentaje de: " + faces[0].emotions.surprise  + " en el minuto: " + ((timestamp/60).toFixed(2)) + ". \n";
@@ -193,7 +208,7 @@ class EmotionRecognitionService {
 
               }
 
-              EmotionRecognitionService.log('#emoji', `<div class="emoji">${faces[0].emojis.dominantEmoji}</div>`);
+              //EmotionRecognitionService.log('#emoji', `<div class="emoji">${faces[0].emojis.dominantEmoji}</div>`);
               EmotionRecognitionService.log("#results", " ");
               // EmotionRecognitionService.log("#results", "<h3><strong>Otros valores:</strong></h3>");
               EmotionRecognitionService.log('#atencion', "<strong class='text-primary'>Atención a la cámara: </strong> " + faces[0].emotions.engagement.toFixed(2), function(key, val) {
