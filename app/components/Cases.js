@@ -46,9 +46,9 @@ class Cases extends React.Component {
     };
 
     deleteCase(id){
-        let decision = confirm("Estás seguro de que quieres borrar este caso?\nEsta acción no puede ser deshecha.");
+        let decision = confirm("Estás seguro de que quieres archivar este caso?\nEsta acción no puede ser deshecha.");
         if (decision){
-            axios.delete(BASE_URL_PATH+'/cases/'+id)
+            axios.patch(BASE_URL_PATH+'/cases/'+id,{case:{enabled:false}})
                 .then(function (response) {
                     console.log(response);
                 })
@@ -143,7 +143,7 @@ class Cases extends React.Component {
                                                                 <FontAwesomeIcon icon="eye"/> &nbsp; Ver
                                                             </Button> {'  '}
                                                             <Button variant="contained" color="secondary" style={{color: "white"}} onClick={this.deleteCase.bind(this, n.id)}>
-                                                                <FontAwesomeIcon icon="trash"/> &nbsp; Borrar
+                                                                <FontAwesomeIcon icon="trash"/> &nbsp; Archivar
                                                             </Button>
                                                         </TableCell>
                                                     </TableRow>
