@@ -61,7 +61,7 @@ class Reports extends React.Component {
                     console.log(error);
                 })
                 .then(function () {
-                    //window.location.reload();
+                    window.location.reload();
                 });
         }
 
