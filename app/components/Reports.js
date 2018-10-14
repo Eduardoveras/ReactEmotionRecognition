@@ -49,9 +49,11 @@ class Reports extends React.Component {
     };
 
     deleteReport(id){
-        let decision = confirm("Estás seguro de que quieres borrar este reporte?\nEsta acción no puede ser deshecha.");
+        let decision = confirm("Estás seguro de que quieres archivar este reporte?\nEsta acción no puede ser deshecha.");
         if (decision){
-            axios.delete(BASE_URL_PATH+'/face_video_analyses/'+id)
+            let URL = BASE_URL_PATH+'/face_video_analyses/'+id;
+            console.log(URL);
+            axios.patch(URL, { face_video_analysis: {enabled:false} })
                 .then(function (response) {
                     console.log(response);
                 })
@@ -125,7 +127,7 @@ class Reports extends React.Component {
                                                                 <FontAwesomeIcon icon="eye"/> &nbsp;Ver
                                                             </Button>&nbsp; &nbsp;
                                                             <Button variant="contained" color="secondary" style={{color: "white"}} onClick={this.deleteReport.bind(this, n.id)}>
-                                                                <FontAwesomeIcon icon="trash"/> &nbsp;Borrar
+                                                                <FontAwesomeIcon icon="trash"/> &nbsp;Archivar
                                                             </Button>
                                                         </TableCell>
                                                     </TableRow>
