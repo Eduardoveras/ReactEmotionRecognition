@@ -119,6 +119,7 @@ class ButtonAppBar extends React.Component {
                 {this.state.logueado && <Button color="inherit" href="/reports"><FontAwesomeIcon icon="chart-bar"/> &nbsp;Reportes</Button>}
                 {this.state.logueado && <Button color="inherit" href="/casos"><FontAwesomeIcon icon="file-video"/> &nbsp;Casos</Button>}
                 {this.state.logueado && <Button color="inherit" href="/manuales"><FontAwesomeIcon icon="file-alt"/>&nbsp;Manuales</Button>}
+                {this.state.logueado && <Button color="inherit" href="/ajustes"><FontAwesomeIcon icon="file-alt"/>&nbsp;Ajustes</Button>}
                 {this.state.logueado && <Button color="inherit" href="/" onClick={this.clearStorageLogout}><FontAwesomeIcon icon="sign-out-alt"/>&nbsp;Salir</Button>}
             </Toolbar>
           </AppBar>

@@ -7,6 +7,7 @@ import VideoReport from '../components/VideoReport';
 import Manuales from '../components/Manuales';
 import Cases from '../components/Cases';
 import Case from '../components/Case';
+import Settings from '../components/Settings';
 
 const Root = () => {
   return (
@@ -19,6 +20,7 @@ const Root = () => {
         <Route path="/manuales" component={Manuales} exact />
         <Route path="/casos" component={Cases} exact />
         <Route path="/casos/:id" component={Case} exact />
+        <Route path="/ajustes" component={Settings} exact />
       </Switch>
     </Router>
   );
