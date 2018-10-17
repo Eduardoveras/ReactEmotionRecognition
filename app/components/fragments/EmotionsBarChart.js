@@ -1,6 +1,8 @@
 /* eslint-disable react/prefer-stateless-function,no-console,no-restricted-globals,class-methods-use-this */
 import React from 'react';
 import {Bar} from 'react-chartjs-2';
+import axios from "axios/index";
+import {BASE_URL_PATH} from "../../constants";
 
 class EmotionsBarChart extends React.Component {
     constructor(props) {
@@ -20,6 +22,19 @@ class EmotionsBarChart extends React.Component {
         this.contemptLength = 0;
         this.surprise_data = [];
         this.surpriseLength = 0;
+        this.state={
+            settings:null
+        }
+    }
+
+    componentWillMount(){
+        axios.get(BASE_URL_PATH+'/settings')
+            .then((response) => {
+                this.setState({ settings: response.data[0] });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     render() {
@@ -141,10 +156,10 @@ class EmotionsBarChart extends React.Component {
         }
 
         let data_bar_char = {
-            labels: ['Joy', 'Sadness', 'Anger', 'Fear', 'Surprise', 'Disgust', 'Contempt'],
+            labels: [],
             datasets: [{
+                data: [],
                 label: 'Promedio de porcentaje de la emocion X',
-                data: [this.joyLength / cantidadFelicidad, this.sadnessLength / cantidadTristeza, this.angerLength / cantidadEnojo, this.fearLength / cantidadMiedo, this.surpriseLength / cantidadSorpresa, this.disgustLength / cantidadDisgusto, this.contemptLength / cantidadContempt],
                 backgroundColor: [
                     'rgba(75,192,192, 0.4)',
                     'rgba(75,0,192,0.4)',
@@ -167,6 +182,44 @@ class EmotionsBarChart extends React.Component {
             }]
         };
 
+        if(this.state.settings) {
+            if (this.state.settings.joy_enabled) {
+                data_bar_char.labels.push('Joy');
+                data_bar_char.datasets[0].data.push(this.joyLength / cantidadFelicidad);
+
+            }
+            if (this.state.settings.sadness_enabled) {
+                data_bar_char.labels.push('Sadness');
+                data_bar_char.datasets[0].data.push(this.sadnessLength / cantidadTristeza);
+
+            }
+            if (this.state.settings.anger_enabled) {
+                data_bar_char.labels.push('Anger');
+                data_bar_char.datasets[0].data.push(this.angerLength / cantidadEnojo);
+
+            }
+            if (this.state.settings.surprise_enabled) {
+                data_bar_char.labels.push('Surprise');
+                data_bar_char.datasets[0].data.push(this.surpriseLength / cantidadSorpresa);
+
+            }
+            if (this.state.settings.disgust_enabled) {
+                data_bar_char.labels.push('Disgust');
+                data_bar_char.datasets[0].data.push(this.disgustLength / cantidadDisgusto);
+
+            }
+            if (this.state.settings.contempt_enabled) {
+                data_bar_char.labels.push('Contempt');
+                data_bar_char.datasets[0].data.push(this.contemptLength / cantidadContempt);
+
+            }
+
+            if (this.state.settings.fear_enabled) {
+                data_bar_char.labels.push('Fear');
+                data_bar_char.datasets[0].data.push(this.fearLength / cantidadMiedo);
+
+            }
+        }
 
         return (
             <div>
