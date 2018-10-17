@@ -1,12 +1,52 @@
 import React from 'react';
 import axios from "axios";
 import {BASE_URL_PATH} from "../constants";
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import TextField from '@material-ui/core/TextField';
+import Select from '@material-ui/core/Select';
+import {library} from '@fortawesome/fontawesome-svg-core'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+
+library.add(faEye);
+library.add(faEyeSlash);
+
+const tableStyle = {
+    minWidth: 700,
+    textAlign: 'center'
+};
+
+const welcomeStyle = {
+    padding: "20px",
+    textAlign: 'center',
+    marginRight: "20%",
+    marginLeft: "20%"
+};
+
+const paperStyle = {
+    padding: "20px",
+    textAlign: 'center',
+    height: '30vh',
+    marginBottom: "35px"
+};
 
 
 class Settings extends React.Component {
     constructor(props) {
         super(props);
-
         this.state= {
             settings:null
         };
@@ -117,21 +157,119 @@ class Settings extends React.Component {
     render() {
         return (
             <div className='container' id='container'>
-                <h1> Settings</h1>
-                {this.state.settings?
-                    <div>
-                        Joy Enabled: {this.state.settings.joy_enabled?'true':'false'} <button onClick={this.switch_emotion.bind(this,'joy')}>Enable</button> <br/>
-                        Sadness Enabled: {this.state.settings.sadness_enabled?'true':'false'} <button onClick={this.switch_emotion.bind(this,'sadness')}>Enable</button> <br/>
-                        Anger Enabled: {this.state.settings.anger_enabled?'true':'false'} <button onClick={this.switch_emotion.bind(this,'anger')}>Enable</button> <br/>
-                        contempt Enabled: {this.state.settings.contempt_enabled?'true':'false'}<button onClick={this.switch_emotion.bind(this,'contempt')}>Enable</button> <br/>
-                        disgust Enabled: {this.state.settings.disgust_enabled?'true':'false'}<button onClick={this.switch_emotion.bind(this,'disgust')}>Enable</button> <br/>
-                        fear Enabled: {this.state.settings.fear_enabled?'true':'false'}<button onClick={this.switch_emotion.bind(this,'fear')}>Enable</button> <br/>
-                        surprise Enabled: {this.state.settings.surprise_enabled?'true':'false'}<button onClick={this.switch_emotion.bind(this,'surprise')}>Enable</button> <br/>
-                    </div>
-
-                    :'Loading data...'}
-                {}
-
+                <Typography variant="display1">Ajustes</Typography> <br/>
+                <Grid container spacing={24}>
+                    <Grid item xs={12}>
+                        <Paper style={welcomeStyle}>
+                            <Typography variant="body1" color="inherit">Quita o agrega de los gráficos cualquier emoción que desees, el botón de color azul significa habilitar y el boton gris deshabilitar.</Typography>
+                        </Paper>
+                    </Grid>
+                </Grid>
+                <Grid container spacing={24}>
+                    <Grid item xs={12}>
+                        <Paper style={paperStyle}>
+                            <div>
+                                {this.state.settings?
+                                    <div>
+                                        <Table style={tableStyle}>
+                                            <TableHead>
+                                                <TableRow>
+                                                    <TableCell numeric>Felicidad</TableCell>
+                                                    <TableCell numeric>Tristeza</TableCell>
+                                                    <TableCell numeric>Enojo</TableCell>
+                                                    <TableCell numeric>Desprecio</TableCell>
+                                                    <TableCell numeric>Disguto</TableCell>
+                                                    <TableCell numeric>Miedo</TableCell>
+                                                    <TableCell numeric>Sorpresa</TableCell>
+                                                </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+                                                <TableCell numeric>
+                                                    {this.state.settings.joy_enabled ?
+                                                        <Button variant="fab" color="default" onClick={this.switch_emotion.bind(this, 'joy')}>
+                                                            <FontAwesomeIcon icon="eye-slash" size={10}/>
+                                                        </Button>
+                                                        :
+                                                        <Button variant="fab" color="primary" onClick={this.switch_emotion.bind(this, 'joy')}>
+                                                            <FontAwesomeIcon icon="eye" size={10}/>
+                                                        </Button>
+                                                    }
+                                                </TableCell>
+                                                <TableCell numeric>
+                                                    {this.state.settings.sadness_enabled ?
+                                                        <Button variant="fab" color="default" onClick={this.switch_emotion.bind(this, 'sadness')}>
+                                                            <FontAwesomeIcon icon="eye-slash" size={10}/>
+                                                        </Button>
+                                                        :
+                                                        <Button variant="fab" color="primary" onClick={this.switch_emotion.bind(this, 'sadness')}>
+                                                            <FontAwesomeIcon icon="eye" size={10}/>
+                                                        </Button>
+                                                    }
+                                                </TableCell>
+                                                <TableCell numeric>
+                                                    {this.state.settings.anger_enabled ?
+                                                        <Button variant="fab" color="default" onClick={this.switch_emotion.bind(this, 'anger')}>
+                                                            <FontAwesomeIcon icon="eye-slash" size={10}/>
+                                                        </Button>
+                                                        :
+                                                        <Button variant="fab" color="primary" onClick={this.switch_emotion.bind(this, 'anger')}>
+                                                            <FontAwesomeIcon icon="eye" size={10}/>
+                                                        </Button>
+                                                    }
+                                                </TableCell>
+                                                <TableCell numeric>
+                                                    {this.state.settings.contempt_enabled ?
+                                                        <Button variant="fab" color="default" onClick={this.switch_emotion.bind(this, 'contempt')}>
+                                                            <FontAwesomeIcon icon="eye-slash" size={10}/>
+                                                        </Button>
+                                                        :
+                                                        <Button variant="fab" color="primary" onClick={this.switch_emotion.bind(this, 'contempt')}>
+                                                            <FontAwesomeIcon icon="eye" size={10}/>
+                                                        </Button>
+                                                    }
+                                                </TableCell>
+                                                <TableCell numeric>
+                                                    {this.state.settings.disgust_enabled ?
+                                                        <Button variant="fab" color="default" onClick={this.switch_emotion.bind(this, 'disgust')}>
+                                                            <FontAwesomeIcon icon="eye-slash" size={10}/>
+                                                        </Button>
+                                                        :
+                                                        <Button variant="fab" color="primary" onClick={this.switch_emotion.bind(this, 'disgust')}>
+                                                            <FontAwesomeIcon icon="eye" size={10}/>
+                                                        </Button>
+                                                    }
+                                                </TableCell>
+                                                <TableCell numeric>
+                                                    {this.state.settings.fear_enabled ?
+                                                        <Button variant="fab" color="default" onClick={this.switch_emotion.bind(this, 'fear')}>
+                                                            <FontAwesomeIcon icon="eye-slash" size={10}/>
+                                                        </Button>
+                                                        :
+                                                        <Button variant="fab" color="primary" onClick={this.switch_emotion.bind(this, 'fear')}>
+                                                            <FontAwesomeIcon icon="eye" size={10}/>
+                                                        </Button>
+                                                    }
+                                                </TableCell>
+                                                <TableCell numeric>
+                                                    {this.state.settings.surprise_enabled ?
+                                                        <Button variant="fab" color="default" onClick={this.switch_emotion.bind(this, 'surprise')}>
+                                                            <FontAwesomeIcon icon="eye-slash" size={10}/>
+                                                        </Button>
+                                                        :
+                                                        <Button variant="fab" color="primary" onClick={this.switch_emotion.bind(this, 'surprise')}>
+                                                            <FontAwesomeIcon icon="eye" size={10}/>
+                                                        </Button>
+                                                    }
+                                                </TableCell>
+                                            </TableBody>
+                                        </Table>
+                                    </div>
+                                    :'Loading data...'}
+                                {}
+                            </div>
+                        </Paper>
+                    </Grid>
+                </Grid>
             </div>
         );
     }
