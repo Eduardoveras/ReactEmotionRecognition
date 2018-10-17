@@ -178,7 +178,7 @@ class Settings extends React.Component {
                                                     <TableCell numeric>Tristeza</TableCell>
                                                     <TableCell numeric>Enojo</TableCell>
                                                     <TableCell numeric>Desprecio</TableCell>
-                                                    <TableCell numeric>Disguto</TableCell>
+                                                    <TableCell numeric>Disgusto</TableCell>
                                                     <TableCell numeric>Miedo</TableCell>
                                                     <TableCell numeric>Sorpresa</TableCell>
                                                 </TableRow>
