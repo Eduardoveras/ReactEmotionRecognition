@@ -73,138 +73,7 @@ class timelineChart extends React.Component {
 
         let data_line_chart = {
             labels: this.timestamps,
-            datasets: [
-                {
-                    label: 'Sadness',
-                    fill: true,
-                    lineTension: 0.1,
-                    backgroundColor: 'rgba(75,0,192,0.4)',
-                    borderColor: 'rgba(75,192,192,1)',
-                    borderCapStyle: 'butt',
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    pointBorderColor: 'rgba(75,192,192,1)',
-                    pointBackgroundColor: '#fff',
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 5,
-                    pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-                    pointHoverBorderColor: 'rgba(220,220,220,1)',
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 1,
-                    pointHitRadius: 10,
-                    data: this.sadness_data
-                },
-                {
-                    label: 'Anger',
-                    fill: true,
-                    lineTension: 0.1,
-                    backgroundColor: 'rgba(196,212,17,0.4)',
-                    borderColor: 'rgba(196,212,17,1)',
-                    borderCapStyle: 'butt',
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    pointBorderColor: 'rgba(196,212,17,1)',
-                    pointBackgroundColor: '#fff',
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 5,
-                    pointHoverBackgroundColor: 'rgba(196,212,17,1)',
-                    pointHoverBorderColor: 'rgba(220,220,220,1)',
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 1,
-                    pointHitRadius: 10,
-                    data: this.anger_data
-                },
-                {
-                    label: 'Fear',
-                    fill: true,
-                    lineTension: 0.1,
-                    backgroundColor: 'rgba(75,0,0,0.4)',
-                    borderColor: 'rgba(75,192,192,1)',
-                    borderCapStyle: 'butt',
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    pointBorderColor: 'rgba(75,192,192,1)',
-                    pointBackgroundColor: '#fff',
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 5,
-                    pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-                    pointHoverBorderColor: 'rgba(220,220,220,1)',
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 1,
-                    pointHitRadius: 10,
-                    data: this.fear_data
-                },
-                {
-                    label: 'Surprise',
-                    fill: true,
-                    lineTension: 0.1,
-                    backgroundColor: 'rgba(17,98,212,0.4)',
-                    borderColor: 'rgba(17,98,212,1)',
-                    borderCapStyle: 'butt',
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    pointBorderColor: 'rgba(17,98,212,1)',
-                    pointBackgroundColor: '#fff',
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 5,
-                    pointHoverBackgroundColor: 'rgba(17,98,212,1)',
-                    pointHoverBorderColor: 'rgba(220,220,220,1)',
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 1,
-                    pointHitRadius: 10,
-                    data: this.surprise_data
-                },
-
-                {
-                    label: 'Contempt',
-                    fill: true,
-                    lineTension: 0.1,
-                    backgroundColor: 'rgba(6,85,45,0.4)',
-                    borderColor: 'rgba(6,85,45,1)',
-                    borderCapStyle: 'butt',
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    pointBorderColor: 'rgba(6,85,45,1)',
-                    pointBackgroundColor: '#fff',
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 5,
-                    pointHoverBackgroundColor: 'rgba(6,85,45,1)',
-                    pointHoverBorderColor: 'rgba(220,220,220,1)',
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 1,
-                    pointHitRadius: 10,
-                    data: this.contempt_data
-                },
-
-                {
-                    label: 'Disgust',
-                    fill: true,
-                    lineTension: 0.1,
-                    backgroundColor: 'rgba(212,37,17,0.4)',
-                    borderColor: 'rgba(212,37,17,1)',
-                    borderCapStyle: 'butt',
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    pointBorderColor: 'rgba(212,37,17,1)',
-                    pointBackgroundColor: '#fff',
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 5,
-                    pointHoverBackgroundColor: 'rgba(212,37,17,1)',
-                    pointHoverBorderColor: 'rgba(220,220,220,1)',
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 1,
-                    pointHitRadius: 10,
-                    data: this.disgust_data
-                }
-
-            ]
-
+            datasets: []
         };
 
         if(this.state.settings) {
@@ -230,8 +99,147 @@ class timelineChart extends React.Component {
                     pointHitRadius: 10,
                     data: this.joy_data
                 },)
-
             }
+            if(this.state.settings.sadness_enabled){
+                data_line_chart.datasets.push({
+                    label: 'Sadness',
+                    fill: true,
+                    lineTension: 0.1,
+                    backgroundColor: 'rgba(75,0,192,0.4)',
+                    borderColor: 'rgba(75,192,192,1)',
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: 'rgba(75,192,192,1)',
+                    pointBackgroundColor: '#fff',
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+                    pointHoverBorderColor: 'rgba(220,220,220,1)',
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: this.sadness_data
+                },)
+            }
+            if(this.state.settings.anger_enabled){
+                data_line_chart.datasets.push({
+                    label: 'Anger',
+                    fill: true,
+                    lineTension: 0.1,
+                    backgroundColor: 'rgba(196,212,17,0.4)',
+                    borderColor: 'rgba(196,212,17,1)',
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: 'rgba(196,212,17,1)',
+                    pointBackgroundColor: '#fff',
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: 'rgba(196,212,17,1)',
+                    pointHoverBorderColor: 'rgba(220,220,220,1)',
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: this.anger_data
+                },)
+            }
+            if(this.state.settings.fear_enabled){
+                data_line_chart.datasets.push({
+                    label: 'Fear',
+                    fill: true,
+                    lineTension: 0.1,
+                    backgroundColor: 'rgba(75,0,0,0.4)',
+                    borderColor: 'rgba(75,192,192,1)',
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: 'rgba(75,192,192,1)',
+                    pointBackgroundColor: '#fff',
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+                    pointHoverBorderColor: 'rgba(220,220,220,1)',
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: this.fear_data
+                },)
+            }
+            if(this.state.settings.surprise_enabled){
+                data_line_chart.datasets.push({
+                    label: 'Surprise',
+                    fill: true,
+                    lineTension: 0.1,
+                    backgroundColor: 'rgba(17,98,212,0.4)',
+                    borderColor: 'rgba(17,98,212,1)',
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: 'rgba(17,98,212,1)',
+                    pointBackgroundColor: '#fff',
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: 'rgba(17,98,212,1)',
+                    pointHoverBorderColor: 'rgba(220,220,220,1)',
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: this.surprise_data
+                },)
+            }
+            if(this.state.settings.contempt_enabled){
+                data_line_chart.datasets.push({
+                    label: 'Contempt',
+                    fill: true,
+                    lineTension: 0.1,
+                    backgroundColor: 'rgba(6,85,45,0.4)',
+                    borderColor: 'rgba(6,85,45,1)',
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: 'rgba(6,85,45,1)',
+                    pointBackgroundColor: '#fff',
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: 'rgba(6,85,45,1)',
+                    pointHoverBorderColor: 'rgba(220,220,220,1)',
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: this.contempt_data
+                },)
+            }
+            if(this.state.settings.disgust_enabled){
+                data_line_chart.datasets.push({
+                        label: 'Disgust',
+                        fill: true,
+                        lineTension: 0.1,
+                        backgroundColor: 'rgba(212,37,17,0.4)',
+                        borderColor: 'rgba(212,37,17,1)',
+                        borderCapStyle: 'butt',
+                        borderDash: [],
+                        borderDashOffset: 0.0,
+                        borderJoinStyle: 'miter',
+                        pointBorderColor: 'rgba(212,37,17,1)',
+                        pointBackgroundColor: '#fff',
+                        pointBorderWidth: 1,
+                        pointHoverRadius: 5,
+                        pointHoverBackgroundColor: 'rgba(212,37,17,1)',
+                        pointHoverBorderColor: 'rgba(220,220,220,1)',
+                        pointHoverBorderWidth: 2,
+                        pointRadius: 1,
+                        pointHitRadius: 10,
+                        data: this.disgust_data
+                    }
+                )
+            }
+
         }
 
         return (this.api_data===[]? null : <Line data={data_line_chart} width={100} height={500}
