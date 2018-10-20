@@ -15,7 +15,7 @@ import {URL_PATH} from '../constants';
 import {BASE_URL_PATH} from '../constants';
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faEye, faEyeSlash, faGrinAlt, faMeh, faPlayCircle, faStopCircle} from '@fortawesome/free-solid-svg-icons';
+import {faEye, faEyeSlash, faGrinAlt, faMeh, faPlayCircle, faStopCircle, faStop, faPlay} from '@fortawesome/free-solid-svg-icons';
 import blobToBase64 from 'blob-to-base64'
 import CreateCriminal from './fragments/createCriminal'
 
@@ -25,9 +25,11 @@ library.add(faEyeSlash);
 library.add(faEye);
 library.add(faMeh);
 library.add(faGrinAlt);
+library.add(faPlay);
+library.add(faStop);
 
 const paperStyle = {
-    padding: "20px",
+    padding: "27px",
     textAlign: 'center',
     height: '87vh',
     marginBottom: "35px"
@@ -237,34 +239,8 @@ class App extends React.Component {
                                 {/*<video id="testing_video" autoPlay playsInline muted/>*/}
                                 <div className="center-text">
                                     <div className="btn-group btn-group-lg" role="group" aria-label="Basic example">
-                                        <label>
-                                            <TextField type="text" name="name" onChange={this.handleChange}
-                                                       id="outlined-full-width"
-                                                       label="Notas"
-                                                       style={{marginRight: "5%"}}
-                                                       placeholder="Notas de la sesión"
-                                                       margin="normal"
-                                                       variant="outlined"
-                                                       InputLabelProps={{
-                                                           shrink: true,
-                                                       }}/>
-                                            <FormControl >
-                                                <Select
-                                                    name="selected_case"
-                                                    value={this.state.selected_case}
-                                                    onChange={this.handleChange}
-                                                    displayEmpty
-                                                >
-                                                    <MenuItem value="" disabled>
-                                                        Seleccione el caso
-                                                    </MenuItem>
-                                                    {cases.map(function(d){return (
-                                                        <MenuItem key={d.id} value={d.id}>{d.id}</MenuItem>
-                                                        )})}
-                                                </Select>
-                                                <FormHelperText>Caso</FormHelperText>
-                                            </FormControl>
-                                            <FormControl >
+                                        <CreateCriminal action={this.updateData}/>
+                                        <FormControl style={{marginBottom: "0.5rem", display: "inline-block"}}>
                                                 <Select
                                                     name="selected_criminal"
                                                     value={this.state.selected_criminal}
@@ -280,14 +256,41 @@ class App extends React.Component {
                                                 </Select>
                                                 <FormHelperText>Criminal</FormHelperText>
                                             </FormControl>
-                                        </label>
+                                            <FormControl style={{display: "inline-block"}}>
+                                                <Select
+                                                    name="selected_case"
+                                                    value={this.state.selected_case}
+                                                    onChange={this.handleChange}
+                                                    displayEmpty
+                                                >
+                                                    <MenuItem value="" disabled>
+                                                        Seleccione el caso
+                                                    </MenuItem>
+                                                    {cases.map(function(d){return (
+                                                        <MenuItem key={d.id} value={d.id}>{d.id}</MenuItem>
+                                                    )})}
+                                                </Select>
+                                                <FormHelperText>Caso</FormHelperText>
+                                            </FormControl>
                                     <br/>
-                                        <CreateCriminal action={this.updateData} style={{margin: 0, padding: 0, display: "inline"}}/>
-                                        {this.showFinishButton ? <Button id="stop" onClick={this.onStop.bind(this)}><FontAwesomeIcon icon="stop-circle" style={{color: "grey"}}/> &nbsp;Terminar
-                                            sesion</Button> : <Button onClick={this.onStart.bind(this)} disabled={this.state.isButtonDisabled}>
-                                            <FontAwesomeIcon icon="play-circle" style={{color: "grey"}}/> &nbsp;Iniciar </Button>}
-                                        {this.state.textVisible ?  <Button onClick={this.handleTextVisible}><FontAwesomeIcon icon="eye-slash" style={{color: "grey"}}/> &nbsp;Ocultar texto</Button> : <Button onClick={this.handleTextVisible}><FontAwesomeIcon icon="eye" style={{color: "grey"}}/> &nbsp;Mostrar texto</Button>}
-                                        {this.state.emojiVisible ? <Button onClick={this.handleEmojiVisible}><FontAwesomeIcon icon="meh" style={{color: "grey"}}/> &nbsp;Ocultar emoji</Button> : <Button onClick={this.handleEmojiVisible}><FontAwesomeIcon icon="grin-alt" style={{color: "grey"}}/> &nbsp;Mostrar emoji</Button>}
+                                        {this.showFinishButton ? <Button id="stop" variant="extendedFab" color="secondary" onClick={this.onStop.bind(this)} style={{color: "white", marginRight: "1rem"}}><FontAwesomeIcon icon="stop"/>&nbsp; Terminar sesión</Button> :
+                                            <Button variant="extendedFab" onClick={this.onStart.bind(this)} disabled={this.state.isButtonDisabled} color="primary" style={{color: "white", marginRight: "1rem"}}><FontAwesomeIcon icon="play"/>&nbsp; Iniciar</Button>}
+                                        {this.state.textVisible ?  <Button variant="extendedFab" onClick={this.handleTextVisible} style={{marginRight: "1rem"}}><FontAwesomeIcon icon="eye-slash" style={{color: "black"}}/> &nbsp;Ocultar texto</Button> : <Button variant="extendedFab" onClick={this.handleTextVisible} style={{marginRight: "1rem"}}><FontAwesomeIcon icon="eye" style={{color: "black"}}/> &nbsp;Mostrar texto</Button>}
+                                        {this.state.emojiVisible ? <Button variant="extendedFab" onClick={this.handleEmojiVisible}><span style={{fontSize: "22px"}}>😡</span> &nbsp;Ocultar emoji</Button> : <Button variant="extendedFab" onClick={this.handleEmojiVisible}><span style={{fontSize: "22px"}}>😃</span> &nbsp;Mostrar emoji</Button>} <br/>
+                                        <Grid item xs={11}>
+                                            <Paper style={{backgroundColor: "#F0F8FF", marginLeft: "5rem", marginTop: "1rem"}}>
+                                                <TextField type="text" name="name" onChange={this.handleChange}
+                                                           id="outlined-full-width"
+                                                           label="Notas"
+                                                           style={{width: "50.75rem", height: "2.2rem", backgroundColor: "white"}}
+                                                           placeholder="Notas de la sesión"
+                                                           margin="normal"
+                                                           variant="outlined"
+                                                           InputLabelProps={{
+                                                               shrink: true,
+                                                           }}/>
+                                            </Paper>
+                                        </Grid>
                                     </div>
                                     <div id="logs"/>
                                 </div>
