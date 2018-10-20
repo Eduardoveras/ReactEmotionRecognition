@@ -1,6 +1,8 @@
 /* eslint-disable react/prefer-stateless-function,no-console,no-restricted-globals,class-methods-use-this */
 import React from 'react';
 import {Doughnut} from 'react-chartjs-2';
+import axios from "axios/index";
+import {BASE_URL_PATH} from "../../constants";
 
 class EmotionsPieChart extends React.Component {
     constructor(props) {
@@ -20,10 +22,23 @@ class EmotionsPieChart extends React.Component {
         this.contemptLength = 0;
         this.surprise_data = [];
         this.surpriseLength = 0;
+        this.state={
+            settings:null
+        }
+    }
+
+    componentWillMount(){
+        axios.get(BASE_URL_PATH+'/settings')
+            .then((response) => {
+                this.setState({ settings: response.data[0] });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     render() {
-        this.api_data=this.props.data
+        this.api_data=this.props.data;
 
         this.joy_data = this.api_data.map(function (e) {
             return e.emotions.joy;
@@ -141,30 +156,69 @@ class EmotionsPieChart extends React.Component {
         }
 
         let data_circle_char = {
-            labels: ['Joy', 'Sadness', 'Anger', 'Fear', 'Surprise', 'Disgust', 'Contempt'],
+            labels: [],
             datasets: [{
-                data: [this.joyLength / cantidadFelicidad, this.sadnessLength / cantidadTristeza, this.angerLength / cantidadEnojo, this.fearLength / cantidadMiedo, this.surpriseLength / cantidadSorpresa, this.disgustLength / cantidadDisgusto, this.contemptLength / cantidadContempt],
+                data: [],
                 backgroundColor: [
-                    'rgba(75,192,192, 0.4)',
-                    'rgba(75,0,192,0.4)',
-                    'rgba(196,212,17,0.4)',
-                    'rgba(75,0,0,0.4)',
-                    'rgba(17,98,212,0.4)',
-                    'rgba(212,37,17,0.4)',
-                    'rgba(6,85,45,0.4)'
-                ],
-                borderColor: [
-                    'rgba(75,192,192, 1)',
-                    'rgba(75,0,192,1)',
-                    'rgba(196,212,17,1)',
-                    'rgba(75,0,0,1)',
-                    'rgba(17,98,212,1)',
-                    'rgba(212,37,17,1)',
-                    'rgba(6,85,45,1)'
-                ],
-                borderWidth: 1
-            }]
+                        'rgba(75,192,192, 0.4)',
+                        'rgba(75,0,192,0.4)',
+                        'rgba(196,212,17,0.4)',
+                        'rgba(75,0,0,0.4)',
+                        'rgba(17,98,212,0.4)',
+                        'rgba(212,37,17,0.4)',
+                        'rgba(6,85,45,0.4)'
+                    ],
+                        borderColor: [
+                        'rgba(75,192,192, 1)',
+                        'rgba(75,0,192,1)',
+                        'rgba(196,212,17,1)',
+                        'rgba(75,0,0,1)',
+                        'rgba(17,98,212,1)',
+                        'rgba(212,37,17,1)',
+                        'rgba(6,85,45,1)'
+                    ],
+                        borderWidth: 1
+                }]
         };
+
+        if(this.state.settings) {
+            if (this.state.settings.joy_enabled) {
+                data_circle_char.labels.push('Joy');
+                data_circle_char.datasets[0].data.push(this.joyLength / cantidadFelicidad);
+
+            }
+            if (this.state.settings.sadness_enabled) {
+                data_circle_char.labels.push('Sadness');
+                data_circle_char.datasets[0].data.push(this.sadnessLength / cantidadTristeza);
+
+            }
+            if (this.state.settings.anger_enabled) {
+                data_circle_char.labels.push('Anger');
+                data_circle_char.datasets[0].data.push(this.angerLength / cantidadEnojo);
+
+            }
+            if (this.state.settings.surprise_enabled) {
+                data_circle_char.labels.push('Surprise');
+                data_circle_char.datasets[0].data.push(this.surpriseLength / cantidadSorpresa);
+
+            }
+            if (this.state.settings.disgust_enabled) {
+                data_circle_char.labels.push('Disgust');
+                data_circle_char.datasets[0].data.push(this.disgustLength / cantidadDisgusto);
+
+            }
+            if (this.state.settings.contempt_enabled) {
+                data_circle_char.labels.push('Contempt');
+                data_circle_char.datasets[0].data.push(this.contemptLength / cantidadContempt);
+
+            }
+
+            if (this.state.settings.fear_enabled) {
+                data_circle_char.labels.push('Fear');
+                data_circle_char.datasets[0].data.push(this.fearLength / cantidadMiedo);
+
+            }
+        }
 
         return (
             <div className='container'>
