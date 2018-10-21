@@ -8,6 +8,7 @@ import Manuales from '../components/Manuales';
 import Cases from '../components/Cases';
 import Case from '../components/Case';
 import Settings from '../components/Settings';
+import Analysis from '../components/Analysis';
 
 const Root = () => {
   return (
@@ -21,6 +22,7 @@ const Root = () => {
         <Route path="/casos" component={Cases} exact />
         <Route path="/casos/:id" component={Case} exact />
         <Route path="/ajustes" component={Settings} exact />
+        <Route path="/analisis/:id" component={Analysis} exact />
       </Switch>
     </Router>
   );

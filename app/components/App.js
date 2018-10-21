@@ -282,7 +282,7 @@ class App extends React.Component {
                                                 <TextField type="text" name="name" onChange={this.handleChange}
                                                            id="outlined-full-width"
                                                            label="Notas"
-                                                           style={{width: "50.75rem", height: "2.2rem", backgroundColor: "white"}}
+                                                           style={{width: "40.75rem", height: "2.2rem", backgroundColor: "white"}}
                                                            placeholder="Notas de la sesión"
                                                            margin="normal"
                                                            variant="outlined"
