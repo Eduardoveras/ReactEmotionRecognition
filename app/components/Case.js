@@ -12,6 +12,8 @@ import Button from "@material-ui/core/Button/Button";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faFileVideo} from '@fortawesome/free-solid-svg-icons'
+import videojs from 'video.js'
+import markers from 'videojs-markers'
 
 library.add(faFileVideo);
 
@@ -37,11 +39,39 @@ class Cases extends React.Component {
         axios.get(URL)
             .then((response) => {
                 console.log(response.data);
-                this.setState({ data: response.data });
+                this.setState({ data: response.data },
+                    () => this.state.data.face_video_analysis.forEach(function(element) {
+                        console.log(element.id);
+                        videojs("example_video_"+element.id, {}, function(){
+                            this.markers({
+                                markerStyle: {
+                                    'width':'8px',
+                                    'background-color': 'red'
+                                },
+                                markers: [
+                                    {time: 1, text: "this"},
+                                    {time: 2,  text: "is"},
+                                    {time: 3.5,text: "so"},
+                                    {time: 28,  text: "cool"}
+                                ]
+                            });
+                        });
+                    })
+                );
             })
             .catch((error) => {
                 console.log(error);
             });
+    }
+    componentDidMount(){
+
+        if(this.state.data.face_video_analysis){
+
+
+
+
+        }
+
     }
 
     render() {
@@ -62,7 +92,7 @@ class Cases extends React.Component {
                             <Card style={cardStyle}>
 
                                 <CardContent>
-                                    <video controls style={videoStyle} name="media">
+                                    <video className="video-js" id={"example_video_"+d.id} controls style={videoStyle} name="media">
                                         <source src={d.video_base64}
                                                 type="video/webm"/>
                                     </video>
