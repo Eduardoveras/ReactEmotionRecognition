@@ -32,7 +32,6 @@ class Analysis extends React.Component {
         let URL = BASE_URL_PATH + '/face_video_analyses/' + this.state.video_id;
         axios.get(URL)
             .then((response) => {
-                console.log(response.data);
                 this.setState({data: response.data},this.setPlayer
                 );
             })
@@ -41,7 +40,6 @@ class Analysis extends React.Component {
             });
         axios.get(BASE_URL_PATH+'/emotions/'+ this.state.video_id)
             .then((response) => {
-                console.log(response.data);
                 this.setState({api_data: response.data});
             })
             .catch((error) => {
@@ -101,7 +99,6 @@ class Analysis extends React.Component {
                    }
                ]
            });
-           console.log("ADDED MARKERS")
 
         });
 
@@ -116,18 +113,16 @@ class Analysis extends React.Component {
     nextMark(){
         if (this.globalPlayer){
             this.globalPlayer.markers.next();
-            console.log("dike funciona.");
         }else {
-            console.log("no player nigga");
+            console.log("Error...");
         }
 
     }
     prevMark(){
         if (this.globalPlayer){
             this.globalPlayer.markers.prev();
-            console.log("dike funciona.");
         }else {
-            console.log("no player nigga");
+            console.log("Error");
         }
 
     }

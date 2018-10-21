@@ -103,7 +103,7 @@ class App extends React.Component {
             return;
         }
 
-        console.log('Created MediaRecorder', this.mediaRecorder, 'with options', {mimeType: 'video/webm;codecs=vp9'});
+        //console.log('Created MediaRecorder', this.mediaRecorder, 'with options', {mimeType: 'video/webm;codecs=vp9'});
         this.mediaRecorder.onstop = (event) => {
             console.log('Recorder stopped: ', event);
         };

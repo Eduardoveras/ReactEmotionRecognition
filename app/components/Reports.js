@@ -52,7 +52,6 @@ class Reports extends React.Component {
         let decision = confirm("Estás seguro de que quieres archivar este reporte?\nEsta acción no puede ser deshecha.");
         if (decision){
             let URL = BASE_URL_PATH+'/face_video_analyses/'+id;
-            console.log(URL);
             axios.patch(URL, { face_video_analysis: {enabled:false} })
                 .then(function (response) {
                     console.log(response);

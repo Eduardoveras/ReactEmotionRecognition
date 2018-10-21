@@ -38,10 +38,8 @@ class Cases extends React.Component {
         let URL = BASE_URL_PATH+'/cases/'+this.state.case_id;
         axios.get(URL)
             .then((response) => {
-                console.log(response.data);
                 this.setState({ data: response.data },
                     () => this.state.data.face_video_analysis.forEach(function(element) {
-                        console.log(element.id);
                         videojs("example_video_"+element.id, {}, function(){
                             this.markers({
                                 markerStyle: {
