@@ -106,7 +106,7 @@ class Cases extends React.Component {
                                     <Button href={'/reports/'+d.id} variant="contained" size="small" color="primary">
                                         <FontAwesomeIcon icon="file-video"/> &nbsp; Ver Reporte
                                     </Button>
-                                    <Button href={'/analisis/'+d.id} variant="contained" size="small" color="primary">
+                                    <Button href={'/analisis/'+d.id} variant="contained" size="small" color="secondary" style={{color: "white"}}>
                                         <FontAwesomeIcon icon="search-plus"/> &nbsp; Análisis
                                     </Button>
                                 </CardActions>
