@@ -1,18 +1,23 @@
 /* eslint-disable react/prefer-stateless-function,no-console,no-restricted-globals,class-methods-use-this */
 import React from 'react';
 import axios from 'axios/index';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import Typography from "@material-ui/core/es/Typography/Typography";
 import {withTheme} from '@material-ui/core/styles'
 import {BASE_URL_PATH} from '../constants';
 import Card from "@material-ui/core/Card/Card";
 import CardContent from "@material-ui/core/CardContent/CardContent";
-import {library} from '@fortawesome/fontawesome-svg-core'
-import {faFileVideo} from '@fortawesome/free-solid-svg-icons'
 import DynamicTimelineChart from '../components/fragments/timelineChartDynamic'
 import videojs from 'video.js'
+import {library} from '@fortawesome/fontawesome-svg-core'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faThumbtack, faBackward, faForward} from '@fortawesome/free-solid-svg-icons';
+import InputAdornment from "@material-ui/core/es/InputAdornment/InputAdornment";
 
-
-library.add(faFileVideo);
+library.add(faThumbtack);
+library.add(faBackward);
+library.add(faForward);
 
 class Analysis extends React.Component {
     constructor(props) {
@@ -58,12 +63,12 @@ class Analysis extends React.Component {
                markerStyle: {
                    'width':'7px',
                    'border-radius': '30%',
-                   'background-color': 'red'
+                   'background-color': '#2196F3'
                },
                markerTip:{
                    display: true,
                    text: function(marker) {
-                       return "Break: "+ marker.text;
+                       return "Marcador: "+ marker.text;
                    },
                    time: function(marker) {
                        return marker.time;
@@ -83,24 +88,7 @@ class Analysis extends React.Component {
                        return "Break overlay: " + marker.overlayText;
                    }
                },
-               markers: [
-                   {
-                       time: 1,
-                       text: "put"
-                   },
-                   {
-                       time: 2,
-                       text: "any"
-                   },
-                   {
-                       time: 3,
-                       text: "text"
-                   },
-                   {
-                       time: 20,
-                       text: "here"
-                   }
-               ]
+               markers: []
            });
 
         });
@@ -151,23 +139,33 @@ class Analysis extends React.Component {
                 <Card>{this.state.data?
                     <CardContent>
                         <Typography variant="display1" gutterBottom>
-                            Analisis #{this.state.video_id}
+                            Análisis #{this.state.video_id}
                         </Typography>
                         {this.state.data.video_base64?
                             <video id="example_video_1" controls autoPlay playsInline muted className="video_center video-js" name="media">
                                 <source src={this.state.data.video_base64}
                                         type="video/webm"/>
                             </video>:'Loading Video....'}
-                            <button onClick={this.nextMark}>NEXT</button>
-                        <button onClick={this.prevMark}>PREVIOUS</button>
-                        <button onClick={this.addMark.bind(this, 'YOLO')}>ADD MESSAGE</button>
-                        <input type="text" name="text_field" onChange={this.handleChange}/>
 
+                            <div className="button_center">
+                                <Button variant="extendedFab" color="default" onClick={this.prevMark} style={{marginRight: "1rem"}}><FontAwesomeIcon icon="backward"/>&nbsp; Anterior</Button>
+                                <Button variant="extendedFab" color="default" onClick={this.nextMark} style={{marginRight: "1rem"}}><FontAwesomeIcon icon="forward"/>&nbsp; Siguiente</Button>
+                                <Button variant="extendedFab" color="primary" onClick={this.addMark.bind(this, 'YOLO')} style={{marginRight: "1rem"}}><FontAwesomeIcon icon="thumbtack"/>&nbsp; Añadir marcador</Button>
+                                <TextField type="text" name="text_field" onChange={this.handleChange}
+                                       id="outlined-adornment-amount"
+                                       variant="outlined"
+                                       label="Texto del marcador"
+                                       InputProps={{
+                                           startAdornment: <InputAdornment position="start">📌</InputAdornment>,
+                                       }}
+                                />
+                            </div>
+                        <hr style={{color: "black", marginTop: "1rem", marginBottom: "1rem"}}/>
                         <Typography gutterBottom variant="headline" component="h2">
-                            {this.state.data.criminal && this.state.data.criminal.name ? this.state.data.criminal.name : 'No se especifico nombre.'}
+                            <strong>Nombre de la persona: </strong>{this.state.data.criminal && this.state.data.criminal.name ? this.state.data.criminal.name : 'No se especifico nombre.'}
                         </Typography>
                         <Typography component="p">
-                            {this.state.data.notes === '' || this.state.data.notes == null ? 'No notes' : this.state.data.notes}
+                            <strong>Notas: </strong>{this.state.data.notes === '' || this.state.data.notes == null ? 'No notes' : this.state.data.notes}
                         </Typography>
                         {this.state.api_data?
                             <DynamicTimelineChart api_data={this.state.api_data}/>:'Loading data............'
