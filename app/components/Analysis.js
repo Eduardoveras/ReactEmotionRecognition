@@ -21,11 +21,14 @@ class Analysis extends React.Component {
             data: [],
             api_data: null,
             video_id: window.location.href.split('/').pop(),
+            text_field:'',
         };
         this.globalPlayer=null;
         this.setPlayer=this.setPlayer.bind(this);
         this.nextMark=this.nextMark.bind(this);
         this.prevMark=this.prevMark.bind(this);
+        this.addMark=this.addMark.bind(this);
+        this.handleChange=this.handleChange.bind(this);
     }
 
     componentWillMount() {
@@ -94,7 +97,7 @@ class Analysis extends React.Component {
                        text: "text"
                    },
                    {
-                       time: 5,
+                       time: 20,
                        text: "here"
                    }
                ]
@@ -127,6 +130,20 @@ class Analysis extends React.Component {
 
     }
 
+    addMark(text_message){
+        if (this.globalPlayer){
+            this.globalPlayer.markers.add([{ time: this.globalPlayer.currentTime(), text: this.state.text_field}]);;
+        }else {
+            console.log("Error");
+        }
+
+    }
+
+    handleChange = event => {
+        this.setState({ [event.target.name]: event.target.value });
+    };
+
+
     render() {
 
         return (
@@ -143,6 +160,8 @@ class Analysis extends React.Component {
                             </video>:'Loading Video....'}
                             <button onClick={this.nextMark}>NEXT</button>
                         <button onClick={this.prevMark}>PREVIOUS</button>
+                        <button onClick={this.addMark.bind(this, 'YOLO')}>ADD MESSAGE</button>
+                        <input type="text" name="text_field" onChange={this.handleChange}/>
 
                         <Typography gutterBottom variant="headline" component="h2">
                             {this.state.data.criminal && this.state.data.criminal.name ? this.state.data.criminal.name : 'No se especifico nombre.'}
