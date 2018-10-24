@@ -81,7 +81,6 @@ class Cases extends React.Component {
 
     createNewCase(){
         let URL = BASE_URL_PATH+'/cases';
-        console.log(URL);
         axios.post(URL,
             { case:
                 {

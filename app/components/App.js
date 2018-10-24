@@ -103,7 +103,7 @@ class App extends React.Component {
             return;
         }
 
-        console.log('Created MediaRecorder', this.mediaRecorder, 'with options', {mimeType: 'video/webm;codecs=vp9'});
+        //console.log('Created MediaRecorder', this.mediaRecorder, 'with options', {mimeType: 'video/webm;codecs=vp9'});
         this.mediaRecorder.onstop = (event) => {
             console.log('Recorder stopped: ', event);
         };
@@ -282,7 +282,7 @@ class App extends React.Component {
                                                 <TextField type="text" name="name" onChange={this.handleChange}
                                                            id="outlined-full-width"
                                                            label="Notas"
-                                                           style={{width: "50.75rem", height: "2.2rem", backgroundColor: "white"}}
+                                                           style={{width: "40.75rem", height: "2.2rem", backgroundColor: "white"}}
                                                            placeholder="Notas de la sesión"
                                                            margin="normal"
                                                            variant="outlined"

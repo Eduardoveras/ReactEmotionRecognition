@@ -59,21 +59,21 @@ class ButtonAppBar extends React.Component {
           this.infoUser = this.infoUser.split(',');
           this.infoUser = this.infoUser[0].split(':');
           this.infoUser = this.infoUser[1].split('"');
-          console.log(this.infoUser);
+          //console.log(this.infoUser);
 
           this.userPhoto = localStorage.getItem(localStorage.key(0));
           this.userPhoto = this.userPhoto.split(',');
           this.userPhoto = this.userPhoto[2].split(':');
           this.userPhoto = this.userPhoto[2].split('"');
           this.userPhoto = "https:" + this.userPhoto[0];
-          console.log(this.userPhoto);
+          //console.log(this.userPhoto);
           this.setState({logueado: true});
           usuario = this.infoUser[1];
       } catch(e){
           console.log(e.toString());
       }
 
-      console.log(window.location.href);
+      //console.log(window.location.href);
 
       for(let i = 0; i < this.state.administradores.length; i++){
           if(this.state.administradores[i] === usuario){

@@ -12,6 +12,8 @@ import Button from "@material-ui/core/Button/Button";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faFileVideo} from '@fortawesome/free-solid-svg-icons'
+import videojs from 'video.js'
+import markers from 'videojs-markers'
 
 library.add(faFileVideo);
 
@@ -36,12 +38,38 @@ class Cases extends React.Component {
         let URL = BASE_URL_PATH+'/cases/'+this.state.case_id;
         axios.get(URL)
             .then((response) => {
-                console.log(response.data);
-                this.setState({ data: response.data });
+                this.setState({ data: response.data },
+                    () => this.state.data.face_video_analysis.forEach(function(element) {
+                        videojs("example_video_"+element.id, {}, function(){
+                            this.markers({
+                                markerStyle: {
+                                    'width':'8px',
+                                    'background-color': 'red'
+                                },
+                                markers: [
+                                    {time: 1, text: "this"},
+                                    {time: 2,  text: "is"},
+                                    {time: 3.5,text: "so"},
+                                    {time: 28,  text: "cool"}
+                                ]
+                            });
+                        });
+                    })
+                );
             })
             .catch((error) => {
                 console.log(error);
             });
+    }
+    componentDidMount(){
+
+        if(this.state.data.face_video_analysis){
+
+
+
+
+        }
+
     }
 
     render() {
@@ -62,7 +90,7 @@ class Cases extends React.Component {
                             <Card style={cardStyle}>
 
                                 <CardContent>
-                                    <video controls style={videoStyle} name="media">
+                                    <video className="video-js" id={"example_video_"+d.id} controls style={videoStyle} name="media">
                                         <source src={d.video_base64}
                                                 type="video/webm"/>
                                     </video>
@@ -77,6 +105,9 @@ class Cases extends React.Component {
                                 <CardActions>
                                     <Button href={'/reports/'+d.id} variant="contained" size="small" color="primary">
                                         <FontAwesomeIcon icon="file-video"/> &nbsp; Ver Reporte
+                                    </Button>
+                                    <Button href={'/analisis/'+d.id} variant="contained" size="small" color="secondary" style={{color: "white"}}>
+                                        <FontAwesomeIcon icon="search-plus"/> &nbsp; Análisis
                                     </Button>
                                 </CardActions>
                             </Card>
