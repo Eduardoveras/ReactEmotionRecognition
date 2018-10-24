@@ -7,7 +7,7 @@ const MinifyPlugin = require('babel-minify-webpack-plugin');
 
 
 const config = {
-  devtool: 'cheap-module-source-map',
+  devtool: false,
 
   entry: [
     './main.js',
