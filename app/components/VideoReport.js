@@ -96,6 +96,12 @@ class VideoReport extends React.Component {
                                     SUMMARY
                                 </Typography>
                                 <Typography variant="body1" gutterBottom>
+                                    {this.state.summary_data&& this.state.summary_data.criminal?"Persona Entrevistada: "+this.state.summary_data.criminal.name:"Unknown person"}
+                                </Typography>
+                                <Typography variant="body1" gutterBottom>
+                                    {this.state.summary_data?"Fecha: "+this.state.summary_data.created_at:"Unknown person"}
+                                </Typography>
+                                <Typography variant="body1" gutterBottom>
                                     {this.state.summary_data?
                                         "El genero detectado de la persona analizada es "+this.state.summary_data.average_gender
                                         +" ,se estima que su edad esta en el rango de "+this.state.summary_data.average_age+" anios de edad. "
@@ -108,6 +114,7 @@ class VideoReport extends React.Component {
                                         +",Desprecio: "+this.state.summary_data.emotions_percentage[6]
                                         +",Sorpresa: "+this.state.summary_data.emotions_percentage[7]
                                         :'loading data...'}
+
 
                                 </Typography>
                             </div>
