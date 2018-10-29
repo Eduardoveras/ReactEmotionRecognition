@@ -27,7 +27,7 @@ class VideoReport extends React.Component {
         this.state = {
             api_data: [],
             report_id: window.location.href.split('/').pop(),
-            notes: '',
+            summary_data: null,
             textVisible: true,
             graphsVisible: true
         };
@@ -48,7 +48,8 @@ class VideoReport extends React.Component {
             });
         axios.get(URL+'/face_video_analyses/'+this.state.report_id)
             .then((response) => {
-                this.setState({notes: response.data.notes});
+                //this.setState({notes: response.data.notes});
+                this.setState({summary_data: response.data})
             })
             .catch((error) => {
                 console.log(error);
@@ -85,7 +86,7 @@ class VideoReport extends React.Component {
                     {this.state.textVisible ? <Button  color="primary" onClick={this.handleTextVisible}><FontAwesomeIcon icon="eye-slash" style={{color: "grey"}}/> &nbsp;Ocultar resumen</Button>: <Button color="primary" onClick={this.handleTextVisible}><FontAwesomeIcon icon="file-alt" style={{color: "grey"}}/> &nbsp;Mostrar resumen</Button>}
                 </Typography>
                 <Typography variant="display1" gutterBottom>
-                    Notas del reporte: {this.state.notes}
+                    Notas del reporte: {this.state.summary_data?this.state.summary_data.notes:'loading data...'}
                 </Typography>
                 {this.state.textVisible &&
                     <Card style={cardStyle}>
@@ -95,15 +96,19 @@ class VideoReport extends React.Component {
                                     SUMMARY
                                 </Typography>
                                 <Typography variant="body1" gutterBottom>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lacinia augue a auctor
-                                    mattis.
-                                    Aenean hendrerit elit sed augue tristique varius. Fusce vitae tortor non turpis
-                                    condimentum maximus
-                                    ut sit amet leo. Fusce elementum, ipsum non rutrum dapibus, felis purus malesuada
-                                    tellus,
-                                    non iaculis tellus justo in nisl. Morbi ac molestie risus. Curabitur consequat aliquam
-                                    semper.
-                                    Donec ultricies tempor arcu tempor ullamcorper.
+                                    {this.state.summary_data?
+                                        "El genero detectado de la persona analizada es "+this.state.summary_data.average_gender
+                                        +" ,se estima que su edad esta en el rango de "+this.state.summary_data.average_age+" anios de edad. "
+                                        +"Las emociones principales son las siguientes: "
+                                        +"Felicidad: "+this.state.summary_data.emotions_percentage[0]
+                                        +",Miedo: "+this.state.summary_data.emotions_percentage[1]
+                                        +",Enojo: "+this.state.summary_data.emotions_percentage[2]
+                                        +",Asco: "+this.state.summary_data.emotions_percentage[3]
+                                        +",Tristeza: "+this.state.summary_data.emotions_percentage[4]
+                                        +",Desprecio: "+this.state.summary_data.emotions_percentage[6]
+                                        +",Sorpresa: "+this.state.summary_data.emotions_percentage[7]
+                                        :'loading data...'}
+
                                 </Typography>
                             </div>
                         </CardContent>
