@@ -84,7 +84,7 @@ class VideoReport extends React.Component {
 
     render() {
         const cardStyle = {
-            margin: '58px 200px',
+            margin: '58px 120px',
         };
         return (
             <div className='container'>
@@ -110,11 +110,11 @@ class VideoReport extends React.Component {
                                 <Table>
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell numeric>Persona entrevistada</TableCell>
-                                            <TableCell numeric>Fecha del reporte</TableCell>
-                                            <TableCell numeric>Duración (seg)</TableCell>
-                                            <TableCell numeric>Genero</TableCell>
-                                            <TableCell numeric>Rango de edad</TableCell>
+                                        <TableCell numeric><Typography variant="body1">Persona entrevistada {' '} <span style={{fontSize: "1rem"}}>👨</span></Typography></TableCell>
+                                        <TableCell numeric><Typography variant="body1">Fecha del reporte {' '} <span style={{fontSize: "1rem"}}>📆</span></Typography></TableCell>
+                                        <TableCell numeric><Typography variant="body1">Duración (seg) {' '} <span style={{fontSize: "1rem"}}>⏱</span></Typography></TableCell>
+                                        <TableCell numeric><Typography variant="body1">Genero {' '} <span style={{fontSize: "1rem"}}>🚻</span></Typography></TableCell>
+                                        <TableCell numeric><Typography variant="body1">Rango de edad {' '} <span style={{fontSize: "1rem"}}>🔞</span></Typography></TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -143,13 +143,13 @@ class VideoReport extends React.Component {
                                 <Table>
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell numeric>Felicidad</TableCell>
-                                            <TableCell numeric>Miedo</TableCell>
-                                            <TableCell numeric>Enojo</TableCell>
-                                            <TableCell numeric>Disgusto</TableCell>
-                                            <TableCell numeric>Tristeza</TableCell>
-                                            <TableCell numeric>Desprecio</TableCell>
-                                            <TableCell numeric>Sorpresa</TableCell>
+                                            <TableCell numeric><Typography variant="body1">Felicidad {' '} <span style={{fontSize: "1rem"}}>😃</span></Typography></TableCell>
+                                            <TableCell numeric><Typography variant="body1">Miedo {' '} <span style={{fontSize: "1rem"}}>😱</span></Typography></TableCell>
+                                            <TableCell numeric><Typography variant="body1">Enojo {' '} <span style={{fontSize: "1rem"}}>😡</span></Typography></TableCell>
+                                            <TableCell numeric><Typography variant="body1">Disgusto {' '} <span style={{fontSize: "1rem"}}>😫</span></Typography></TableCell>
+                                            <TableCell numeric><Typography variant="body1">Tristeza {' '} <span style={{fontSize: "1rem"}}>😢</span></Typography></TableCell>
+                                            <TableCell numeric><Typography variant="body1">Desprecio {' '} <span style={{fontSize: "1rem"}}>😕</span></Typography></TableCell>
+                                            <TableCell numeric><Typography variant="body1">Sorpresa {' '} <span style={{fontSize: "1rem"}}>😲</span></Typography></TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -185,11 +185,11 @@ class VideoReport extends React.Component {
                                     <b><i>Momentos en los que hubo emociones paralelas</i></b>
                                     <hr/>
                                 </Typography>
-                                <Table style={{width: "270px"}}>
+                                <Table style={{width: "370px"}}>
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell numeric>Número</TableCell>
-                                            <TableCell numeric>Momento (tiempo)</TableCell>
+                                            <TableCell numeric><Typography variant="body1">Número {' '} <span style={{fontSize: "1rem"}}>#️⃣ </span></Typography></TableCell>
+                                            <TableCell numeric><Typography variant="body1">Momento (tiempo) {' '} <span style={{fontSize: "1rem"}}>⏱</span></Typography></TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
