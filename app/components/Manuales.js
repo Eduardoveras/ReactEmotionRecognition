@@ -21,7 +21,8 @@ const welcomeStyle = {
     padding: "20px",
     textAlign: 'center',
     marginRight: "20%",
-    marginLeft: "20%"
+    marginLeft: "20%",
+    backgroundColor: "#fffec1"
 };
 
 class Manuales extends React.Component {
@@ -34,7 +35,7 @@ class Manuales extends React.Component {
                 <Grid container spacing={24}>
                     <Grid item xs={12}>
                         <Paper style={welcomeStyle}>
-                            <Typography variant="body1" color="inherit">Bienvenido a la sección de manuales, da click encima de una imagen y se reproducirá la imagen animada correspondiente al título.</Typography>
+                            <Typography variant="body1" color="inherit" >Bienvenido a la sección de manuales, da click encima de una imagen y se reproducirá la imagen animada correspondiente al título.</Typography>
                         </Paper>
                     </Grid>
                 </Grid>
@@ -43,30 +44,44 @@ class Manuales extends React.Component {
                         <Paper style={paperStyle}>
                             <Typography variant="title" color="inherit">¿Cómo loguearse?</Typography>
                             <GifPlayer gif="https://i.imgur.com/63SPRXA.gif" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
-                            <Button variant="contained" color="primary" target="_blank" href="https://i.imgur.com/63SPRXA.gif"> <FontAwesomeIcon icon="search-plus"/> &nbsp;Ver en grande (loguearse)</Button>
+                            <Button variant="extendedFab" color="primary" target="_blank" href="https://i.imgur.com/63SPRXA.gif">🔎 &nbsp;Ver en grande (loguearse)</Button>
                         </Paper>
                     </Grid>
                     <Grid item xs={6}>
                         <Paper style={paperStyle}>
                             <Typography variant="title" color="inherit">¿Cómo detectar emociones?</Typography>
-                            <GifPlayer gif="https://i.imgur.com/YCyzT8A.gif" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
-                            <Button variant="contained" color="primary" target="_blank" href="https://i.imgur.com/YCyzT8A.gif"> <FontAwesomeIcon icon="search-plus"/> &nbsp;Ver en grande (detectar emociones)</Button>
+                            <GifPlayer gif="https://i.imgur.com/9HOQIwG.gif" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
+                            <Button variant="extendedFab" color="primary" target="_blank" href="https://i.imgur.com/9HOQIwG.gif">🔎 &nbsp;Ver en grande (detectar emociones)</Button>
                         </Paper>
                     </Grid>
                 </Grid>
                 <Grid container spacing={24}>
                     <Grid item xs={6}>
                         <Paper style={paperStyle}>
-                            <Typography variant="title" color="inherit">¿Cómo interactuar con los reportes?</Typography>
-                            <GifPlayer gif="https://i.imgur.com/4xp7ak2.gif" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
-                            <Button variant="contained" color="primary" target="_blank" href="https://i.imgur.com/4xp7ak2.gif"> <FontAwesomeIcon icon="search-plus"/> &nbsp;Ver en grande (reportes)</Button>
+                            <Typography variant="title" color="inherit">¿Cómo interactuar con los reportes y el resumen estadístico?</Typography>
+                            <GifPlayer gif="https://i.imgur.com/yudWW87.gif" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
+                            <Button variant="extendedFab" color="primary" target="_blank" href="https://i.imgur.com/yudWW87.gif">🔎 &nbsp;Ver en grande (reportes y resumen)</Button>
                         </Paper>
                     </Grid>
                     <Grid item xs={6}>
                         <Paper style={paperStyle}>
-                            <Typography variant="title" color="inherit">Otro a poner luego</Typography>
-                            <GifPlayer gif="#" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
-                            <Button variant="contained" color="primary" target="_blank" href="#"><FontAwesomeIcon icon="search-plus"/> &nbsp;Ver en grande (otro)</Button>
+                            <Typography variant="title" color="inherit">¿Cómo interactuar con los casos?</Typography>
+                            <GifPlayer gif="https://i.imgur.com/hDRGn7l.gif" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
+                            <Button variant="extendedFab" color="primary" target="_blank" href="https://i.imgur.com/hDRGn7l.gif">🔎 &nbsp;Ver en grande (casos)</Button>
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Paper style={paperStyle}>
+                            <Typography variant="title" color="inherit">¿Cómo interactuar con los ajustes?</Typography>
+                            <GifPlayer gif="https://i.imgur.com/2KKEkHS.gif" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
+                            <Button variant="extendedFab" color="primary" target="_blank" href=" https://i.imgur.com/2KKEkHS.gif">🔎 &nbsp;Ver en grande (ajustes)</Button>
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Paper style={paperStyle}>
+                            <Typography variant="title" color="inherit">¿Cómo interactuar con los marcadores?</Typography>
+                            <GifPlayer gif="https://i.imgur.com/r1bC4XR.gif" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
+                            <Button variant="extendedFab" color="primary" target="_blank" href=" https://i.imgur.com/r1bC4XR.gif">🔎 &nbsp;Ver en grande (marcadores)</Button>
                         </Paper>
                     </Grid>
                 </Grid>
