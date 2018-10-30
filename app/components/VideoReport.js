@@ -136,6 +136,16 @@ class VideoReport extends React.Component {
                                 <Typography variant="body1" gutterBottom>
                                     <b>Sorpresa:</b> {this.state.summary_data.emotions_percentage[7]} %
                                 </Typography>
+                                <Typography variant="body1" gutterBottom>
+                                    De todas estas emociones, la principal detectada fue la de <b> {this.state.summary_data.dominant_emotion} </b>, la cual tiene la mayor aparicion.
+                                </Typography>
+                                    {this.state.summary_data.notable_moments.map(function(d){return (
+                                        <Typography variant="body1" gutterBottom>
+                                            {d}
+                                        </Typography>
+                                    )
+                                    })}
+
                             </div>
                             }
                         </CardContent>
