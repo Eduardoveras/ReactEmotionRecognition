@@ -72,6 +72,11 @@ class VideoReport extends React.Component {
         });
     }
 
+    cambiarFecha(input) {
+        var d = new Date(input);
+        return d.getDate() + "/" + (d.getMonth()+ 1) + "/" + d.getFullYear() + "  " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+    }
+
     render() {
         const cardStyle = {
             margin: '58px 200px',
@@ -95,25 +100,25 @@ class VideoReport extends React.Component {
                             <div>
 
                                 <Typography variant="display1" gutterBottom>
-                                    SUMMARY
+                                    RESUMEN ESTADÍSTICO
                                 </Typography>
                                 <Typography variant="body1" gutterBottom>
                                     {this.state.summary_data.criminal?"Persona Entrevistada: "+this.state.summary_data.criminal.name:"Unknown person"}
                                 </Typography>
                                 <Typography variant="body1" gutterBottom>
-                                    {"Fecha: "+this.state.summary_data.created_at}
+                                    {"Fecha del reporte: "+ this.cambiarFecha(this.state.summary_data.created_at)}
                                 </Typography>
                                 <Typography variant="body1" gutterBottom>
-                                    {"Duracion: "+this.state.summary_data.Duration}
+                                    {"Duración: "+this.state.summary_data.duration.substr(0, 6)} segundos
                                 </Typography>
                                 <Typography variant="body1" gutterBottom>
                                     El genero detectado de la persona analizada es {this.state.summary_data.average_gender}
                                 </Typography>
                                 <Typography variant="body1" gutterBottom>
-                                        se estima que su edad esta en el rango de {this.state.summary_data.average_age}" anios de edad.
+                                        se estima que su edad esta en el rango de {this.state.summary_data.average_age} años de edad.
                                 </Typography>
                                 <Typography variant="body1" gutterBottom>
-                                        Las emociones principales son las siguientes:
+                                        Los promedios de las emociones principales son los siguientes:
                                 </Typography>
                                 <Typography variant="body1" gutterBottom>
                                     <b>Felicidad:</b> {this.state.summary_data.emotions_percentage[0]}%
@@ -125,7 +130,7 @@ class VideoReport extends React.Component {
                                     <b>Enojo:</b> {this.state.summary_data.emotions_percentage[2]}%
                                 </Typography>
                                 <Typography variant="body1" gutterBottom>
-                                    <b>Asco:</b> {this.state.summary_data.emotions_percentage[3]}%
+                                    <b>Disgusto:</b> {this.state.summary_data.emotions_percentage[3]}%
                                 </Typography>
                                 <Typography variant="body1" gutterBottom>
                                     <b>Tristeza:</b> {this.state.summary_data.emotions_percentage[4]}%
