@@ -13,6 +13,11 @@ import PositiveNegativeChart from './fragments/PositiveNegativeEmotionsChart'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faChartBar, faFileAlt, faEyeSlash, faDownload} from '@fortawesome/free-solid-svg-icons'
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 
 library.add(faChartBar);
 library.add(faFileAlt);
@@ -98,59 +103,109 @@ class VideoReport extends React.Component {
                         <CardContent>
                             {this.state.summary_data&&
                             <div>
-
                                 <Typography variant="display1" gutterBottom>
                                     RESUMEN ESTADÍSTICO
                                 </Typography>
-                                <Typography variant="body1" gutterBottom>
-                                    {this.state.summary_data.criminal?"Persona Entrevistada: "+this.state.summary_data.criminal.name:"Unknown person"}
+                                <hr/>
+                                <Table>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell numeric>Persona entrevistada</TableCell>
+                                            <TableCell numeric>Fecha del reporte</TableCell>
+                                            <TableCell numeric>Duración (seg)</TableCell>
+                                            <TableCell numeric>Genero</TableCell>
+                                            <TableCell numeric>Rango de edad</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        <TableCell numeric>
+                                            {this.state.summary_data.criminal? this.state.summary_data.criminal.name:"N/A"}
+                                        </TableCell>
+                                        <TableCell numeric>
+                                            {this.cambiarFecha(this.state.summary_data.created_at)}
+                                        </TableCell>
+                                        <TableCell numeric>
+                                            {this.state.summary_data.duration.substr(0, 6)} segundos
+                                        </TableCell>
+                                        <TableCell numeric>
+                                            {this.state.summary_data.average_gender}
+                                        </TableCell>
+                                        <TableCell numeric>
+                                            {this.state.summary_data.average_age} años
+                                        </TableCell>
+                                    </TableBody>
+                                </Table>
+                                <br/>
+                                <Typography variant="subheading" gutterBottom style={{color: "grey"}}>
+                                    <b><i>Promedios de las emociones</i></b>
+                                    <hr/>
                                 </Typography>
+                                <Table>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell numeric>Felicidad</TableCell>
+                                            <TableCell numeric>Miedo</TableCell>
+                                            <TableCell numeric>Enojo</TableCell>
+                                            <TableCell numeric>Disgusto</TableCell>
+                                            <TableCell numeric>Tristeza</TableCell>
+                                            <TableCell numeric>Desprecio</TableCell>
+                                            <TableCell numeric>Sorpresa</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        <TableCell numeric>
+                                            {this.state.summary_data.emotions_percentage[0]}%
+                                        </TableCell>
+                                        <TableCell numeric>
+                                            {this.state.summary_data.emotions_percentage[1]}%
+                                        </TableCell>
+                                        <TableCell numeric>
+                                            {this.state.summary_data.emotions_percentage[2]}%
+                                        </TableCell>
+                                        <TableCell numeric>
+                                            {this.state.summary_data.emotions_percentage[3]}%
+                                        </TableCell>
+                                        <TableCell numeric>
+                                            {this.state.summary_data.emotions_percentage[4]}%
+                                        </TableCell>
+                                        <TableCell numeric>
+                                            {this.state.summary_data.emotions_percentage[6]}%
+                                        </TableCell>
+                                        <TableCell numeric>
+                                            {this.state.summary_data.emotions_percentage[7]}%
+                                        </TableCell>
+                                    </TableBody>
+                                </Table>
+                                <br/>
                                 <Typography variant="body1" gutterBottom>
-                                    {"Fecha del reporte: "+ this.cambiarFecha(this.state.summary_data.created_at)}
+                                    De todas estas emociones, la principal detectada fue la de <b> {this.state.summary_data.dominant_emotion} </b>, la cual tiene la mayor aparición.
                                 </Typography>
-                                <Typography variant="body1" gutterBottom>
-                                    {"Duración: "+this.state.summary_data.duration.substr(0, 6)} segundos
+                                <br/>
+                                <Typography variant="subheading" gutterBottom style={{color: "grey"}}>
+                                    <b><i>Momentos en los que hubo emociones paralelas</i></b>
+                                    <hr/>
                                 </Typography>
-                                <Typography variant="body1" gutterBottom>
-                                    El genero detectado de la persona analizada es {this.state.summary_data.average_gender}
-                                </Typography>
-                                <Typography variant="body1" gutterBottom>
-                                        se estima que su edad esta en el rango de {this.state.summary_data.average_age} años de edad.
-                                </Typography>
-                                <Typography variant="body1" gutterBottom>
-                                        Los promedios de las emociones principales son los siguientes:
-                                </Typography>
-                                <Typography variant="body1" gutterBottom>
-                                    <b>Felicidad:</b> {this.state.summary_data.emotions_percentage[0]}%
-                                </Typography>
-                                <Typography variant="body1" gutterBottom>
-                                    <b>Miedo:</b> {this.state.summary_data.emotions_percentage[1]}%
-                                </Typography>
-                                <Typography variant="body1" gutterBottom>
-                                    <b>Enojo:</b> {this.state.summary_data.emotions_percentage[2]}%
-                                </Typography>
-                                <Typography variant="body1" gutterBottom>
-                                    <b>Disgusto:</b> {this.state.summary_data.emotions_percentage[3]}%
-                                </Typography>
-                                <Typography variant="body1" gutterBottom>
-                                    <b>Tristeza:</b> {this.state.summary_data.emotions_percentage[4]}%
-                                </Typography>
-                                <Typography variant="body1" gutterBottom>
-                                    <b>Desprecio:</b> {this.state.summary_data.emotions_percentage[6]}%
-                                </Typography>
-                                <Typography variant="body1" gutterBottom>
-                                    <b>Sorpresa:</b> {this.state.summary_data.emotions_percentage[7]} %
-                                </Typography>
-                                <Typography variant="body1" gutterBottom>
-                                    De todas estas emociones, la principal detectada fue la de <b> {this.state.summary_data.dominant_emotion} </b>, la cual tiene la mayor aparicion.
-                                </Typography>
-                                    {this.state.summary_data.notable_moments.map(function(d){return (
-                                        <Typography variant="body1" gutterBottom>
-                                            {d}
-                                        </Typography>
-                                    )
-                                    })}
-
+                                <Table style={{width: "270px"}}>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell numeric>Número</TableCell>
+                                            <TableCell numeric>Momento (tiempo)</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {this.state.summary_data.notable_moments.map(function(d, index){return (
+                                            <TableRow>
+                                                <TableCell>
+                                                    {index}
+                                                </TableCell>
+                                                <TableCell numeric>
+                                                    {d.substr(49, 57)}
+                                                </TableCell>
+                                            </TableRow>
+                                        )
+                                        })}
+                                    </TableBody>
+                                </Table>
                             </div>
                             }
                         </CardContent>
