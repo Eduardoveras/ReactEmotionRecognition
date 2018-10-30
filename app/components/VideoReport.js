@@ -91,33 +91,53 @@ class VideoReport extends React.Component {
                 {this.state.textVisible &&
                     <Card style={cardStyle}>
                         <CardContent>
+                            {this.state.summary_data&&
                             <div>
+
                                 <Typography variant="display1" gutterBottom>
                                     SUMMARY
                                 </Typography>
                                 <Typography variant="body1" gutterBottom>
-                                    {this.state.summary_data&& this.state.summary_data.criminal?"Persona Entrevistada: "+this.state.summary_data.criminal.name:"Unknown person"}
+                                    {this.state.summary_data.criminal?"Persona Entrevistada: "+this.state.summary_data.criminal.name:"Unknown person"}
                                 </Typography>
                                 <Typography variant="body1" gutterBottom>
-                                    {this.state.summary_data?"Fecha: "+this.state.summary_data.created_at:"Unknown person"}
+                                    {"Fecha: "+this.state.summary_data.created_at}
                                 </Typography>
                                 <Typography variant="body1" gutterBottom>
-                                    {this.state.summary_data?
-                                        "El genero detectado de la persona analizada es "+this.state.summary_data.average_gender
-                                        +" ,se estima que su edad esta en el rango de "+this.state.summary_data.average_age+" anios de edad. "
-                                        +"Las emociones principales son las siguientes: "
-                                        +"Felicidad: "+this.state.summary_data.emotions_percentage[0]
-                                        +",Miedo: "+this.state.summary_data.emotions_percentage[1]
-                                        +",Enojo: "+this.state.summary_data.emotions_percentage[2]
-                                        +",Asco: "+this.state.summary_data.emotions_percentage[3]
-                                        +",Tristeza: "+this.state.summary_data.emotions_percentage[4]
-                                        +",Desprecio: "+this.state.summary_data.emotions_percentage[6]
-                                        +",Sorpresa: "+this.state.summary_data.emotions_percentage[7]
-                                        :'loading data...'}
-
-
+                                    {"Duracion: "+this.state.summary_data.Duration}
+                                </Typography>
+                                <Typography variant="body1" gutterBottom>
+                                    El genero detectado de la persona analizada es {this.state.summary_data.average_gender}
+                                </Typography>
+                                <Typography variant="body1" gutterBottom>
+                                        se estima que su edad esta en el rango de {this.state.summary_data.average_age}" anios de edad.
+                                </Typography>
+                                <Typography variant="body1" gutterBottom>
+                                        Las emociones principales son las siguientes:
+                                </Typography>
+                                <Typography variant="body1" gutterBottom>
+                                    <b>Felicidad:</b> {this.state.summary_data.emotions_percentage[0]}%
+                                </Typography>
+                                <Typography variant="body1" gutterBottom>
+                                    <b>Miedo:</b> {this.state.summary_data.emotions_percentage[1]}%
+                                </Typography>
+                                <Typography variant="body1" gutterBottom>
+                                    <b>Enojo:</b> {this.state.summary_data.emotions_percentage[2]}%
+                                </Typography>
+                                <Typography variant="body1" gutterBottom>
+                                    <b>Asco:</b> {this.state.summary_data.emotions_percentage[3]}%
+                                </Typography>
+                                <Typography variant="body1" gutterBottom>
+                                    <b>Tristeza:</b> {this.state.summary_data.emotions_percentage[4]}%
+                                </Typography>
+                                <Typography variant="body1" gutterBottom>
+                                    <b>Desprecio:</b> {this.state.summary_data.emotions_percentage[6]}%
+                                </Typography>
+                                <Typography variant="body1" gutterBottom>
+                                    <b>Sorpresa:</b> {this.state.summary_data.emotions_percentage[7]} %
                                 </Typography>
                             </div>
+                            }
                         </CardContent>
                     </Card>
                 }
