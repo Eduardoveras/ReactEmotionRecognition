@@ -77,6 +77,7 @@ class VideoReport extends React.Component {
         });
     }
 
+
     cambiarFecha(input) {
         var d = new Date(input);
         return d.getDate() + "/" + (d.getMonth()+ 1) + "/" + d.getFullYear() + "  " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
@@ -178,9 +179,10 @@ class VideoReport extends React.Component {
                                 </Table>
                                 <br/>
                                 <Typography variant="body1" gutterBottom>
-                                    De todas estas emociones, la principal detectada fue la de <b> {this.state.summary_data.dominant_emotion} </b>, la cual tiene la mayor aparición.
+                                    De todas estas emociones, la principal detectada fue la de <b> {this.state.summary_data.dominant_emotion}</b>, la cual tiene la mayor aparición.
+                                    Y la de menor aparición fue <b> {this.state.summary_data.lesser_emotion}</b>.
+                                <br/> <br/>
                                 </Typography>
-                                <br/>
                                 <Typography variant="subheading" gutterBottom style={{color: "grey"}}>
                                     <b><i>Momentos en los que hubo emociones paralelas</i></b>
                                     <hr/>
