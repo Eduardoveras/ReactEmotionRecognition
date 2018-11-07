@@ -22,6 +22,10 @@ import {faChartBar, faFileAlt, faHome, faSignOutAlt, faUserSecret} from "@fortaw
 import {library} from "@fortawesome/fontawesome-svg-core/index";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faTrash, faEye} from '@fortawesome/free-solid-svg-icons'
+import ReactTable from 'react-table'
+import 'react-table/react-table.css'
+
+
 
 library.add(faTrash);
 library.add(faEye);
@@ -41,12 +45,11 @@ class Reports extends React.Component {
         this.state = {
             data: [],
             page: 0,
-            rowsPerPage: 10
+            rowsPerPage: 10,
+            sortBy: 'test'
         };
+        this.handleChangeSort = this.handleChangeSort.bind(this);
     }
-    handleChangePage = (event, page) => {
-        this.setState({ page });
-    };
 
     deleteReport(id){
         let decision = confirm("Estás seguro de que quieres archivar este reporte?\nEsta acción no puede ser deshecha.");
@@ -67,10 +70,6 @@ class Reports extends React.Component {
 
     }
 
-    handleChangeRowsPerPage = event => {
-        this.setState({ rowsPerPage: event.target.value });
-    };
-
     componentWillMount() {
       let URL = URL_PATH;
       axios.get(URL)
@@ -83,7 +82,33 @@ class Reports extends React.Component {
     }
 
     render() {
+        const columns = [{
+            Header: 'ID',
+            accessor: 'id'
+        }, {
+            Header: 'Criminal Name',
+            accessor: 'criminal.name',
+        }, {
+            Header: 'Duration',
+            accessor: 'duration',
+        }, {
+            Header: 'test',
+            accessor: 'friend.age'
+        },{
+            Header: 'Ver',
+            id: 'edit',
+            accessor: 'id',
+            Cell: ({value}) => (<Button variant="contained" color="primary" href={"/reports/"+value}>
+                <FontAwesomeIcon icon="eye"/> &nbsp;Ver
+            </Button>)
+        },{
+            Header: 'Borrar',
+            id: 'delete',
+            accessor: 'id',
+            Cell: ({value}) => (<Button style={{color: "white"}} variant="contained" color="secondary" onClick={()=>{this.deleteReport(value)}}><FontAwesomeIcon icon="trash"/> &nbsp;Archivar</Button>)
+        }];
         const { data, rowsPerPage, page } = this.state;
+        console.log(data);
         const emptyRows =
             rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
@@ -93,70 +118,12 @@ class Reports extends React.Component {
                     Reportes
                 </Typography>
 
-                <Grid container spacing={32} >
-                    <Grid item xs={12}>
-                        <Paper>
-                            <div>
-                                <Table>
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell numeric>ID</TableCell>
-                                            <TableCell >Persona</TableCell>
-                                            <TableCell >Notas</TableCell>
-                                            <TableCell >Fecha</TableCell>
-                                            <TableCell >Acciones</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {data
-                                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                            .map(n => {
-                                                let created = new Date(n.created_at)
-                                                return (
-                                                    <TableRow key={n.id}>
-                                                        <TableCell component="th" scope="row">
-                                                            {n.id}
-                                                        </TableCell>
-                                                        <TableCell >Persona Personica</TableCell>
-                                                        <TableCell >{n.notes}</TableCell>
-
-                                                        <TableCell numeric>{created.toLocaleDateString('es-DO')}</TableCell>
-                                                        <TableCell>
-                                                            <Button variant="contained" color="primary" href={"/reports/"+n.id}>
-                                                                <FontAwesomeIcon icon="eye"/> &nbsp;Ver
-                                                            </Button>&nbsp; &nbsp;
-                                                            <Button variant="contained" color="secondary" style={{color: "white"}} onClick={this.deleteReport.bind(this, n.id)}>
-                                                                <FontAwesomeIcon icon="trash"/> &nbsp;Archivar
-                                                            </Button>
-                                                        </TableCell>
-                                                    </TableRow>
-                                                );
-                                            })}
-                                        {emptyRows > 0 && (
-                                            <TableRow style={{ height: 48 * emptyRows }}>
-                                                <TableCell colSpan={6} />
-                                            </TableRow>
-                                        )}
-                                    </TableBody>
-                                    <MuiThemeProvider theme={theme}>
-                                        <TableFooter>
-                                            <TableRow>
-                                                <TablePagination
-                                                    colSpan={3}
-                                                    count={data.length}
-                                                    rowsPerPage={rowsPerPage}
-                                                    page={page}
-                                                    onChangePage={this.handleChangePage}
-                                                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                                                />
-                                            </TableRow>
-                                        </TableFooter>
-                                    </MuiThemeProvider>
-                                </Table>
-                            </div>
-                        </Paper>
-                    </Grid>
-                </Grid>
+                <ReactTable
+                    nextText="Siguiente"
+                    prevText="Anterior"
+                    data={data}
+                    columns={columns}
+                />
             </div>
         );
     }
