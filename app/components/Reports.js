@@ -48,7 +48,7 @@ class Reports extends React.Component {
             rowsPerPage: 10,
             sortBy: 'test'
         };
-        this.handleChangeSort = this.handleChangeSort.bind(this);
+        //this.handleChangeSort = this.handleChangeSort.bind(this);
     }
 
     deleteReport(id){
