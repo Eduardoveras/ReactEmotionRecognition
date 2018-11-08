@@ -1,39 +1,22 @@
 /* eslint-disable react/prefer-stateless-function,no-console,no-restricted-globals,class-methods-use-this */
 import React from 'react';
 import axios from 'axios/index';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from "@material-ui/core/es/Typography/Typography";
-import TablePagination from "@material-ui/core/es/TablePagination/TablePagination";
-import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
-import { createMuiTheme } from "@material-ui/core/styles/index";
-import purple from "@material-ui/core/colors/purple";
-import { withTheme } from '@material-ui/core/styles'
-import TableFooter from "@material-ui/core/es/TableFooter/TableFooter";
 import {BASE_URL_PATH} from '../constants';
 import {library} from "@fortawesome/fontawesome-svg-core/index";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faPlus, faTrash, faEye} from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faEye, faPlus, faTrash} from '@fortawesome/free-solid-svg-icons'
+import ReactTable from "react-table";
 
 library.add(faTrash);
 library.add(faEye);
 library.add(faPlus);
 
-const theme = createMuiTheme({
-    palette: {
-        primary: { main: purple[500] }, // Purple and green play nicely together.
-        secondary: { main: '#11cb5f' }, // This is just green.A700 as hex.
-    },
-});
-
 class Cases extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             data: [],
@@ -41,14 +24,11 @@ class Cases extends React.Component {
             rowsPerPage: 10
         };
     }
-    handleChangePage = (event, page) => {
-        this.setState({ page });
-    };
 
-    deleteCase(id){
+    deleteCase(id) {
         let decision = confirm("Estás seguro de que quieres archivar este caso?\nEsta acción no puede ser deshecha.");
-        if (decision){
-            axios.patch(BASE_URL_PATH+'/cases/'+id,{case:{enabled:false}})
+        if (decision) {
+            axios.patch(BASE_URL_PATH + '/cases/' + id, {case: {enabled: false}})
                 .then(function (response) {
                     console.log(response);
                 })
@@ -63,30 +43,27 @@ class Cases extends React.Component {
 
     }
 
-    handleChangeRowsPerPage = event => {
-        this.setState({ rowsPerPage: event.target.value });
-    };
-
     componentWillMount() {
-        let URL = BASE_URL_PATH+'/cases';
+        let URL = BASE_URL_PATH + '/cases';
         axios.get(URL)
             .then((response) => {
                 console.log(response.data);
-                this.setState({ data: response.data });
+                this.setState({data: response.data});
             })
             .catch((error) => {
                 console.log(error);
             });
     }
 
-    createNewCase(){
-        let URL = BASE_URL_PATH+'/cases';
+    createNewCase() {
+        let URL = BASE_URL_PATH + '/cases';
         axios.post(URL,
-            { case:
-                {
-                    notes: ''
-                }
-        })
+            {
+                case:
+                    {
+                        notes: ''
+                    }
+            })
             .then((response) => {
                 window.location.pathname = '/casos/' + response.data.id;
             })
@@ -96,9 +73,31 @@ class Cases extends React.Component {
     }
 
     render() {
-        const { data, rowsPerPage, page } = this.state;
-        const emptyRows =
-            rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+        const columns = [{
+            Header: 'ID',
+            accessor: 'id'
+        }, {
+            Header: 'Notas',
+            accessor: 'notes',
+        }, {
+            Header: 'Fecha',
+            accessor: 'created_at',
+        }, {
+            Header: 'Ver',
+            id: 'edit',
+            accessor: 'id',
+            Cell: ({value}) => (<Button variant="contained" color="primary" href={"/casos/" + value}>
+                <FontAwesomeIcon icon="eye"/> &nbsp;Ver
+            </Button>)
+        }, {
+            Header: 'Borrar',
+            id: 'delete',
+            accessor: 'id',
+            Cell: ({value}) => (<Button style={{color: "white"}} variant="contained" color="secondary" onClick={() => {
+                this.deleteCase(value)
+            }}><FontAwesomeIcon icon="trash"/> &nbsp;Archivar</Button>)
+        }];
+        const {data} = this.state;
 
         return (
             <div className='container'>
@@ -109,66 +108,16 @@ class Cases extends React.Component {
                     </Button>
                 </Typography>
 
-                <Grid container spacing={32} >
+                <Grid container spacing={32}>
                     <Grid item xs={12}>
                         <Paper>
                             <div>
-                                <Table>
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell numeric>ID</TableCell>
-                                            <TableCell >Persona</TableCell>
-                                            <TableCell >Notas</TableCell>
-                                            <TableCell >Fecha</TableCell>
-                                            <TableCell >Acciones</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {data
-                                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                            .map(n => {
-                                                let created = new Date(n.created_at)
-                                                return (
-                                                    <TableRow key={n.id}>
-                                                        <TableCell component="th" scope="row">
-                                                            {n.id}
-                                                        </TableCell>
-                                                        <TableCell >Persona Personica</TableCell>
-                                                        <TableCell >{n.notes}</TableCell>
-
-                                                        <TableCell numeric>{created.toLocaleDateString('es-DO')}</TableCell>
-                                                        <TableCell>
-                                                            <Button variant="contained" color="primary" href={"/casos/"+n.id}>
-                                                                <FontAwesomeIcon icon="eye"/> &nbsp; Ver
-                                                            </Button> {'  '}
-                                                            <Button variant="contained" color="secondary" style={{color: "white"}} onClick={this.deleteCase.bind(this, n.id)}>
-                                                                <FontAwesomeIcon icon="trash"/> &nbsp; Archivar
-                                                            </Button>
-                                                        </TableCell>
-                                                    </TableRow>
-                                                );
-                                            })}
-                                        {emptyRows > 0 && (
-                                            <TableRow style={{ height: 48 * emptyRows }}>
-                                                <TableCell colSpan={6} />
-                                            </TableRow>
-                                        )}
-                                    </TableBody>
-                                    <MuiThemeProvider theme={theme}>
-                                        <TableFooter>
-                                            <TableRow>
-                                                <TablePagination
-                                                    colSpan={3}
-                                                    count={data.length}
-                                                    rowsPerPage={rowsPerPage}
-                                                    page={page}
-                                                    onChangePage={this.handleChangePage}
-                                                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                                                />
-                                            </TableRow>
-                                        </TableFooter>
-                                    </MuiThemeProvider>
-                                </Table>
+                                <ReactTable
+                                    nextText="Siguiente"
+                                    prevText="Anterior"
+                                    data={data}
+                                    columns={columns}
+                                />
                             </div>
                         </Paper>
                     </Grid>
@@ -178,4 +127,4 @@ class Cases extends React.Component {
     }
 }
 
-export default withTheme()(Cases);
+export default Cases;

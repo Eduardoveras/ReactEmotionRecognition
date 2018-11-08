@@ -1,54 +1,29 @@
 /* eslint-disable react/prefer-stateless-function,no-console,no-restricted-globals,class-methods-use-this */
 import React from 'react';
 import axios from 'axios/index';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from "@material-ui/core/es/Typography/Typography";
-import TablePagination from "@material-ui/core/es/TablePagination/TablePagination";
-import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
-import { createMuiTheme } from "@material-ui/core/styles/index";
-import purple from "@material-ui/core/colors/purple";
-import { withTheme } from '@material-ui/core/styles'
-import TableFooter from "@material-ui/core/es/TableFooter/TableFooter";
-import { URL_PATH } from '../constants';
-import {BASE_URL_PATH} from '../constants';
-import {faChartBar, faFileAlt, faHome, faSignOutAlt, faUserSecret} from "@fortawesome/free-solid-svg-icons/index";
+import {BASE_URL_PATH, URL_PATH} from '../constants';
 import {library} from "@fortawesome/fontawesome-svg-core/index";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faTrash, faEye} from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faEye, faTrash} from '@fortawesome/free-solid-svg-icons'
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'
-
 
 
 library.add(faTrash);
 library.add(faEye);
 
 
-const theme = createMuiTheme({
-    palette: {
-        primary: { main: purple[500] }, // Purple and green play nicely together.
-        secondary: { main: '#11cb5f' }, // This is just green.A700 as hex.
-    },
-});
-
 class Reports extends React.Component {
     constructor(props){
         super(props);
-        this.reportList=[];
         this.state = {
             data: [],
             page: 0,
             rowsPerPage: 10,
             sortBy: 'test'
         };
-        //this.handleChangeSort = this.handleChangeSort.bind(this);
     }
 
     deleteReport(id){
@@ -71,8 +46,7 @@ class Reports extends React.Component {
     }
 
     componentWillMount() {
-      let URL = URL_PATH;
-      axios.get(URL)
+        axios.get(URL_PATH)
             .then((response) => {
                 this.setState({ data: response.data });
             })
@@ -107,10 +81,8 @@ class Reports extends React.Component {
             accessor: 'id',
             Cell: ({value}) => (<Button style={{color: "white"}} variant="contained" color="secondary" onClick={()=>{this.deleteReport(value)}}><FontAwesomeIcon icon="trash"/> &nbsp;Archivar</Button>)
         }];
-        const { data, rowsPerPage, page } = this.state;
+        const {data} = this.state;
         console.log(data);
-        const emptyRows =
-            rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
         return (
             <div className='container'>
@@ -129,4 +101,4 @@ class Reports extends React.Component {
     }
 }
 
-export default withTheme()(Reports);
+export default Reports;
