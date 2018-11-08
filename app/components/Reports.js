@@ -8,8 +8,6 @@ import {library} from "@fortawesome/fontawesome-svg-core/index";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEye, faTrash} from '@fortawesome/free-solid-svg-icons'
 import ReactTable from 'react-table'
-import 'react-table/react-table.css'
-
 
 library.add(faTrash);
 library.add(faEye);
