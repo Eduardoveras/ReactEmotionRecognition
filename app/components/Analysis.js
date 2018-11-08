@@ -4,7 +4,6 @@ import axios from 'axios/index';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from "@material-ui/core/es/Typography/Typography";
-import {withTheme} from '@material-ui/core/styles'
 import {BASE_URL_PATH} from '../constants';
 import Card from "@material-ui/core/Card/Card";
 import CardContent from "@material-ui/core/CardContent/CardContent";
@@ -12,7 +11,7 @@ import DynamicTimelineChart from '../components/fragments/timelineChartDynamic'
 import videojs from 'video.js'
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faThumbtack, faBackward, faForward} from '@fortawesome/free-solid-svg-icons';
+import {faBackward, faForward, faThumbtack} from '@fortawesome/free-solid-svg-icons';
 import InputAdornment from "@material-ui/core/es/InputAdornment/InputAdornment";
 
 library.add(faThumbtack);
@@ -118,9 +117,9 @@ class Analysis extends React.Component {
 
     }
 
-    addMark(text_message){
+    addMark() {
         if (this.globalPlayer){
-            this.globalPlayer.markers.add([{ time: this.globalPlayer.currentTime(), text: this.state.text_field}]);;
+            this.globalPlayer.markers.add([{time: this.globalPlayer.currentTime(), text: this.state.text_field}]);
         }else {
             console.log("Error");
         }
@@ -180,4 +179,4 @@ class Analysis extends React.Component {
     }
 }
 
-export default withTheme()(Analysis);
+export default Analysis;

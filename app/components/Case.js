@@ -3,17 +3,15 @@ import React from 'react';
 import axios from 'axios/index';
 import Grid from '@material-ui/core/Grid';
 import Typography from "@material-ui/core/es/Typography/Typography";
-import { withTheme } from '@material-ui/core/styles'
 import {BASE_URL_PATH} from '../constants';
 import Card from "@material-ui/core/Card/Card";
 import CardContent from "@material-ui/core/CardContent/CardContent";
 import CardActions from "@material-ui/core/CardActions/CardActions";
 import Button from "@material-ui/core/Button/Button";
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {library} from '@fortawesome/fontawesome-svg-core'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faFileVideo} from '@fortawesome/free-solid-svg-icons'
 import videojs from 'video.js'
-import markers from 'videojs-markers'
 
 library.add(faFileVideo);
 
@@ -123,4 +121,4 @@ class Cases extends React.Component {
     }
 }
 
-export default withTheme()(Cases);
+export default Cases;
