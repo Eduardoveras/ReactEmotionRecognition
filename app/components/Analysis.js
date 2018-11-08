@@ -13,6 +13,8 @@ import {library} from '@fortawesome/fontawesome-svg-core'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faBackward, faForward, faThumbtack} from '@fortawesome/free-solid-svg-icons';
 import InputAdornment from "@material-ui/core/es/InputAdornment/InputAdornment";
+import 'videojs-markers'
+
 
 library.add(faThumbtack);
 library.add(faBackward);
@@ -149,7 +151,7 @@ class Analysis extends React.Component {
                             <div className="button_center">
                                 <Button variant="extendedFab" color="default" onClick={this.prevMark} style={{marginRight: "1rem"}}><FontAwesomeIcon icon="backward"/>&nbsp; Anterior</Button>
                                 <Button variant="extendedFab" color="default" onClick={this.nextMark} style={{marginRight: "1rem"}}><FontAwesomeIcon icon="forward"/>&nbsp; Siguiente</Button>
-                                <Button variant="extendedFab" color="primary" onClick={this.addMark.bind(this, 'YOLO')} style={{marginRight: "1rem"}}><FontAwesomeIcon icon="thumbtack"/>&nbsp; Añadir marcador</Button>
+                                <Button variant="extendedFab" color="primary" onClick={this.addMark.bind(this)} style={{marginRight: "1rem"}}><FontAwesomeIcon icon="thumbtack"/>&nbsp; Añadir marcador</Button>
                                 <TextField type="text" name="text_field" onChange={this.handleChange}
                                        id="outlined-adornment-amount"
                                        variant="outlined"
