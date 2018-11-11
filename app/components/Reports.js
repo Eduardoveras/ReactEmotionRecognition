@@ -60,9 +60,13 @@ class Reports extends React.Component {
         }, {
             Header: 'Criminal Name',
             accessor: 'criminal.name',
+            filterMethod: (filter, row) =>
+                row[filter.id].toLowerCase().includes(filter.value.toLowerCase())
         }, {
             Header: 'Duration',
             accessor: 'duration',
+            filterMethod: (filter, row) =>
+                row[filter.id].includes(filter.value)
         }, {
             Header: 'test',
             accessor: 'friend.age'
@@ -72,12 +76,14 @@ class Reports extends React.Component {
             accessor: 'id',
             Cell: ({value}) => (<Button variant="contained" color="primary" href={"/reports/"+value}>
                 <FontAwesomeIcon icon="eye"/> &nbsp;Ver
-            </Button>)
+            </Button>),
+            Filter: ({ filter, onChange }) => <div>---</div>
         },{
             Header: 'Borrar',
             id: 'delete',
             accessor: 'id',
-            Cell: ({value}) => (<Button style={{color: "white"}} variant="contained" color="secondary" onClick={()=>{this.deleteReport(value)}}><FontAwesomeIcon icon="trash"/> &nbsp;Archivar</Button>)
+            Cell: ({value}) => (<Button style={{color: "white"}} variant="contained" color="secondary" onClick={()=>{this.deleteReport(value)}}><FontAwesomeIcon icon="trash"/> &nbsp;Archivar</Button>),
+            Filter: ({ filter, onChange }) => <div>---</div>
         }];
         const {data} = this.state;
         console.log(data);
@@ -92,6 +98,9 @@ class Reports extends React.Component {
                     nextText="Siguiente"
                     prevText="Anterior"
                     data={data}
+                    filterable
+                    defaultFilterMethod={(filter, row) =>
+                        String(row[filter.id]) === filter.value}
                     columns={columns}
                 />
             </div>

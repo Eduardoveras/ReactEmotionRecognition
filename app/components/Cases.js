@@ -79,23 +79,29 @@ class Cases extends React.Component {
         }, {
             Header: 'Notas',
             accessor: 'notes',
+            filterMethod: (filter, row) =>
+                row[filter.id].toLowerCase().includes(filter.value.toLowerCase())
         }, {
             Header: 'Fecha',
             accessor: 'created_at',
+            filterMethod: (filter, row) =>
+                row[filter.id].toLowerCase().includes(filter.value.toLowerCase())
         }, {
             Header: 'Ver',
             id: 'edit',
             accessor: 'id',
             Cell: ({value}) => (<Button variant="contained" color="primary" href={"/casos/" + value}>
                 <FontAwesomeIcon icon="eye"/> &nbsp;Ver
-            </Button>)
+            </Button>),
+            Filter: ({ filter, onChange }) => <div>---</div>
         }, {
-            Header: 'Borrar',
+            Header: 'Archivar',
             id: 'delete',
             accessor: 'id',
             Cell: ({value}) => (<Button style={{color: "white"}} variant="contained" color="secondary" onClick={() => {
                 this.deleteCase(value)
-            }}><FontAwesomeIcon icon="trash"/> &nbsp;Archivar</Button>)
+            }}><FontAwesomeIcon icon="trash"/> &nbsp;Archivar</Button>),
+            Filter: ({ filter, onChange }) => <div>---</div>
         }];
         const {data} = this.state;
 
@@ -116,6 +122,9 @@ class Cases extends React.Component {
                                     nextText="Siguiente"
                                     prevText="Anterior"
                                     data={data}
+                                    filterable
+                                    defaultFilterMethod={(filter, row) =>
+                                        String(row[filter.id]) === filter.value}
                                     columns={columns}
                                 />
                             </div>
