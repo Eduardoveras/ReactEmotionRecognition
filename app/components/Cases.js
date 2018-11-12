@@ -21,7 +21,8 @@ class Cases extends React.Component {
         this.state = {
             data: [],
             page: 0,
-            rowsPerPage: 10
+            rowsPerPage: 10,
+            loading: true
         };
     }
 
@@ -48,7 +49,7 @@ class Cases extends React.Component {
         axios.get(URL)
             .then((response) => {
                 console.log(response.data);
-                this.setState({data: response.data});
+                this.setState({data: response.data,loading:false});
             })
             .catch((error) => {
                 console.log(error);
@@ -103,7 +104,7 @@ class Cases extends React.Component {
             }}><FontAwesomeIcon icon="trash"/> &nbsp;Archivar</Button>),
             Filter: ({ filter, onChange }) => <div>---</div>
         }];
-        const {data} = this.state;
+        const {data,loading} = this.state;
 
         return (
             <div className='container'>
@@ -122,6 +123,7 @@ class Cases extends React.Component {
                                     nextText="Siguiente"
                                     prevText="Anterior"
                                     data={data}
+                                    loading={loading}
                                     filterable
                                     defaultFilterMethod={(filter, row) =>
                                         String(row[filter.id]) === filter.value}

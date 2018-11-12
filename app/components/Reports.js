@@ -20,7 +20,8 @@ class Reports extends React.Component {
             data: [],
             page: 0,
             rowsPerPage: 10,
-            sortBy: 'test'
+            sortBy: 'test',
+            loading: true
         };
     }
 
@@ -46,11 +47,14 @@ class Reports extends React.Component {
     componentWillMount() {
         axios.get(URL_PATH)
             .then((response) => {
-                this.setState({ data: response.data });
+                this.setState({ data: response.data,loading: false });
             })
             .catch((error) => {
                 console.log(error);
+            }).finally(function() {
+                this.setState({ loading: false });
             });
+        ;
     }
 
     render() {
@@ -85,7 +89,7 @@ class Reports extends React.Component {
             Cell: ({value}) => (<Button style={{color: "white"}} variant="contained" color="secondary" onClick={()=>{this.deleteReport(value)}}><FontAwesomeIcon icon="trash"/> &nbsp;Archivar</Button>),
             Filter: ({ filter, onChange }) => <div>---</div>
         }];
-        const {data} = this.state;
+        const {data,loading} = this.state;
         console.log(data);
 
         return (
@@ -93,11 +97,11 @@ class Reports extends React.Component {
                 <Typography variant="display1" gutterBottom>
                     Reportes
                 </Typography>
-
                 <ReactTable
                     nextText="Siguiente"
                     prevText="Anterior"
                     data={data}
+                    loading={loading}
                     filterable
                     defaultFilterMethod={(filter, row) =>
                         String(row[filter.id]) === filter.value}
