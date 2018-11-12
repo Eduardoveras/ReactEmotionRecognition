@@ -181,6 +181,8 @@ class VideoReport extends React.Component {
                                 <Typography variant="body1" gutterBottom>
                                     De todas estas emociones, la principal detectada fue la de <b> {this.state.summary_data.dominant_emotion}</b>, la cual tiene la mayor aparición.
                                     Y la de menor aparición fue <b> {this.state.summary_data.lesser_emotion}</b>.
+                                    <br/>
+                                    La proporcion de emociones <b>{this.state.summary_data.emotion_trend}</b>
                                 <br/> <br/>
                                 </Typography>
                                 <Typography variant="subheading" gutterBottom style={{color: "grey"}}>

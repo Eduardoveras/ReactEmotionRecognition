@@ -143,7 +143,8 @@ class PositiveNegativeEmotionsChart extends React.Component {
         let data_circle_char = {
             labels: ['Positive Emotions','Negative Emotions'],
             datasets: [{
-                data: [(this.joyLength+this.surpriseLength) / (cantidadFelicidad+cantidadSorpresa), (this.sadnessLength+this.angerLength+this.fearLength+this.disgustLength+this.contemptLength) / (cantidadTristeza+cantidadEnojo+ cantidadMiedo+cantidadDisgusto+cantidadContempt)],
+                data: [(this.joyLength+this.surpriseLength) / (cantidadFelicidad+cantidadSorpresa+cantidadTristeza+cantidadEnojo+ cantidadMiedo+cantidadDisgusto+cantidadContempt),
+                    (this.sadnessLength+this.angerLength+this.fearLength+this.disgustLength+this.contemptLength) / (cantidadFelicidad+cantidadSorpresa+cantidadTristeza+cantidadEnojo+cantidadMiedo+cantidadDisgusto+cantidadContempt)],
                 backgroundColor: [
                     'rgba(75,192,192, 0.4)',
                     'DarkSalmon',
