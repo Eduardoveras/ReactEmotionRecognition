@@ -3,6 +3,7 @@ import React from 'react';
 import Typography from "@material-ui/core/es/Typography/Typography";
 import Card from "@material-ui/core/es/Card/Card";
 import CardContent from "@material-ui/core/es/CardContent/CardContent";
+import CardHeader from '@material-ui/core/CardHeader';
 import axios from "axios/index";
 import Button from "@material-ui/core/es/Button/Button";
 import Grid from "@material-ui/core/es/Grid/Grid";
@@ -126,15 +127,15 @@ class VideoReport extends React.Component {
         let indiceEmociones = 0;
         this.state.porcentajes.map((tabla, indice) => {
             tabla.emotions_percentage.map((porcentaje, indiceP) => {
-                if(indiceP === 5){
+                if (indiceP === 5) {
                     indiceEmociones = 6;
                 }
-                if (indice + 1 <= tamanoPorcentajes - 1 && (indiceEmociones + 1) <= 8) {
-                    if (this.porcentajeRango1(porcentaje, this.state.porcentajes[indice + 1].emotions_percentage[indiceEmociones])) {
-                        Mensaje += "El reporte: " + (indice + 1) + " se parece al reporte: " + (indice + 2) + ". Debido a las siguientes emociones:";
+                if (indice + 1 <= tamanoPorcentajes - 1 && (indiceEmociones + 1) <= 8 && parseInt(this.state.report_id) !== indice + 2) {
+                    if (this.porcentajeRango1(this.state.porcentajes[parseInt(this.state.report_id) - 1].emotions_percentage[indiceEmociones], this.state.porcentajes[indice + 1].emotions_percentage[indiceEmociones])) {
+                        Mensaje = "El reporte: " + parseInt(this.state.report_id) + " se parece al reporte: " + (indice + 2) + ". Debido a las siguientes situaciones:";
                         MensajeEmociones += "La emoción: " + this.sacarEmocion(indiceP) + " tienen promedios de: "
-                            + this.state.porcentajes[indice].emotions_percentage[indiceEmociones] + " en el reporte #" + (indice + 1) + " y de: "
-                            + this.state.porcentajes[indice + 1].emotions_percentage[indiceEmociones] + " en el reporte #" + (indice + 2);
+                            + this.state.porcentajes[parseInt(this.state.report_id) - 1].emotions_percentage[indiceEmociones] + " en el reporte #" + parseInt(this.state.report_id) + " y de: "
+                            + this.state.porcentajes[indice + 1].emotions_percentage[indiceEmociones] + " en el reporte #" + (indice + 2) + ". ";
                     }
                 }
                 indiceEmociones += 1;
@@ -269,47 +270,52 @@ class VideoReport extends React.Component {
                                 </TableBody>
                             </Table>
                             <br/>
-                            <Typography variant="body1">
-                                {this.sacarPorcentajes()}
-                                <Typography/>
-                                <Typography variant="body1" gutterBottom>
-                                    De todas estas emociones, la principal detectada fue la
-                                    de <b> {this.state.summary_data.dominant_emotion}</b>, la cual tiene la mayor
-                                    aparición.
-                                    Y la de menor aparición fue <b> {this.state.summary_data.lesser_emotion}</b>.
-                                    <br/>
-                                    La proporcion de emociones <b>{this.state.summary_data.emotion_trend}</b>
-                                    <br/> <br/>
-                                </Typography>
-                                <Typography variant="subheading" gutterBottom style={{color: "grey"}}>
-                                    <b><i>Momentos en los que hubo emociones paralelas</i></b>
-                                    <hr/>
-                                </Typography>
-                                <Table style={{width: "370px"}}>
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell numeric><Typography variant="body1">Número {' '} <span
-                                                style={{fontSize: "1rem"}}>#️⃣ </span></Typography></TableCell>
-                                            <TableCell numeric><Typography variant="body1">Momento (tiempo) {' '} <span
-                                                style={{fontSize: "1rem"}}>⏱</span></Typography></TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {this.state.summary_data.notable_moments.map(function (d, index) {
-                                            return (
-                                                <TableRow>
-                                                    <TableCell>
-                                                        {index}
-                                                    </TableCell>
-                                                    <TableCell numeric>
-                                                        {d.substr(49, 57)}
-                                                    </TableCell>
-                                                </TableRow>
-                                            )
-                                        })}
-                                    </TableBody>
-                                </Table>
+                            <Card style={{marginBottom: "1rem", background: "linear-gradient(45deg, #b6dcfb 0%, #2196F2 50%, #2196F1 100%) no-repeat fixed"}}>
+                                <CardHeader title="👁️ Observaciones" subheader="Relaciones entre los reportes"/>
+                                <hr/>
+                                <CardContent>
+                                    <Typography variant="body1">
+                                        <span style={{color: "white"}}><b>{this.sacarPorcentajes()}</b></span>
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                            <Typography variant="body1" gutterBottom>
+                                De todas estas emociones, la principal detectada fue la
+                                de <b> {this.state.summary_data.dominant_emotion}</b>, la cual tiene la mayor
+                                aparición.
+                                Y la de menor aparición fue <b> {this.state.summary_data.lesser_emotion}</b>.
+                                <br/>
+                                La proporcion de emociones <b>{this.state.summary_data.emotion_trend}</b>
+                                <br/> <br/>
                             </Typography>
+                            <Typography variant="subheading" gutterBottom style={{color: "grey"}}>
+                                <b><i>Momentos en los que hubo emociones paralelas</i></b>
+                                <hr/>
+                            </Typography>
+                            <Table style={{width: "370px"}}>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell numeric><Typography variant="body1">Número {' '} <span
+                                            style={{fontSize: "1rem"}}>#️⃣ </span></Typography></TableCell>
+                                        <TableCell numeric><Typography variant="body1">Momento (tiempo) {' '} <span
+                                            style={{fontSize: "1rem"}}>⏱</span></Typography></TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {this.state.summary_data.notable_moments.map(function (d, index) {
+                                        return (
+                                            <TableRow>
+                                                <TableCell>
+                                                    {index}
+                                                </TableCell>
+                                                <TableCell numeric>
+                                                    {d.substr(49, 57)}
+                                                </TableCell>
+                                            </TableRow>
+                                        )
+                                    })}
+                                </TableBody>
+                            </Table>
                         </div>
                         }
                     </CardContent>
