@@ -4,7 +4,7 @@ import axios from 'axios/index';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from "@material-ui/core/es/Typography/Typography";
-import {BASE_URL_PATH} from '../constants';
+import {BASE_URL_PATH, URL_PATH} from '../constants';
 import Card from "@material-ui/core/Card/Card";
 import CardContent from "@material-ui/core/CardContent/CardContent";
 import DynamicTimelineChart from '../components/fragments/timelineChartDynamic'
@@ -26,6 +26,7 @@ class Analysis extends React.Component {
         this.state = {
             data: [],
             api_data: null,
+            porcentajes: [],
             video_id: window.location.href.split('/').pop(),
             text_field:'',
         };
@@ -134,7 +135,6 @@ class Analysis extends React.Component {
 
 
     render() {
-
         return (
             <div className='container'>
                 <Card>{this.state.data?
