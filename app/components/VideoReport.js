@@ -133,7 +133,7 @@ class VideoReport extends React.Component {
                 if (indice + 1 <= tamanoPorcentajes - 1 && (indiceEmociones + 1) <= 8 && parseInt(this.state.report_id) !== indice + 2) {
                     if (this.porcentajeRango1(this.state.porcentajes[parseInt(this.state.report_id) - 1].emotions_percentage[indiceEmociones], this.state.porcentajes[indice + 1].emotions_percentage[indiceEmociones])) {
                         Mensaje = "El reporte: " + parseInt(this.state.report_id) + " se parece al reporte: " + (indice + 2) + ". Debido a las siguientes situaciones:";
-                        MensajeEmociones += "La emoción: " + this.sacarEmocion(indiceP) + " tienen promedios de: "
+                        MensajeEmociones += " La emoción: " + this.sacarEmocion(indiceP) + " tienen promedios de: "
                             + this.state.porcentajes[parseInt(this.state.report_id) - 1].emotions_percentage[indiceEmociones] + " en el reporte #" + parseInt(this.state.report_id) + " y de: "
                             + this.state.porcentajes[indice + 1].emotions_percentage[indiceEmociones] + " en el reporte #" + (indice + 2) + ". ";
                     }
