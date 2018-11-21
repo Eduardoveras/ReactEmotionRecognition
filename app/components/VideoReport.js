@@ -127,7 +127,7 @@ class VideoReport extends React.Component {
             arregloExistentes.push(e.id);
         });
 
-        for (let i = 0; i < 1000; i += 1) {
+        for (let i = 0; i < arregloExistentes.pop(); i += 1) {
             if (!arregloExistentes.includes(i) && i <= arregloExistentes.pop()) {
                 cantidadBorrados += 1;
             }
