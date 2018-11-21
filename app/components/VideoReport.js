@@ -120,6 +120,22 @@ class VideoReport extends React.Component {
     }
 
     sacarPorcentajes() {
+
+        let cantidadBorrados = 0;
+        let arregloExistentes = [];
+        this.state.porcentajes.map((e) => {
+            arregloExistentes.push(e.id);
+        });
+
+        for (let i = 0; i < 1000; i += 1) {
+            if (!arregloExistentes.includes(i) && i <= arregloExistentes.pop()) {
+                cantidadBorrados += 1;
+            }
+        }
+
+        console.log("BORRADOS: " + cantidadBorrados);
+
+
         let tamanoPorcentajes = this.state.porcentajes.length;
         console.log("TAMANO PORCENTAJES: " + tamanoPorcentajes);
         let Mensaje = "";
@@ -131,10 +147,10 @@ class VideoReport extends React.Component {
                     indiceEmociones = 6;
                 }
                 if (indice + 1 <= tamanoPorcentajes - 1 && (indiceEmociones + 1) <= 8 && parseInt(this.state.report_id) !== indice + 2) {
-                    if (this.porcentajeRango1(this.state.porcentajes[parseInt(this.state.report_id) - 1].emotions_percentage[indiceEmociones], this.state.porcentajes[indice + 1].emotions_percentage[indiceEmociones])) {
+                    if (this.porcentajeRango1(this.state.porcentajes[parseInt(this.state.report_id) - cantidadBorrados].emotions_percentage[indiceEmociones], this.state.porcentajes[indice + 1].emotions_percentage[indiceEmociones])) {
                         Mensaje = "El reporte: " + parseInt(this.state.report_id) + " se parece al reporte: " + (indice + 2) + ". Debido a las siguientes situaciones:";
                         MensajeEmociones += " La emoción: " + this.sacarEmocion(indiceP) + " tienen promedios de: "
-                            + this.state.porcentajes[parseInt(this.state.report_id) - 1].emotions_percentage[indiceEmociones] + " en el reporte #" + parseInt(this.state.report_id) + " y de: "
+                            + this.state.porcentajes[parseInt(this.state.report_id) - cantidadBorrados].emotions_percentage[indiceEmociones] + " en el reporte #" + parseInt(this.state.report_id) + " y de: "
                             + this.state.porcentajes[indice + 1].emotions_percentage[indiceEmociones] + " en el reporte #" + (indice + 2) + ". ";
                     }
                 }
@@ -270,7 +286,10 @@ class VideoReport extends React.Component {
                                 </TableBody>
                             </Table>
                             <br/>
-                            <Card style={{marginBottom: "1rem", background: "linear-gradient(45deg, #b6dcfb 0%, #2196F2 50%, #2196F1 100%) no-repeat fixed"}}>
+                            <Card style={{
+                                marginBottom: "1rem",
+                                background: "linear-gradient(45deg, #b6dcfb 0%, #2196F2 50%, #2196F1 100%) no-repeat fixed"
+                            }}>
                                 <CardHeader title="👁️ Observaciones" subheader="Relaciones entre los reportes"/>
                                 <hr/>
                                 <CardContent>
