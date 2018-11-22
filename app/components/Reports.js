@@ -2,7 +2,7 @@
 import React from 'react';
 import axios from 'axios/index';
 import Button from '@material-ui/core/Button';
-import Typography from "@material-ui/core/es/Typography/Typography";
+import Typography from "@material-ui/core/Typography/Typography";
 import {BASE_URL_PATH, URL_PATH} from '../constants';
 import {library} from "@fortawesome/fontawesome-svg-core/index";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'

@@ -4,7 +4,7 @@ import axios from 'axios/index';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import Typography from "@material-ui/core/es/Typography/Typography";
+import Typography from "@material-ui/core/Typography/Typography";
 import {BASE_URL_PATH} from '../constants';
 import {library} from "@fortawesome/fontawesome-svg-core/index";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'

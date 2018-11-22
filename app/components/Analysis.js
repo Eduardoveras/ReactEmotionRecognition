@@ -3,7 +3,7 @@ import React from 'react';
 import axios from 'axios/index';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Typography from "@material-ui/core/es/Typography/Typography";
+import Typography from "@material-ui/core/Typography/Typography";
 import {BASE_URL_PATH, URL_PATH} from '../constants';
 import Card from "@material-ui/core/Card/Card";
 import CardContent from "@material-ui/core/CardContent/CardContent";
@@ -12,7 +12,7 @@ import videojs from 'video.js'
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faBackward, faForward, faThumbtack} from '@fortawesome/free-solid-svg-icons';
-import InputAdornment from "@material-ui/core/es/InputAdornment/InputAdornment";
+import InputAdornment from "@material-ui/core/InputAdornment/InputAdornment";
 import 'videojs-markers'
 
 
