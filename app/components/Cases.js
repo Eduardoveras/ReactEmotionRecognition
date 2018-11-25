@@ -78,11 +78,6 @@ class Cases extends React.Component {
             Header: 'ID',
             accessor: 'id'
         }, {
-            Header: 'Notas',
-            accessor: 'notes',
-            filterMethod: (filter, row) =>
-                row[filter.id].toLowerCase().includes(filter.value.toLowerCase())
-        }, {
             Header: 'Fecha',
             accessor: 'created_at',
             filterMethod: (filter, row) =>
@@ -91,7 +86,7 @@ class Cases extends React.Component {
             Header: 'Ver',
             id: 'edit',
             accessor: 'id',
-            Cell: ({value}) => (<Button variant="contained" color="primary" href={"/casos/" + value}>
+            Cell: ({value}) => (<Button variant="extendedFab" color="primary" href={"/casos/" + value}>
                 <FontAwesomeIcon icon="eye"/> &nbsp;Ver
             </Button>),
             Filter: ({ filter, onChange }) => <div>---</div>
@@ -99,7 +94,7 @@ class Cases extends React.Component {
             Header: 'Archivar',
             id: 'delete',
             accessor: 'id',
-            Cell: ({value}) => (<Button style={{color: "white"}} variant="contained" color="secondary" onClick={() => {
+            Cell: ({value}) => (<Button style={{color: "white"}} variant="extendedFab" color="secondary" onClick={() => {
                 this.deleteCase(value)
             }}><FontAwesomeIcon icon="trash"/> &nbsp;Archivar</Button>),
             Filter: ({ filter, onChange }) => <div>---</div>
@@ -128,6 +123,7 @@ class Cases extends React.Component {
                                     defaultFilterMethod={(filter, row) =>
                                         String(row[filter.id]) === filter.value}
                                     columns={columns}
+                                    style={{fontFamily: "Arial"}}
                                 />
                             </div>
                         </Paper>
