@@ -83,7 +83,7 @@ class createCriminal extends React.Component {
     render() {
 
         return (
-            <div className={root}>
+            <span className={root}>
                 <Button variant="extendedFab" onClick={this.handleOpen} style={{marginBottom: "1rem", marginTop: "0.3rem", display: "inline"}}><span style={{fontSize: "22px"}}>👨</span> &nbsp;Crear persona</Button>
                 <Modal
                     aria-labelledby="simple-modal-title"
@@ -111,7 +111,7 @@ class createCriminal extends React.Component {
                     </div>
                 </Modal>
 
-            </div>
+            </span>
         )
     }
 }

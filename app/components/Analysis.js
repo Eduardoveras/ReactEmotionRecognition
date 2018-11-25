@@ -42,8 +42,7 @@ class Analysis extends React.Component {
         let URL = BASE_URL_PATH + '/face_video_analyses/' + this.state.video_id;
         axios.get(URL)
             .then((response) => {
-                this.setState({data: response.data},this.setPlayer
-                );
+                this.setState({data: response.data},this.setPlayer);
             })
             .catch((error) => {
                 console.log(error);
@@ -60,6 +59,7 @@ class Analysis extends React.Component {
     setPlayer(){
 
        this.globalPlayer= videojs("example_video_1", {}, function(){
+
 
            this.markers({
                markerStyle: {
@@ -95,11 +95,6 @@ class Analysis extends React.Component {
 
         });
 
-       if (this.globalPlayer){
-
-
-       }
-
 
     }
 
@@ -122,7 +117,18 @@ class Analysis extends React.Component {
 
     addMark() {
         if (this.globalPlayer){
+
             this.globalPlayer.markers.add([{time: this.globalPlayer.currentTime(), text: this.state.text_field}]);
+            axios.post(BASE_URL_PATH+'/markers/', {
+                note: this.state.text_field,
+                time:this.globalPlayer.currentTime(),
+                face_video_analysis_id:this.state.video_id
+            })
+                .then(function(response){
+                    console.log('Marker added correctly');
+                });
+
+
         }else {
             console.log("Error");
         }
