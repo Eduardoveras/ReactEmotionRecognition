@@ -62,23 +62,20 @@ class Reports extends React.Component {
             Header: 'ID',
             accessor: 'id'
         }, {
-            Header: 'Criminal Name',
+            Header: 'Nombre de la persona analizada',
             accessor: 'criminal.name',
             filterMethod: (filter, row) =>
                 row[filter.id].toLowerCase().includes(filter.value.toLowerCase())
         }, {
-            Header: 'Duration',
+            Header: 'Duración',
             accessor: 'duration',
             filterMethod: (filter, row) =>
                 row[filter.id].includes(filter.value)
-        }, {
-            Header: 'test',
-            accessor: 'friend.age'
         },{
             Header: 'Ver',
             id: 'edit',
             accessor: 'id',
-            Cell: ({value}) => (<Button variant="contained" color="primary" href={"/reports/"+value}>
+            Cell: ({value}) => (<Button variant="extendedFab" color="primary" href={"/reports/"+value}>
                 <FontAwesomeIcon icon="eye"/> &nbsp;Ver
             </Button>),
             Filter: ({ filter, onChange }) => <div>---</div>
@@ -86,7 +83,7 @@ class Reports extends React.Component {
             Header: 'Borrar',
             id: 'delete',
             accessor: 'id',
-            Cell: ({value}) => (<Button style={{color: "white"}} variant="contained" color="secondary" onClick={()=>{this.deleteReport(value)}}><FontAwesomeIcon icon="trash"/> &nbsp;Archivar</Button>),
+            Cell: ({value}) => (<Button style={{color: "white"}} variant="extendedFab" color="secondary" onClick={()=>{this.deleteReport(value)}}><FontAwesomeIcon icon="trash"/> &nbsp;Archivar</Button>),
             Filter: ({ filter, onChange }) => <div>---</div>
         }];
         const {data,loading} = this.state;
@@ -106,6 +103,7 @@ class Reports extends React.Component {
                     defaultFilterMethod={(filter, row) =>
                         String(row[filter.id]) === filter.value}
                     columns={columns}
+                    style={{fontFamily: "Arial"}}
                 />
             </div>
         );

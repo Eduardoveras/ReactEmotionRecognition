@@ -183,38 +183,38 @@ class EmotionsPieChart extends React.Component {
 
         if(this.state.settings) {
             if (this.state.settings.joy_enabled) {
-                data_circle_char.labels.push('Joy');
+                data_circle_char.labels.push('Felicidad');
                 data_circle_char.datasets[0].data.push(this.joyLength / cantidadFelicidad);
 
             }
             if (this.state.settings.sadness_enabled) {
-                data_circle_char.labels.push('Sadness');
+                data_circle_char.labels.push('Tristeza');
                 data_circle_char.datasets[0].data.push(this.sadnessLength / cantidadTristeza);
 
             }
             if (this.state.settings.anger_enabled) {
-                data_circle_char.labels.push('Anger');
+                data_circle_char.labels.push('Enojo');
                 data_circle_char.datasets[0].data.push(this.angerLength / cantidadEnojo);
 
             }
             if (this.state.settings.surprise_enabled) {
-                data_circle_char.labels.push('Surprise');
+                data_circle_char.labels.push('Sorpresa');
                 data_circle_char.datasets[0].data.push(this.surpriseLength / cantidadSorpresa);
 
             }
             if (this.state.settings.disgust_enabled) {
-                data_circle_char.labels.push('Disgust');
+                data_circle_char.labels.push('Disgusto');
                 data_circle_char.datasets[0].data.push(this.disgustLength / cantidadDisgusto);
 
             }
             if (this.state.settings.contempt_enabled) {
-                data_circle_char.labels.push('Contempt');
+                data_circle_char.labels.push('Desprecio');
                 data_circle_char.datasets[0].data.push(this.contemptLength / cantidadContempt);
 
             }
 
             if (this.state.settings.fear_enabled) {
-                data_circle_char.labels.push('Fear');
+                data_circle_char.labels.push('Miedo');
                 data_circle_char.datasets[0].data.push(this.fearLength / cantidadMiedo);
 
             }
