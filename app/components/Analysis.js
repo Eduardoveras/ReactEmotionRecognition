@@ -13,6 +13,7 @@ import {library} from '@fortawesome/fontawesome-svg-core'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faBackward, faForward, faThumbtack} from '@fortawesome/free-solid-svg-icons';
 import InputAdornment from "@material-ui/core/InputAdornment/InputAdornment";
+import  NotesLog from "./fragments/NotesLog"
 import 'videojs-markers'
 
 
@@ -167,6 +168,8 @@ class Analysis extends React.Component {
                                        }}
                                 />
                             </div>
+                        <NotesLog report_id={this.state.video_id} />
+
                         <hr style={{color: "black", marginTop: "1rem", marginBottom: "1rem"}}/>
                         <Typography gutterBottom variant="headline" component="h2">
                             <strong>Nombre de la persona: </strong>{this.state.data.criminal && this.state.data.criminal.name ? this.state.data.criminal.name : 'No se especifico nombre.'}

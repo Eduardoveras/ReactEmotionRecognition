@@ -20,6 +20,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import {BASE_URL_PATH} from "../constants";
+import NotesLog from "./fragments/NotesLog";
 
 library.add(faChartBar);
 library.add(faFileAlt);
@@ -336,6 +337,10 @@ class VideoReport extends React.Component {
                     <Grid item xs={6}>
                         <PositiveNegativeChart data={this.state.api_data}/>
                     </Grid>
+                    <Grid item xs={6}>
+                        <NotesLog report_id={this.state.report_id}/>
+                    </Grid>
+
                 </Grid>
                 }
                 <br/>
