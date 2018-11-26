@@ -243,11 +243,13 @@ class App extends React.Component {
     }
 
     upload_notes_to_backend(){
+        let minutes = Math.floor(this.emotionService.timeStamp / 60);
+        let seconds = this.emotionService.timeStamp - minutes * 60;
         axios.post(BASE_URL_PATH + '/add_logs/' + this.state.video_id, {logs: this.state.current_notes})
             .then(response => {
-                console.log('pushed notes to backend');
+                console.log('pushed notes to backenddd');
                 //this.setState({current_notes: "",previous_notes});
-                this.setState(prevState => ({current_notes: "", previous_notes: prevState.previous_notes+"0:00-"+prevState.current_notes+"\n" }));
+                this.setState(prevState => ({current_notes: "", previous_notes: prevState.previous_notes+minutes+":"+parseInt(seconds)+prevState.current_notes+"\n" }));
 
             });
 

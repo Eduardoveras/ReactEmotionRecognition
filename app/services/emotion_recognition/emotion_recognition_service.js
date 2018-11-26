@@ -24,6 +24,7 @@ class EmotionRecognitionService {
       this.sorpresa = 0;
     this.width = width;
     this.height = height;
+    this.timeStamp=0;
 
       // SDK Needs to create video and canvas nodes in the DOM in order to function
       // Here we are adding those nodes a predefined div.
@@ -72,6 +73,7 @@ class EmotionRecognitionService {
       // Add a callback to receive the results from processing an image.
       // The faces object contains the list of the faces detected in an image.
       this.detector.addEventListener('onImageResultsSuccess', (faces, image, timestamp) => {
+          this.timeStamp=timestamp;
           let porcentajeAMostrar = 1;
           const horas = Math.trunc(timestamp / 3600).toString().padStart(2, '0');
           const minutos = Math.trunc((timestamp % 3600) / 60).toString().padStart(2, '0');
