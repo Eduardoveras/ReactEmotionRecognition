@@ -13,6 +13,7 @@ import {library} from '@fortawesome/fontawesome-svg-core'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faBackward, faForward, faThumbtack} from '@fortawesome/free-solid-svg-icons';
 import InputAdornment from "@material-ui/core/InputAdornment/InputAdornment";
+import  NotesLog from "./fragments/NotesLog"
 import 'videojs-markers'
 
 
@@ -42,8 +43,7 @@ class Analysis extends React.Component {
         let URL = BASE_URL_PATH + '/face_video_analyses/' + this.state.video_id;
         axios.get(URL)
             .then((response) => {
-                this.setState({data: response.data},this.setPlayer
-                );
+                this.setState({data: response.data},this.setPlayer);
             })
             .catch((error) => {
                 console.log(error);
@@ -60,6 +60,7 @@ class Analysis extends React.Component {
     setPlayer(){
 
        this.globalPlayer= videojs("example_video_1", {}, function(){
+
 
            this.markers({
                markerStyle: {
@@ -95,11 +96,6 @@ class Analysis extends React.Component {
 
         });
 
-       if (this.globalPlayer){
-
-
-       }
-
 
     }
 
@@ -122,7 +118,18 @@ class Analysis extends React.Component {
 
     addMark() {
         if (this.globalPlayer){
+
             this.globalPlayer.markers.add([{time: this.globalPlayer.currentTime(), text: this.state.text_field}]);
+            axios.post(BASE_URL_PATH+'/markers/', {
+                note: this.state.text_field,
+                time:this.globalPlayer.currentTime(),
+                face_video_analysis_id:this.state.video_id
+            })
+                .then(function(response){
+                    console.log('Marker added correctly');
+                });
+
+
         }else {
             console.log("Error");
         }
@@ -161,6 +168,8 @@ class Analysis extends React.Component {
                                        }}
                                 />
                             </div>
+                        <NotesLog report_id={this.state.video_id} />
+
                         <hr style={{color: "black", marginTop: "1rem", marginBottom: "1rem"}}/>
                         <Typography gutterBottom variant="headline" component="h2">
                             <strong>Nombre de la persona: </strong>{this.state.data.criminal && this.state.data.criminal.name ? this.state.data.criminal.name : 'No se especifico nombre.'}

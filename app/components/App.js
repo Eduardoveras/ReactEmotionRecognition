@@ -15,7 +15,17 @@ import {URL_PATH} from '../constants';
 import {BASE_URL_PATH} from '../constants';
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faEye, faEyeSlash, faGrinAlt, faMeh, faPlayCircle, faStopCircle, faStop, faPlay} from '@fortawesome/free-solid-svg-icons';
+import {
+    faEye,
+    faEyeSlash,
+    faGrinAlt,
+    faMeh,
+    faPlayCircle,
+    faStopCircle,
+    faStop,
+    faPlay,
+    faPlus
+} from '@fortawesome/free-solid-svg-icons';
 import blobToBase64 from 'blob-to-base64'
 import CreateCriminal from './fragments/createCriminal'
 
@@ -27,6 +37,7 @@ library.add(faMeh);
 library.add(faGrinAlt);
 library.add(faPlay);
 library.add(faStop);
+library.add(faPlus);
 
 const paperStyle = {
     padding: "27px",
@@ -51,7 +62,7 @@ const atencionStyle = {
     height: '10vh'
 };
 
-let recordedBlobs=[];
+let recordedBlobs = [];
 
 
 class App extends React.Component {
@@ -60,34 +71,38 @@ class App extends React.Component {
         super(props);
 
         this.showFinishButton = false;
-        this.canvas=null;
-        this.video=null;
-        this.mediaRecorder=null;
+        this.canvas = null;
+        this.video = null;
+        this.mediaRecorder = null;
 
         this.state = {
             name: '',
             isButtonDisabled: false,
             emojiVisible: true,
             textVisible: true,
-            video_id:-1,
+            video_id: -1,
             cases: [],
             selected_case: 1,
             criminals: [],
-            selected_criminal:'',
-            selected_criminal_id:0
+            selected_criminal: '',
+            selected_criminal_id: 0,
+            current_notes: '',
+            previous_notes:''
+
         };
 
         this.handleEmojiVisible = this.handleEmojiVisible.bind(this);
         this.handleTextVisible = this.handleTextVisible.bind(this);
-        this.stopRecording= this.stopRecording.bind(this);
-        this.startRecording= this.startRecording.bind(this);
+        this.stopRecording = this.stopRecording.bind(this);
+        this.startRecording = this.startRecording.bind(this);
         this.updateData = this.updateData.bind(this);
+        this.upload_notes_to_backend=this.upload_notes_to_backend.bind(this);
 
     }
 
     handleDataAvailable(event) {
-        if (recordedBlobs==null){
-            recordedBlobs=[];
+        if (recordedBlobs == null) {
+            recordedBlobs = [];
 
         }
         if (event.data && event.data.size > 0) {
@@ -113,19 +128,19 @@ class App extends React.Component {
     }
 
     stopRecording() {
-       this.mediaRecorder.stop();
+        this.mediaRecorder.stop();
         console.log('Recorded Blobs: ', recordedBlobs);
         const superBuffer = new Blob(recordedBlobs, {type: 'video/webm'});
-        const {video_id, selected_case }= this.state;
-        console.log("video id hack:"+video_id);
+        const {video_id, selected_case} = this.state;
+        console.log("video id hack:" + video_id);
         blobToBase64(superBuffer, function (error, base64) {
             if (!error) {
-                axios.post(BASE_URL_PATH+'/add_video/'+video_id, { video_file: base64 })
-                    .then(function(response){
+                axios.post(BASE_URL_PATH + '/add_video/' + video_id, {video_file: base64})
+                    .then(function (response) {
                         console.log('Video saved correctly');
                         window.location.href = '/casos/' + selected_case;
                     });
-            }else {
+            } else {
                 console.log("Error converting to base64");
                 alert('There was an error saving the video');
 
@@ -155,23 +170,23 @@ class App extends React.Component {
         this.emotionService = new EmotionService(640, 480, $(this.refs.affElement)[0]);
     }
 
-    componentWillMount(){
+    componentWillMount() {
         this.updateData();
 
 
     }
 
-    updateData(){
-        axios.get(BASE_URL_PATH+'/cases')
+    updateData() {
+        axios.get(BASE_URL_PATH + '/cases')
             .then((response) => {
-                this.setState({ cases: response.data });
+                this.setState({cases: response.data});
             })
             .catch((error) => {
                 console.log(error);
             });
-        axios.get(BASE_URL_PATH+'/criminals')
+        axios.get(BASE_URL_PATH + '/criminals')
             .then((response) => {
-                this.setState({ criminals: response.data });
+                this.setState({criminals: response.data});
             })
             .catch((error) => {
                 console.log(error);
@@ -214,21 +229,33 @@ class App extends React.Component {
     }
 
     handleChange = event => {
-        this.setState({ [event.target.name]: event.target.value });
+        this.setState({[event.target.name]: event.target.value});
     };
 
     handleChangeSelect = (event, index, value) => {
         console.log(index.key);
-        this.setState({ [event.target.name]: event.target.value });
-        this.setState({ selected_criminal_id: parseInt(index.key, 10) });
+        this.setState({[event.target.name]: event.target.value});
+        this.setState({selected_criminal_id: parseInt(index.key, 10)});
     };
 
     onReset() {
         this.emotionService.onReset();
     }
 
+    upload_notes_to_backend(){
+        let minutes = Math.floor(this.emotionService.timeStamp / 60);
+        let seconds = this.emotionService.timeStamp - minutes * 60;
+        axios.post(BASE_URL_PATH + '/add_logs/' + this.state.video_id, {logs: minutes+":"+parseInt(seconds)+" - "+this.state.current_notes})
+            .then(response => {
+                console.log('pushed notes to backenddd');
+                this.setState(prevState => ({current_notes: "", previous_notes: prevState.previous_notes+minutes+":"+parseInt(seconds)+" - "+prevState.current_notes+"\n" }));
+
+            });
+
+    }
+
     render() {
-        const { cases,criminals} = this.state;
+        const {cases, criminals} = this.state;
         return (
             <div className='container' id='container'>
                 <Grid container spacing={24}>
@@ -239,58 +266,115 @@ class App extends React.Component {
                                 {/*<video id="testing_video" autoPlay playsInline muted/>*/}
                                 <div className="center-text">
                                     <div className="btn-group btn-group-lg" role="group" aria-label="Basic example">
-                                        <CreateCriminal action={this.updateData}/>
+                                        {this.showFinishButton ?<div/>:
+                                        <div>
                                         <FormControl style={{marginBottom: "0.5rem", display: "inline-block"}}>
-                                                <Select
-                                                    name="selected_criminal"
-                                                    value={this.state.selected_criminal}
-                                                    onChange={this.handleChangeSelect}
-                                                    displayEmpty
-                                                >
-                                                    <MenuItem value="" disabled>
-                                                        Seleccione persona interrogada
-                                                    </MenuItem>
-                                                    {criminals.map(function(d){return (
+                                            <Select
+                                                name="selected_criminal"
+                                                value={this.state.selected_criminal}
+                                                onChange={this.handleChangeSelect}
+                                                displayEmpty
+                                            >
+                                                <MenuItem value="" disabled>
+                                                    Seleccione persona interrogada
+                                                </MenuItem>
+                                                {criminals.map(function (d) {
+                                                    return (
                                                         <MenuItem key={d.id} value={d.name}>{d.name}</MenuItem>
-                                                    )})}
-                                                </Select>
-                                                <FormHelperText>Criminal</FormHelperText>
-                                            </FormControl>
-                                            <FormControl style={{display: "inline-block"}}>
-                                                <Select
-                                                    name="selected_case"
-                                                    value={this.state.selected_case}
-                                                    onChange={this.handleChange}
-                                                    displayEmpty
-                                                >
-                                                    <MenuItem value="" disabled>
-                                                        Seleccione el caso
-                                                    </MenuItem>
-                                                    {cases.map(function(d){return (
+                                                    )
+                                                })}
+                                            </Select>
+                                            <FormHelperText>Criminal</FormHelperText>
+                                        </FormControl>
+                                        <FormControl style={{display: "inline-block"}}>
+                                            <Select
+                                                name="selected_case"
+                                                value={this.state.selected_case}
+                                                onChange={this.handleChange}
+                                                displayEmpty
+                                            >
+                                                <MenuItem value="" disabled>
+                                                    Seleccione el caso
+                                                </MenuItem>
+                                                {cases.map(function (d) {
+                                                    return (
                                                         <MenuItem key={d.id} value={d.id}>{d.id}</MenuItem>
-                                                    )})}
-                                                </Select>
-                                                <FormHelperText>Caso</FormHelperText>
-                                            </FormControl>
-                                    <br/>
-                                        {this.showFinishButton ? <Button id="stop" variant="extendedFab" color="secondary" onClick={this.onStop.bind(this)} style={{color: "white", marginRight: "1rem"}}><FontAwesomeIcon icon="stop"/>&nbsp; Terminar sesión</Button> :
-                                            <Button variant="extendedFab" onClick={this.onStart.bind(this)} disabled={this.state.isButtonDisabled} color="primary" style={{color: "white", marginRight: "1rem"}}><FontAwesomeIcon icon="play"/>&nbsp; Iniciar</Button>}
-                                        {this.state.textVisible ?  <Button variant="extendedFab" onClick={this.handleTextVisible} style={{marginRight: "1rem"}}><FontAwesomeIcon icon="eye-slash" style={{color: "black"}}/> &nbsp;Ocultar texto</Button> : <Button variant="extendedFab" onClick={this.handleTextVisible} style={{marginRight: "1rem"}}><FontAwesomeIcon icon="eye" style={{color: "black"}}/> &nbsp;Mostrar texto</Button>}
-                                        {this.state.emojiVisible ? <Button variant="extendedFab" onClick={this.handleEmojiVisible}><span style={{fontSize: "22px"}}>😡</span> &nbsp;Ocultar emoji</Button> : <Button variant="extendedFab" onClick={this.handleEmojiVisible}><span style={{fontSize: "22px"}}>😃</span> &nbsp;Mostrar emoji</Button>} <br/>
-                                        <Grid item xs={11}>
-                                            <Paper style={{backgroundColor: "#F0F8FF", marginLeft: "5rem", marginTop: "1rem"}}>
-                                                <TextField type="text" name="name" onChange={this.handleChange}
-                                                           id="outlined-full-width"
-                                                           label="Notas"
-                                                           style={{width: "40.75rem", height: "2.2rem", backgroundColor: "white"}}
-                                                           placeholder="Notas de la sesión"
-                                                           margin="normal"
-                                                           variant="outlined"
-                                                           InputLabelProps={{
-                                                               shrink: true,
-                                                           }}/>
-                                            </Paper>
-                                        </Grid>
+                                                    )
+                                                })}
+                                            </Select>
+                                            <FormHelperText>Caso</FormHelperText>
+                                        </FormControl>
+                                        <TextField type="text" name="name" onChange={this.handleChange}
+                                                   id="outlined-full-width"
+                                                   label="Titulo"
+                                                   style={{
+                                                       width: "12.75rem",
+                                                       height: "2.2rem",
+                                                       backgroundColor: "white",
+                                                       marginLeft: "1.50rem"
+
+                                                   }}
+                                                   placeholder="Titulo de la sesión"
+                                                   margin="normal"
+                                                   variant="outlined"
+                                                   InputLabelProps={{
+                                                       shrink: true,
+                                                   }}/></div>}
+
+
+                                        <br/>
+
+                                        {this.showFinishButton ?
+                                            <Button id="stop" variant="extendedFab" color="secondary"
+                                                    onClick={this.onStop.bind(this)}
+                                                    style={{color: "white", marginRight: "1rem"}}><FontAwesomeIcon
+                                                icon="stop"/>&nbsp; Terminar sesión</Button> :
+                                            <Button variant="extendedFab" onClick={this.onStart.bind(this)}
+                                                    disabled={this.state.isButtonDisabled} color="primary"
+                                                    style={{color: "white", marginRight: "1rem"}}><FontAwesomeIcon
+                                                icon="play"/>&nbsp; Iniciar</Button>}
+                                        {this.state.textVisible ?
+                                            <Button variant="extendedFab" onClick={this.handleTextVisible}
+                                                    style={{marginRight: "1rem"}}><FontAwesomeIcon icon="eye-slash"
+                                                                                                   style={{color: "black"}}/> &nbsp;Ocultar
+                                                texto</Button> :
+                                            <Button variant="extendedFab" onClick={this.handleTextVisible}
+                                                    style={{marginRight: "1rem"}}><FontAwesomeIcon icon="eye"
+                                                                                                   style={{color: "black"}}/> &nbsp;Mostrar
+                                                texto</Button>}
+                                        {this.state.emojiVisible ?
+                                            <Button variant="extendedFab" onClick={this.handleEmojiVisible}><span
+                                                style={{fontSize: "22px"}}>😡</span> &nbsp;Ocultar emoji</Button> :
+                                            <Button variant="extendedFab" onClick={this.handleEmojiVisible}><span
+                                                style={{fontSize: "22px"}}>😃</span> &nbsp;Mostrar emoji</Button>}
+                                        <CreateCriminal action={this.updateData}/>
+                                        <br/>
+                                        <TextField
+                                                id="standard-name"
+                                                name="current_notes"
+                                                label="Agregar notas"
+                                                value={this.state.current_notes}
+                                                onChange={this.handleChange}
+                                                disabled={!this.showFinishButton}
+                                                margin="normal"
+                                                style={{marginTop: "5.8rem"}}
+                                            />
+                                        <Button  variant="extendedFab" color="secondary"
+                                                 disabled={!this.showFinishButton}
+                                                 onClick={this.upload_notes_to_backend.bind(this)}
+                                                 style={{color: "white", marginLeft: "0.7rem", marginRight: "1.0rem", marginTop: "6.0rem"}}><FontAwesomeIcon
+                                            icon="plus"/>&nbsp;
+                                        </Button>
+                                        <TextField
+                                            id="standard-textarea"
+                                            label="Log de notas"
+                                            placeholder="Placeholder"
+                                            rows="5"
+                                            multiline
+                                            value={this.state.previous_notes}
+                                            disabled
+                                            margin="normal"
+                                        />
                                     </div>
                                     <div id="logs"/>
                                 </div>
@@ -314,7 +398,7 @@ class App extends React.Component {
                             <Typography variant="title" gutterBottom>
                                 Atención a la cámara
                             </Typography>
-                                <div id="atencion"/>
+                            <div id="atencion"/>
                         </Paper>
                         <Paper style={emojiStyle}>
                             <Typography variant="title" gutterBottom>
