@@ -184,38 +184,38 @@ class EmotionsBarChart extends React.Component {
 
         if(this.state.settings) {
             if (this.state.settings.joy_enabled) {
-                data_bar_char.labels.push('Joy');
+                data_bar_char.labels.push('Felicidad');
                 data_bar_char.datasets[0].data.push(this.joyLength / cantidadFelicidad);
 
             }
             if (this.state.settings.sadness_enabled) {
-                data_bar_char.labels.push('Sadness');
+                data_bar_char.labels.push('Tristeza');
                 data_bar_char.datasets[0].data.push(this.sadnessLength / cantidadTristeza);
 
             }
             if (this.state.settings.anger_enabled) {
-                data_bar_char.labels.push('Anger');
+                data_bar_char.labels.push('Enojo');
                 data_bar_char.datasets[0].data.push(this.angerLength / cantidadEnojo);
 
             }
             if (this.state.settings.surprise_enabled) {
-                data_bar_char.labels.push('Surprise');
+                data_bar_char.labels.push('Sorpresa');
                 data_bar_char.datasets[0].data.push(this.surpriseLength / cantidadSorpresa);
 
             }
             if (this.state.settings.disgust_enabled) {
-                data_bar_char.labels.push('Disgust');
+                data_bar_char.labels.push('Disgusto');
                 data_bar_char.datasets[0].data.push(this.disgustLength / cantidadDisgusto);
 
             }
             if (this.state.settings.contempt_enabled) {
-                data_bar_char.labels.push('Contempt');
+                data_bar_char.labels.push('Desprecio');
                 data_bar_char.datasets[0].data.push(this.contemptLength / cantidadContempt);
 
             }
 
             if (this.state.settings.fear_enabled) {
-                data_bar_char.labels.push('Fear');
+                data_bar_char.labels.push('Miedo');
                 data_bar_char.datasets[0].data.push(this.fearLength / cantidadMiedo);
 
             }

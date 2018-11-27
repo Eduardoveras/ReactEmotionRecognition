@@ -287,6 +287,7 @@ class VideoReport extends React.Component {
                             <br/>
 
                             {this.sacarPorcentajes() !== "" && <Card style={{marginBottom: "1rem", background: "linear-gradient(45deg, #b6dcfb 0%, #2196F2 50%, #2196F1 100%) no-repeat fixed"}}>
+
                                 <CardHeader title="👁️ Observaciones" subheader="Relaciones entre los reportes"/>
                                 <hr/>
                                 <CardContent>

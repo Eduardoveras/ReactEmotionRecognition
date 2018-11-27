@@ -58,16 +58,16 @@ class Manuales extends React.Component {
                 <Grid container spacing={24}>
                     <Grid item xs={6}>
                         <Paper style={paperStyle}>
-                            <Typography variant="title" color="inherit">¿Cómo interactuar con los reportes y el resumen estadístico?</Typography>
-                            <GifPlayer gif="https://i.imgur.com/yudWW87.gif" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
-                            <Button variant="extendedFab" color="primary" target="_blank" href="https://i.imgur.com/yudWW87.gif">🔎 &nbsp;Ver en grande (reportes y resumen)</Button>
+                            <Typography variant="title" color="inherit">¿Cómo interactuar con los reportes?</Typography>
+                            <GifPlayer gif="https://i.imgur.com/EXzYTvF.gif" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
+                            <Button variant="extendedFab" color="primary" target="_blank" href="https://i.imgur.com/EXzYTvF.gif">🔎 &nbsp;Ver en grande (reportes y resumen)</Button>
                         </Paper>
                     </Grid>
                     <Grid item xs={6}>
                         <Paper style={paperStyle}>
                             <Typography variant="title" color="inherit">¿Cómo interactuar con los casos?</Typography>
-                            <GifPlayer gif="https://i.imgur.com/hDRGn7l.gif" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
-                            <Button variant="extendedFab" color="primary" target="_blank" href="https://i.imgur.com/hDRGn7l.gif">🔎 &nbsp;Ver en grande (casos)</Button>
+                            <GifPlayer gif="https://i.imgur.com/fEaBWNJ.gif" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
+                            <Button variant="extendedFab" color="primary" target="_blank" href="https://i.imgur.com/fEaBWNJ.gif">🔎 &nbsp;Ver en grande (casos)</Button>
                         </Paper>
                     </Grid>
                     <Grid item xs={6}>
