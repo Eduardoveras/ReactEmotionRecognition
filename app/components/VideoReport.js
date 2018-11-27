@@ -126,7 +126,17 @@ class VideoReport extends React.Component {
         let Mensaje = "";
         let MensajeEmociones = "";
         let indiceEmociones = 0;
-        for(let indice = 1; indice < this.state.porcentajes.length; indice += 1){
+        let reporteActual = 0;
+
+
+        this.state.porcentajes.map((e) => {
+            if (e.id === parseInt(this.state.report_id)) {
+                reporteActual = e;
+            }
+        });
+
+
+        for(let indice = 0; indice < this.state.porcentajes.length; indice += 1){
             if(terminado === true){
                 break;
             }
@@ -134,12 +144,12 @@ class VideoReport extends React.Component {
                 if (indiceP === 5) {
                     indiceEmociones = 6;
                 }
-                if (indice + 1 <= tamanoPorcentajes - 1 && (indiceEmociones + 1) <= 8 && parseInt(this.state.report_id) !== indice + 2) {
-                    if (this.porcentajeRango1(this.state.porcentajes[parseInt(this.state.report_id) - 1].emotions_percentage[indiceEmociones], this.state.porcentajes[indice + 1].emotions_percentage[indiceEmociones])) {
-                        Mensaje = "El reporte: " + parseInt(this.state.report_id) + " se parece al reporte: " + (indice + 2) + ". Debido a las siguientes situaciones:";
+                if (indice + 1 <= tamanoPorcentajes - 1 && (indiceEmociones + 1) <= 8 && reporteActual.id !== this.state.porcentajes[indice + 1].id) {
+                    if (this.porcentajeRango1(reporteActual.emotions_percentage[indiceEmociones], this.state.porcentajes[indice + 1].emotions_percentage[indiceEmociones])) {
+                        Mensaje = "El reporte: " + parseInt(reporteActual.id) + " se parece al reporte: " + this.state.porcentajes[indice + 1].id + ". Debido a las siguientes situaciones:";
                         MensajeEmociones += " La emoción: " + this.sacarEmocion(indiceP) + " tienen promedios de: "
-                            + this.state.porcentajes[parseInt(this.state.report_id) - 1].emotions_percentage[indiceEmociones] + " en el reporte #" + parseInt(this.state.report_id) + " y de: "
-                            + this.state.porcentajes[indice + 1].emotions_percentage[indiceEmociones] + " en el reporte #" + (indice + 2) + ". ";
+                            + reporteActual.emotions_percentage[indiceEmociones]  + " en el reporte #" + reporteActual.id + " y de: "
+                            + this.state.porcentajes[indice + 1].emotions_percentage[indiceEmociones] + " en el reporte #" + this.state.porcentajes[indice + 1].id + ". ";
                         terminado = true;
                     }
                 }
