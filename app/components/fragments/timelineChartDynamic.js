@@ -71,7 +71,7 @@ class timelineChartDynamic extends React.Component {
             labels: this.state.timestamps,
             datasets: [
                 {
-                    label: 'Joy',
+                    label: 'Felicidad',
                     fill: true,
                     lineTension: 0.1,
                     backgroundColor: 'rgba(75,192,192,0.4)',
@@ -92,7 +92,7 @@ class timelineChartDynamic extends React.Component {
                     data: this.state.joy_data
                 },
                 {
-                    label: 'Sadness',
+                    label: 'Tristeza',
                     fill: true,
                     lineTension: 0.1,
                     backgroundColor: 'rgba(75,0,192,0.4)',
@@ -113,7 +113,7 @@ class timelineChartDynamic extends React.Component {
                     data: this.state.sadness_data
                 },
                 {
-                    label: 'Anger',
+                    label: 'Enojo',
                     fill: true,
                     lineTension: 0.1,
                     backgroundColor: 'rgba(196,212,17,0.4)',
@@ -134,7 +134,7 @@ class timelineChartDynamic extends React.Component {
                     data: this.state.anger_data
                 },
                 {
-                    label: 'Fear',
+                    label: 'Miedo',
                     fill: true,
                     lineTension: 0.1,
                     backgroundColor: 'rgba(75,0,0,0.4)',
@@ -155,7 +155,7 @@ class timelineChartDynamic extends React.Component {
                     data: this.state.fear_data
                 },
                 {
-                    label: 'Surprise',
+                    label: 'Sorpresa',
                     fill: true,
                     lineTension: 0.1,
                     backgroundColor: 'rgba(17,98,212,0.4)',
@@ -177,7 +177,7 @@ class timelineChartDynamic extends React.Component {
                 },
 
                 {
-                    label: 'Contempt',
+                    label: 'Desprecio',
                     fill: true,
                     lineTension: 0.1,
                     backgroundColor: 'rgba(6,85,45,0.4)',
@@ -199,7 +199,7 @@ class timelineChartDynamic extends React.Component {
                 },
 
                 {
-                    label: 'Disgust',
+                    label: 'Disgusto',
                     fill: true,
                     lineTension: 0.1,
                     backgroundColor: 'rgba(212,37,17,0.4)',

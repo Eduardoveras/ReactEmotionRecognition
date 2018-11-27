@@ -127,7 +127,9 @@ class VideoReport extends React.Component {
         let MensajeEmociones = "";
         let indiceEmociones = 0;
         for(let indice = 1; indice < this.state.porcentajes.length; indice += 1){
-            if(terminado === true){
+            if(
+              
+             === true){
                 break;
             }
             for(let indiceP = 0; indiceP < this.state.porcentajes[indice].emotions_percentage.length; indiceP += 1){
@@ -277,6 +279,7 @@ class VideoReport extends React.Component {
                             <br/>
 
                             {this.sacarPorcentajes() !== "" && <Card style={{marginBottom: "1rem", background: "linear-gradient(45deg, #b6dcfb 0%, #2196F2 50%, #2196F1 100%) no-repeat fixed"}}>
+
                                 <CardHeader title="👁️ Observaciones" subheader="Relaciones entre los reportes"/>
                                 <hr/>
                                 <CardContent>
