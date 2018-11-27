@@ -311,7 +311,7 @@ class App extends React.Component {
                                                        width: "12.75rem",
                                                        height: "2.2rem",
                                                        backgroundColor: "white",
-                                                       marginLeft: "6px"
+                                                       marginLeft: "1.50rem"
 
                                                    }}
                                                    placeholder="Titulo de la sesión"
@@ -348,8 +348,23 @@ class App extends React.Component {
                                             <Button variant="extendedFab" onClick={this.handleEmojiVisible}><span
                                                 style={{fontSize: "22px"}}>😃</span> &nbsp;Mostrar emoji</Button>}
                                         <CreateCriminal action={this.updateData}/>
-
                                         <br/>
+                                        <TextField
+                                                id="standard-name"
+                                                name="current_notes"
+                                                label="Agregar notas"
+                                                value={this.state.current_notes}
+                                                onChange={this.handleChange}
+                                                disabled={!this.showFinishButton}
+                                                margin="normal"
+                                                style={{marginTop: "5.8rem"}}
+                                            />
+                                        <Button  variant="extendedFab" color="secondary"
+                                                 disabled={!this.showFinishButton}
+                                                 onClick={this.upload_notes_to_backend.bind(this)}
+                                                 style={{color: "white", marginLeft: "0.7rem", marginRight: "1.0rem", marginTop: "6.0rem"}}><FontAwesomeIcon
+                                            icon="plus"/>&nbsp;
+                                        </Button>
                                         <TextField
                                             id="standard-textarea"
                                             label="Log de notas"
@@ -359,23 +374,7 @@ class App extends React.Component {
                                             value={this.state.previous_notes}
                                             disabled
                                             margin="normal"
-                                        /><br/>
-                                        <TextField
-                                            id="standard-name"
-                                            name="current_notes"
-                                            label="Agregar notas"
-                                            value={this.state.current_notes}
-                                            onChange={this.handleChange}
-                                            disabled={!this.showFinishButton}
-                                            margin="normal"
                                         />
-                                        <Button  variant="extendedFab" color="secondary"
-                                                 disabled={!this.showFinishButton}
-                                                onClick={this.upload_notes_to_backend.bind(this)}
-                                                style={{color: "white", marginRight: "1rem"}}><FontAwesomeIcon
-                                            icon="plus"/>&nbsp;</Button>
-
-
                                     </div>
                                     <div id="logs"/>
                                 </div>
