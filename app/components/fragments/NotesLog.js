@@ -32,23 +32,23 @@ class NotesLog extends React.Component {
 
 
     render() {
-
         return (
             <span className={root}>
-                <Card>
-
+                <Card style={{marginTop: "1.3rem", marginLeft: "25%", marginRight: "25%"}}>
                  <CardContent >
-                     <Typography gutterBottom variant="h5" component="h2">
-                         Notas de la session
+                     <Typography variant="display1">
+                         📝 Notas de la sesión
                      </Typography>
+                     <hr/>
                      <div className="notes-log-card">
                          {this.state.data?this.state.data.logs.map(function (d) {
                              return (
                                  <Typography component="p">{d + "\t"}</Typography>
                              )
-                         }):"Loading..."}</div>
+                         }):"Loading..."}
+                         {this.state.data && this.state.data.logs.length <= 0 && <Typography variant="headline">💡<span style={{color: "#CCCC00"}}> No hay notas en esta sesión</span></Typography>}
+                      </div>
                  </CardContent>
-
                 </Card>
 
 

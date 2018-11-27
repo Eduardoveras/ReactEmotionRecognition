@@ -121,13 +121,16 @@ class VideoReport extends React.Component {
     }
 
     sacarPorcentajes() {
+        let terminado = false;
         let tamanoPorcentajes = this.state.porcentajes.length;
-        console.log("TAMANO PORCENTAJES: " + tamanoPorcentajes);
         let Mensaje = "";
         let MensajeEmociones = "";
         let indiceEmociones = 0;
-        this.state.porcentajes.map((tabla, indice) => {
-            tabla.emotions_percentage.map((porcentaje, indiceP) => {
+        for(let indice = 1; indice < this.state.porcentajes.length; indice += 1){
+            if(terminado === true){
+                break;
+            }
+            for(let indiceP = 0; indiceP < this.state.porcentajes[indice].emotions_percentage.length; indiceP += 1){
                 if (indiceP === 5) {
                     indiceEmociones = 6;
                 }
@@ -137,11 +140,12 @@ class VideoReport extends React.Component {
                         MensajeEmociones += " La emoción: " + this.sacarEmocion(indiceP) + " tienen promedios de: "
                             + this.state.porcentajes[parseInt(this.state.report_id) - 1].emotions_percentage[indiceEmociones] + " en el reporte #" + parseInt(this.state.report_id) + " y de: "
                             + this.state.porcentajes[indice + 1].emotions_percentage[indiceEmociones] + " en el reporte #" + (indice + 2) + ". ";
+                        terminado = true;
                     }
                 }
                 indiceEmociones += 1;
-            });
-        });
+            }
+        }
 
         return Mensaje + MensajeEmociones;
     }
@@ -271,7 +275,8 @@ class VideoReport extends React.Component {
                                 </TableBody>
                             </Table>
                             <br/>
-                            <Card style={{marginBottom: "1rem", background: "linear-gradient(45deg, #b6dcfb 0%, #2196F2 50%, #2196F1 100%) no-repeat fixed"}}>
+
+                            {this.sacarPorcentajes() !== "" && <Card style={{marginBottom: "1rem", background: "linear-gradient(45deg, #b6dcfb 0%, #2196F2 50%, #2196F1 100%) no-repeat fixed"}}>
                                 <CardHeader title="👁️ Observaciones" subheader="Relaciones entre los reportes"/>
                                 <hr/>
                                 <CardContent>
@@ -279,7 +284,7 @@ class VideoReport extends React.Component {
                                         <span style={{color: "white"}}><b>{this.sacarPorcentajes()}</b></span>
                                     </Typography>
                                 </CardContent>
-                            </Card>
+                            </Card>}
                             <Typography variant="body1" gutterBottom>
                                 De todas estas emociones, la principal detectada fue la
                                 de <b> {this.state.summary_data.dominant_emotion}</b>, la cual tiene la mayor
@@ -325,9 +330,16 @@ class VideoReport extends React.Component {
                 {this.state.graphsVisible &&
                 <Grid container spacing={32}>
                     <Grid item xs={12}>
+                        <NotesLog report_id={this.state.report_id}/>
+                    </Grid>
+                    <br/>
+                    <Typography variant="display3" style={{marginTop: "2rem", marginBottom: "2rem", marginLeft: "40%", marginRight: "40%"}}>
+                        📊 Gráficas
+                    </Typography>
+                    <br/>
+                    <Grid item xs={12}>
                         <TimelineChart data={this.state.api_data}/>
                     </Grid>
-
                     <Grid item xs={6}>
                         <EmotionsPieChart data={this.state.api_data}/>
                     </Grid>
@@ -337,10 +349,6 @@ class VideoReport extends React.Component {
                     <Grid item xs={6}>
                         <PositiveNegativeChart data={this.state.api_data}/>
                     </Grid>
-                    <Grid item xs={6}>
-                        <NotesLog report_id={this.state.report_id}/>
-                    </Grid>
-
                 </Grid>
                 }
                 <br/>
