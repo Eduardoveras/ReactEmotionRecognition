@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faSearchPlus} from '@fortawesome/free-solid-svg-icons';
+import { faSearchPlus } from '@fortawesome/free-solid-svg-icons';
 var GifPlayer = require('react-gif-player');
 
 library.add(faSearchPlus);
@@ -43,14 +43,14 @@ class Manuales extends React.Component {
                     <Grid item xs={6}>
                         <Paper style={paperStyle}>
                             <Typography variant="title" color="inherit">¿Cómo loguearse?</Typography>
-                            <GifPlayer gif="https://i.imgur.com/63SPRXA.gif" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
+                            <GifPlayer gif="https://i.imgur.com/63SPRXA.gif" style={{ marginTop: "10px", marginBottom: "10px", width: "100%" }} />
                             <Button variant="extendedFab" color="primary" target="_blank" href="https://i.imgur.com/63SPRXA.gif">🔎 &nbsp;Ver en grande (loguearse)</Button>
                         </Paper>
                     </Grid>
                     <Grid item xs={6}>
                         <Paper style={paperStyle}>
                             <Typography variant="title" color="inherit">¿Cómo detectar emociones?</Typography>
-                            <GifPlayer gif="https://i.imgur.com/9HOQIwG.gif" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
+                            <GifPlayer gif="https://i.imgur.com/9HOQIwG.gif" style={{ marginTop: "10px", marginBottom: "10px", width: "100%" }} />
                             <Button variant="extendedFab" color="primary" target="_blank" href="https://i.imgur.com/9HOQIwG.gif">🔎 &nbsp;Ver en grande (detectar emociones)</Button>
                         </Paper>
                     </Grid>
@@ -59,28 +59,28 @@ class Manuales extends React.Component {
                     <Grid item xs={6}>
                         <Paper style={paperStyle}>
                             <Typography variant="title" color="inherit">¿Cómo interactuar con los reportes?</Typography>
-                            <GifPlayer gif="https://i.imgur.com/EXzYTvF.gif" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
+                            <GifPlayer gif="https://i.imgur.com/EXzYTvF.gif" style={{ marginTop: "10px", marginBottom: "10px", width: "100%" }} />
                             <Button variant="extendedFab" color="primary" target="_blank" href="https://i.imgur.com/EXzYTvF.gif">🔎 &nbsp;Ver en grande (reportes y resumen)</Button>
                         </Paper>
                     </Grid>
                     <Grid item xs={6}>
                         <Paper style={paperStyle}>
-                            <Typography variant="title" color="inherit">¿Cómo interactuar con los casos?</Typography>
-                            <GifPlayer gif="https://i.imgur.com/fEaBWNJ.gif" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
-                            <Button variant="extendedFab" color="primary" target="_blank" href="https://i.imgur.com/fEaBWNJ.gif">🔎 &nbsp;Ver en grande (casos)</Button>
+                            <Typography variant="title" color="inherit">¿Cómo interactuar con las publicidades?</Typography>
+                            <GifPlayer gif="https://i.imgur.com/fEaBWNJ.gif" style={{ marginTop: "10px", marginBottom: "10px", width: "100%" }} />
+                            <Button variant="extendedFab" color="primary" target="_blank" href="https://i.imgur.com/fEaBWNJ.gif">🔎 &nbsp;Ver en grande (publicidades)</Button>
                         </Paper>
                     </Grid>
                     <Grid item xs={6}>
                         <Paper style={paperStyle}>
                             <Typography variant="title" color="inherit">¿Cómo interactuar con los ajustes?</Typography>
-                            <GifPlayer gif="https://i.imgur.com/2KKEkHS.gif" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
+                            <GifPlayer gif="https://i.imgur.com/2KKEkHS.gif" style={{ marginTop: "10px", marginBottom: "10px", width: "100%" }} />
                             <Button variant="extendedFab" color="primary" target="_blank" href=" https://i.imgur.com/2KKEkHS.gif">🔎 &nbsp;Ver en grande (ajustes)</Button>
                         </Paper>
                     </Grid>
                     <Grid item xs={6}>
                         <Paper style={paperStyle}>
                             <Typography variant="title" color="inherit">¿Cómo interactuar con los marcadores?</Typography>
-                            <GifPlayer gif="https://i.imgur.com/r1bC4XR.gif" style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}/>
+                            <GifPlayer gif="https://i.imgur.com/r1bC4XR.gif" style={{ marginTop: "10px", marginBottom: "10px", width: "100%" }} />
                             <Button variant="extendedFab" color="primary" target="_blank" href=" https://i.imgur.com/r1bC4XR.gif">🔎 &nbsp;Ver en grande (marcadores)</Button>
                         </Paper>
                     </Grid>
