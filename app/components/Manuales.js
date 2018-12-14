@@ -67,7 +67,7 @@ class Manuales extends React.Component {
                         <Paper style={paperStyle}>
                             <Typography variant="title" color="inherit">¿Cómo interactuar con las publicidades?</Typography>
                             <GifPlayer gif="https://i.imgur.com/fEaBWNJ.gif" style={{ marginTop: "10px", marginBottom: "10px", width: "100%" }} />
-                            <Button variant="extendedFab" color="primary" target="_blank" href="https://i.imgur.com/fEaBWNJ.gif">🔎 &nbsp;Ver en grande (casos)</Button>
+                            <Button variant="extendedFab" color="primary" target="_blank" href="https://i.imgur.com/fEaBWNJ.gif">🔎 &nbsp;Ver en grande (publicidades)</Button>
                         </Paper>
                     </Grid>
                     <Grid item xs={6}>
