@@ -1,6 +1,6 @@
 /* eslint-disable react/prefer-stateless-function,no-console,no-restricted-globals,class-methods-use-this */
 import React from 'react';
-import {Doughnut} from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2';
 
 class PositiveNegativeEmotionsChart extends React.Component {
     constructor(props) {
@@ -23,7 +23,7 @@ class PositiveNegativeEmotionsChart extends React.Component {
     }
 
     render() {
-        this.api_data=this.props.data
+        this.api_data = this.props.data
 
         this.joy_data = this.api_data.map(function (e) {
             return e.emotions.joy;
@@ -141,10 +141,10 @@ class PositiveNegativeEmotionsChart extends React.Component {
         }
 
         let data_circle_char = {
-            labels: ['Emociones positivas','Emociones negativas'],
+            labels: ['Emociones positivas', 'Emociones negativas'],
             datasets: [{
-                data: [(this.joyLength+this.surpriseLength) / (cantidadFelicidad+cantidadSorpresa+cantidadTristeza+cantidadEnojo+ cantidadMiedo+cantidadDisgusto+cantidadContempt),
-                    (this.sadnessLength+this.angerLength+this.fearLength+this.disgustLength+this.contemptLength) / (cantidadFelicidad+cantidadSorpresa+cantidadTristeza+cantidadEnojo+cantidadMiedo+cantidadDisgusto+cantidadContempt)],
+                data: [(this.joyLength + this.surpriseLength) / (cantidadFelicidad + cantidadSorpresa + cantidadTristeza + cantidadEnojo + cantidadMiedo + cantidadDisgusto + cantidadContempt),
+                (this.sadnessLength + this.angerLength + this.fearLength + this.disgustLength + this.contemptLength) / (cantidadFelicidad + cantidadSorpresa + cantidadTristeza + cantidadEnojo + cantidadMiedo + cantidadDisgusto + cantidadContempt)],
                 backgroundColor: [
                     'rgba(75,192,192, 0.4)',
                     'DarkSalmon',
@@ -159,35 +159,35 @@ class PositiveNegativeEmotionsChart extends React.Component {
 
         return (
             <div className='container'>
-                {this.api_data===[]?null:<Doughnut data={data_circle_char} width={100} height={500}
-                                                   options={{
-                                                       responsive: true,
-                                                       maintainAspectRatio: false,
-                                                       title: {
-                                                           display: true,
-                                                           text: 'Emociones positivas vs negativas'
-                                                       },
-                                                       legend: {
-                                                           display: true,
-                                                           position: 'left',
-                                                           labels: {
-                                                               fontSize: 20
-                                                           }
-                                                       },
-                                                       tooltips: {
-                                                           callbacks: {
-                                                               label: function(tooltipItem, data) {
-                                                                   let dataset = data.datasets[tooltipItem.datasetIndex];
-                                                                   let total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
-                                                                       return previousValue + currentValue;
-                                                                   });
-                                                                   let currentValue = dataset.data[tooltipItem.index];
-                                                                   let precentage = Math.floor(((currentValue/total) * 100)+0.5);
-                                                                   return precentage + "%";
-                                                               }
-                                                           }
-                                                       }
-                                                   }}/>}
+                {this.api_data === [] ? null : <Doughnut data={data_circle_char} width={100} height={500}
+                    options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        title: {
+                            display: true,
+                            text: 'Emociones positivas vs negativas'
+                        },
+                        legend: {
+                            display: true,
+                            position: 'left',
+                            labels: {
+                                fontSize: 20
+                            }
+                        },
+                        tooltips: {
+                            callbacks: {
+                                label: function (tooltipItem, data) {
+                                    let dataset = data.datasets[tooltipItem.datasetIndex];
+                                    let total = dataset.data.reduce(function (previousValue, currentValue, currentIndex, array) {
+                                        return previousValue + currentValue;
+                                    });
+                                    let currentValue = dataset.data[tooltipItem.index];
+                                    let precentage = Math.floor(((currentValue / total) * 100) + 0.5);
+                                    return precentage + "%";
+                                }
+                            }
+                        }
+                    }} />}
             </div>
         );
     }

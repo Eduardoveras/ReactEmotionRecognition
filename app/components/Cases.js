@@ -5,10 +5,10 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from "@material-ui/core/Typography/Typography";
-import {BASE_URL_PATH} from '../constants';
-import {library} from "@fortawesome/fontawesome-svg-core/index";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faEye, faPlus, faTrash} from '@fortawesome/free-solid-svg-icons'
+import { BASE_URL_PATH } from '../constants';
+import { library } from "@fortawesome/fontawesome-svg-core/index";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons'
 import ReactTable from "react-table";
 
 library.add(faTrash);
@@ -27,9 +27,9 @@ class Cases extends React.Component {
     }
 
     deleteCase(id) {
-        let decision = confirm("Estás seguro de que quieres archivar este caso?\nEsta acción no puede ser deshecha.");
+        let decision = confirm("Estás seguro de que quieres archivar esta publicidad?\nEsta acción no puede ser deshecha.");
         if (decision) {
-            axios.patch(BASE_URL_PATH + '/cases/' + id, {case: {enabled: false}})
+            axios.patch(BASE_URL_PATH + '/cases/' + id, { case: { enabled: false } })
                 .then(function (response) {
                     console.log(response);
                 })
@@ -49,7 +49,7 @@ class Cases extends React.Component {
         axios.get(URL)
             .then((response) => {
                 console.log(response.data);
-                this.setState({data: response.data,loading:false});
+                this.setState({ data: response.data, loading: false });
             })
             .catch((error) => {
                 console.log(error);
@@ -61,9 +61,9 @@ class Cases extends React.Component {
         axios.post(URL,
             {
                 case:
-                    {
-                        notes: ''
-                    }
+                {
+                    notes: ''
+                }
             })
             .then((response) => {
                 window.location.pathname = '/casos/' + response.data.id;
@@ -86,27 +86,27 @@ class Cases extends React.Component {
             Header: 'Ver',
             id: 'edit',
             accessor: 'id',
-            Cell: ({value}) => (<Button variant="extendedFab" color="primary" href={"/casos/" + value}>
-                <FontAwesomeIcon icon="eye"/> &nbsp;Ver
+            Cell: ({ value }) => (<Button variant="extendedFab" color="primary" href={"/casos/" + value}>
+                <FontAwesomeIcon icon="eye" /> &nbsp;Ver
             </Button>),
             Filter: ({ filter, onChange }) => <div>---</div>
         }, {
             Header: 'Archivar',
             id: 'delete',
             accessor: 'id',
-            Cell: ({value}) => (<Button style={{color: "white"}} variant="extendedFab" color="secondary" onClick={() => {
+            Cell: ({ value }) => (<Button style={{ color: "white" }} variant="extendedFab" color="secondary" onClick={() => {
                 this.deleteCase(value)
-            }}><FontAwesomeIcon icon="trash"/> &nbsp;Archivar</Button>),
+            }}><FontAwesomeIcon icon="trash" /> &nbsp;Archivar</Button>),
             Filter: ({ filter, onChange }) => <div>---</div>
         }];
-        const {data,loading} = this.state;
+        const { data, loading } = this.state;
 
         return (
             <div className='container'>
                 <Typography variant="display1" gutterBottom>
-                    Casos {'  '}
+                    Publicidades {'  '}
                     <Button variant="fab" color="primary" aria-label="Add" onClick={this.createNewCase.bind(this)}>
-                        <FontAwesomeIcon icon="plus"/>
+                        <FontAwesomeIcon icon="plus" />
                     </Button>
                 </Typography>
 
@@ -123,7 +123,7 @@ class Cases extends React.Component {
                                     defaultFilterMethod={(filter, row) =>
                                         String(row[filter.id]) === filter.value}
                                     columns={columns}
-                                    style={{fontFamily: "Arial"}}
+                                    style={{ fontFamily: "Arial" }}
                                 />
                             </div>
                         </Paper>
