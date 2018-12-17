@@ -11,10 +11,11 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
-import { URL_PATH } from '../constants';
-import { BASE_URL_PATH } from '../constants';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {URL_PATH} from '../constants';
+import {BASE_URL_PATH} from '../constants';
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import Modal from '@material-ui/core/Modal';
 import {
     faEye,
     faEyeSlash,
@@ -38,6 +39,17 @@ library.add(faGrinAlt);
 library.add(faPlay);
 library.add(faStop);
 library.add(faPlus);
+
+function getModalStyle() {
+    return {
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        position: 'absolute',
+        backgroundColor: 'white',
+        padding: '1.5rem',
+    };
+}
 
 const paperStyle = {
     padding: "27px",
@@ -87,8 +99,8 @@ class App extends React.Component {
             selected_criminal: '',
             selected_criminal_id: 0,
             current_notes: '',
-            previous_notes: ''
-
+            previous_notes: '',
+            open: false
         };
 
         this.handleEmojiVisible = this.handleEmojiVisible.bind(this);
@@ -97,8 +109,25 @@ class App extends React.Component {
         this.startRecording = this.startRecording.bind(this);
         this.updateData = this.updateData.bind(this);
         this.upload_notes_to_backend = this.upload_notes_to_backend.bind(this);
-
+        this.handleClose = this.handleClose.bind(this);
+        this.handleOpen = this.handleOpen.bind(this);
     }
+
+    handleOpen() {
+        this.setState({
+            open: true
+        });
+    }
+
+    handleClose() {
+        this.setState({
+            open: false
+        });
+    }
+
+    handleRedirect = () => {
+        window.location.href = '/casos/' + this.state.selected_case;
+    };
 
     handleDataAvailable(event) {
         if (recordedBlobs == null) {
@@ -112,7 +141,7 @@ class App extends React.Component {
 
     startRecording() {
         try {
-            this.mediaRecorder = new MediaRecorder(this.canvas.captureStream(), { mimeType: 'video/webm;codecs=vp9' });
+            this.mediaRecorder = new MediaRecorder(this.canvas.captureStream(), {mimeType: 'video/webm;codecs=vp9'});
         } catch (e) {
             console.error('Exception while creating MediaRecorder:', e);
             return;
@@ -130,24 +159,24 @@ class App extends React.Component {
     stopRecording() {
         this.mediaRecorder.stop();
         console.log('Recorded Blobs: ', recordedBlobs);
-        const superBuffer = new Blob(recordedBlobs, { type: 'video/webm' });
-        const { video_id, selected_case } = this.state;
+        const superBuffer = new Blob(recordedBlobs, {type: 'video/webm'});
+        const {video_id, selected_case} = this.state;
+
         console.log("video id hack:" + video_id);
+
         blobToBase64(superBuffer, function (error, base64) {
             if (!error) {
-                axios.post(BASE_URL_PATH + '/add_video/' + video_id, { video_file: base64 })
+                axios.post(BASE_URL_PATH + '/add_video/' + video_id, {video_file: base64})
                     .then(function (response) {
                         console.log('Video saved correctly');
-                        window.location.href = '/casos/' + selected_case;
                     });
             } else {
                 console.log("Error converting to base64");
                 alert('There was an error saving the video');
-
             }
-        })
+        });
 
-
+        this.handleOpen();
     }
 
     handleEmojiVisible() {
@@ -172,21 +201,19 @@ class App extends React.Component {
 
     componentWillMount() {
         this.updateData();
-
-
     }
 
     updateData() {
         axios.get(BASE_URL_PATH + '/cases')
             .then((response) => {
-                this.setState({ cases: response.data });
+                this.setState({cases: response.data});
             })
             .catch((error) => {
                 console.log(error);
             });
         axios.get(BASE_URL_PATH + '/criminals')
             .then((response) => {
-                this.setState({ criminals: response.data });
+                this.setState({criminals: response.data});
             })
             .catch((error) => {
                 console.log(error);
@@ -207,10 +234,10 @@ class App extends React.Component {
 
         let URL = URL_PATH;
 
-        axios.post(URL, { face_video_analysis })
+        axios.post(URL, {face_video_analysis})
             .then(res => {
                 this.video_id = res.data.id;
-                this.setState({ video_id: res.data.id });
+                this.setState({video_id: res.data.id});
                 this.emotionService.onStart(this.state.video_id);
                 this.showFinishButton = true;
                 this.forceUpdate();
@@ -229,13 +256,13 @@ class App extends React.Component {
     }
 
     handleChange = event => {
-        this.setState({ [event.target.name]: event.target.value });
+        this.setState({[event.target.name]: event.target.value});
     };
 
     handleChangeSelect = (event, index, value) => {
         console.log(index.key);
-        this.setState({ [event.target.name]: event.target.value });
-        this.setState({ selected_criminal_id: parseInt(index.key, 10) });
+        this.setState({[event.target.name]: event.target.value});
+        this.setState({selected_criminal_id: parseInt(index.key, 10)});
     };
 
     onReset() {
@@ -245,30 +272,33 @@ class App extends React.Component {
     upload_notes_to_backend() {
         let minutes = Math.floor(this.emotionService.timeStamp / 60);
         let seconds = this.emotionService.timeStamp - minutes * 60;
-        axios.post(BASE_URL_PATH + '/add_logs/' + this.state.video_id, { logs: minutes + ":" + parseInt(seconds) + " - " + this.state.current_notes })
+        axios.post(BASE_URL_PATH + '/add_logs/' + this.state.video_id, {logs: minutes + ":" + parseInt(seconds) + " - " + this.state.current_notes})
             .then(response => {
                 console.log('pushed notes to backenddd');
-                this.setState(prevState => ({ current_notes: "", previous_notes: prevState.previous_notes + minutes + ":" + parseInt(seconds) + " - " + prevState.current_notes + "\n" }));
+                this.setState(prevState => ({
+                    current_notes: "",
+                    previous_notes: prevState.previous_notes + minutes + ":" + parseInt(seconds) + " - " + prevState.current_notes + "\n"
+                }));
 
             });
 
     }
 
     render() {
-        const { cases, criminals } = this.state;
+        const {cases, criminals} = this.state;
         return (
             <div className='container' id='container'>
                 <Grid container spacing={24}>
                     <Grid item xs={7}>
                         <Paper style={paperStyle}>
                             <div>
-                                <div id="affdex_elements" ref="affElement" />
+                                <div id="affdex_elements" ref="affElement"/>
                                 {/*<video id="testing_video" autoPlay playsInline muted/>*/}
                                 <div className="center-text">
                                     <div className="btn-group btn-group-lg" role="group" aria-label="Basic example">
-                                        {this.showFinishButton ? <div /> :
+                                        {this.showFinishButton ? <div/> :
                                             <div>
-                                                <FormControl style={{ marginBottom: "0.5rem", display: "inline-block" }}>
+                                                <FormControl style={{marginBottom: "0.5rem", display: "inline-block"}}>
                                                     <Select
                                                         name="selected_criminal"
                                                         value={this.state.selected_criminal}
@@ -277,7 +307,7 @@ class App extends React.Component {
                                                     >
                                                         <MenuItem value="" disabled>
                                                             Seleccione persona interrogada
-                                                </MenuItem>
+                                                        </MenuItem>
                                                         {criminals.map(function (d) {
                                                             return (
                                                                 <MenuItem key={d.id} value={d.name}>{d.name}</MenuItem>
@@ -286,7 +316,7 @@ class App extends React.Component {
                                                     </Select>
                                                     <FormHelperText>Criminal</FormHelperText>
                                                 </FormControl>
-                                                <FormControl style={{ display: "inline-block" }}>
+                                                <FormControl style={{display: "inline-block"}}>
                                                     <Select
                                                         name="selected_case"
                                                         value={this.state.selected_case}
@@ -295,7 +325,7 @@ class App extends React.Component {
                                                     >
                                                         <MenuItem value="" disabled>
                                                             Seleccione la publicidad
-                                                </MenuItem>
+                                                        </MenuItem>
                                                         {cases.map(function (d) {
                                                             return (
                                                                 <MenuItem key={d.id} value={d.id}>{d.id}</MenuItem>
@@ -305,50 +335,50 @@ class App extends React.Component {
                                                     <FormHelperText>Publicidad</FormHelperText>
                                                 </FormControl>
                                                 <TextField type="text" name="name" onChange={this.handleChange}
-                                                    id="outlined-full-width"
-                                                    label="Titulo"
-                                                    style={{
-                                                        width: "12.75rem",
-                                                        height: "2.2rem",
-                                                        backgroundColor: "white",
-                                                        marginLeft: "1.50rem"
+                                                           id="outlined-full-width"
+                                                           label="Titulo"
+                                                           style={{
+                                                               width: "12.75rem",
+                                                               height: "2.2rem",
+                                                               backgroundColor: "white",
+                                                               marginLeft: "1.50rem"
 
-                                                    }}
-                                                    placeholder="Titulo de la sesión"
-                                                    margin="normal"
-                                                    variant="outlined"
-                                                    InputLabelProps={{
-                                                        shrink: true,
-                                                    }} /></div>}
+                                                           }}
+                                                           placeholder="Titulo de la sesión"
+                                                           margin="normal"
+                                                           variant="outlined"
+                                                           InputLabelProps={{
+                                                               shrink: true,
+                                                           }}/></div>}
 
 
-                                        <br />
+                                        <br/>
 
                                         {this.showFinishButton ?
                                             <Button id="stop" variant="extendedFab" color="secondary"
-                                                onClick={this.onStop.bind(this)}
-                                                style={{ color: "white", marginRight: "1rem" }}><FontAwesomeIcon
-                                                    icon="stop" />&nbsp; Terminar sesión</Button> :
+                                                    onClick={this.onStop.bind(this)}
+                                                    style={{color: "white", marginRight: "1rem"}}><FontAwesomeIcon
+                                                icon="stop"/>&nbsp; Terminar sesión</Button> :
                                             <Button variant="extendedFab" onClick={this.onStart.bind(this)}
-                                                disabled={this.state.isButtonDisabled} color="primary"
-                                                style={{ color: "white", marginRight: "1rem" }}><FontAwesomeIcon
-                                                    icon="play" />&nbsp; Iniciar</Button>}
+                                                    disabled={this.state.isButtonDisabled} color="primary"
+                                                    style={{color: "white", marginRight: "1rem"}}><FontAwesomeIcon
+                                                icon="play"/>&nbsp; Iniciar</Button>}
                                         {this.state.textVisible ?
                                             <Button variant="extendedFab" onClick={this.handleTextVisible}
-                                                style={{ marginRight: "1rem" }}><FontAwesomeIcon icon="eye-slash"
-                                                    style={{ color: "black" }} /> &nbsp;Ocultar
+                                                    style={{marginRight: "1rem"}}><FontAwesomeIcon icon="eye-slash"
+                                                                                                   style={{color: "black"}}/> &nbsp;Ocultar
                                                 texto</Button> :
                                             <Button variant="extendedFab" onClick={this.handleTextVisible}
-                                                style={{ marginRight: "1rem" }}><FontAwesomeIcon icon="eye"
-                                                    style={{ color: "black" }} /> &nbsp;Mostrar
+                                                    style={{marginRight: "1rem"}}><FontAwesomeIcon icon="eye"
+                                                                                                   style={{color: "black"}}/> &nbsp;Mostrar
                                                 texto</Button>}
                                         {this.state.emojiVisible ?
                                             <Button variant="extendedFab" onClick={this.handleEmojiVisible}><span
-                                                style={{ fontSize: "22px" }}>😡</span> &nbsp;Ocultar emoji</Button> :
+                                                style={{fontSize: "22px"}}>😡</span> &nbsp;Ocultar emoji</Button> :
                                             <Button variant="extendedFab" onClick={this.handleEmojiVisible}><span
-                                                style={{ fontSize: "22px" }}>😃</span> &nbsp;Mostrar emoji</Button>}
-                                        <CreateCriminal action={this.updateData} />
-                                        <br />
+                                                style={{fontSize: "22px"}}>😃</span> &nbsp;Mostrar emoji</Button>}
+                                        <CreateCriminal action={this.updateData}/>
+                                        <br/>
                                         <TextField
                                             id="standard-name"
                                             name="current_notes"
@@ -357,13 +387,18 @@ class App extends React.Component {
                                             onChange={this.handleChange}
                                             disabled={!this.showFinishButton}
                                             margin="normal"
-                                            style={{ marginTop: "5.8rem" }}
+                                            style={{marginTop: "5.8rem"}}
                                         />
                                         <Button variant="extendedFab" color="secondary"
-                                            disabled={!this.showFinishButton}
-                                            onClick={this.upload_notes_to_backend.bind(this)}
-                                            style={{ color: "white", marginLeft: "0.7rem", marginRight: "1.0rem", marginTop: "6.0rem" }}><FontAwesomeIcon
-                                                icon="plus" />&nbsp;
+                                                disabled={!this.showFinishButton}
+                                                onClick={this.upload_notes_to_backend.bind(this)}
+                                                style={{
+                                                    color: "white",
+                                                    marginLeft: "0.7rem",
+                                                    marginRight: "1.0rem",
+                                                    marginTop: "6.0rem"
+                                                }}><FontAwesomeIcon
+                                            icon="plus"/>&nbsp;
                                         </Button>
                                         <TextField
                                             id="standard-textarea"
@@ -376,7 +411,7 @@ class App extends React.Component {
                                             margin="normal"
                                         />
                                     </div>
-                                    <div id="logs" />
+                                    <div id="logs"/>
                                 </div>
                             </div>
                         </Paper>
@@ -389,7 +424,7 @@ class App extends React.Component {
                                         Resultados detectados
                                     </Typography>
                                     <Typography gutterBottom>
-                                        {this.state.textVisible && <span id="results" />}
+                                        {this.state.textVisible && <span id="results"/>}
                                     </Typography>
                                 </div>
                             </div>
@@ -398,19 +433,53 @@ class App extends React.Component {
                             <Typography variant="title" gutterBottom>
                                 Atención a la cámara
                             </Typography>
-                            <div id="atencion" />
+                            <div id="atencion"/>
                         </Paper>
                         <Paper style={emojiStyle}>
                             <Typography variant="title" gutterBottom>
                                 Emoji
                             </Typography>
                             <Typography>
-                                <br />
-                                {this.state.emojiVisible && <div id="emoji" />}
+                                <br/>
+                                {this.state.emojiVisible && <div id="emoji"/>}
                             </Typography>
                         </Paper>
                     </Grid>
                 </Grid>
+                {this.state.open &&
+                <span className={root}>
+                <Button variant="extendedFab" onClick={this.handleOpen} style={{
+                    marginLeft: "1rem",
+                    marginBottom: "1rem",
+                    marginTop: "0.74rem",
+                    display: "inline"
+                }}><span style={{fontSize: "22px"}}>👨</span> &nbsp;Crear persona</Button>
+                <Modal
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                    open={this.state.open}
+                    onClose={this.handleClose}
+                >
+                    <div style={getModalStyle()}>
+                        <Typography variant="title" id="modal-title">
+                            ¿Cuál fue la emoción que predominó en este vídeo para ti?
+                        </Typography>
+                        <Button color="primary" style={{marginTop: "0.75rem", marginLeft: "25%", marginRight: "25%"}} variant="extendedFab" size="large">
+                           Elige una emoción
+                        </Button>
+                        <hr/>
+                        <Button variant="fab" color="default" onClick={this.handleRedirect} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😃</span></Button>
+                        <Button variant="fab" color="default" onClick={this.handleRedirect} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😢</span></Button>
+                        <Button variant="fab" color="default" onClick={this.handleRedirect} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😫</span></Button>
+                        <Button variant="fab" color="default" onClick={this.handleRedirect} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😕</span></Button>
+                        <Button variant="fab" color="default" onClick={this.handleRedirect} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😡</span></Button>
+                        <Button variant="fab" color="default" onClick={this.handleRedirect} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😱</span></Button>
+                        <Button variant="fab" color="default" onClick={this.handleRedirect} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😲</span></Button>
+                    </div>
+                </Modal>
+
+            </span>
+                }
             </div>
         );
     }
