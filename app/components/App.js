@@ -111,6 +111,7 @@ class App extends React.Component {
         this.upload_notes_to_backend = this.upload_notes_to_backend.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleOpen = this.handleOpen.bind(this);
+        this.handleRating =this.handleRating.bind(this);
     }
 
     handleOpen() {
@@ -125,8 +126,13 @@ class App extends React.Component {
         });
     }
 
-    handleRedirect = () => {
-        window.location.href = '/casos/' + this.state.selected_case;
+    handleRating = (the_value) => {
+        let selected_case=this.state.selected_case;
+        axios.patch(BASE_URL_PATH + '/face_video_analyses/'+this.state.video_id, { face_video_analysis: { rating: the_value } })
+            .then(function (response) {
+                console.log(response);
+                 window.location.href = '/casos/' +selected_case ;
+            })
     };
 
     handleDataAvailable(event) {
@@ -468,13 +474,13 @@ class App extends React.Component {
                            Elige una emoción
                         </Button>
                         <hr/>
-                        <Button variant="fab" color="default" onClick={this.handleRedirect} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😃</span></Button>
-                        <Button variant="fab" color="default" onClick={this.handleRedirect} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😢</span></Button>
-                        <Button variant="fab" color="default" onClick={this.handleRedirect} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😫</span></Button>
-                        <Button variant="fab" color="default" onClick={this.handleRedirect} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😕</span></Button>
-                        <Button variant="fab" color="default" onClick={this.handleRedirect} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😡</span></Button>
-                        <Button variant="fab" color="default" onClick={this.handleRedirect} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😱</span></Button>
-                        <Button variant="fab" color="default" onClick={this.handleRedirect} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😲</span></Button>
+                        <Button variant="fab" color="default" onClick={() => {this.handleRating("1")}} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😃</span></Button>
+                        <Button variant="fab" color="default" onClick={() => {this.handleRating("2")}} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😢</span></Button>
+                        <Button variant="fab" color="default" onClick={() => {this.handleRating("3")}} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😫</span></Button>
+                        <Button variant="fab" color="default" onClick={() => {this.handleRating("4")}} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😕</span></Button>
+                        <Button variant="fab" color="default" onClick={() => {this.handleRating("5")}} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😡</span></Button>
+                        <Button variant="fab" color="default" onClick={() => {this.handleRating("6")}} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😱</span></Button>
+                        <Button variant="fab" color="default" onClick={() => {this.handleRating("7")}} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😲</span></Button>
                     </div>
                 </Modal>
 
