@@ -194,6 +194,9 @@ class VideoReport extends React.Component {
                 <Typography variant="display1" gutterBottom>
                     Notas del reporte: {this.state.summary_data ? this.state.summary_data.notes : 'loading data...'}
                 </Typography>
+                <Typography variant="display1" gutterBottom>
+                    Emocion deseada: {this.state.summary_data ? this.state.summary_data.rating : 'loading data...'}
+                </Typography>
                 {this.state.textVisible &&
                 <Card style={cardStyle}>
                     <CardContent>

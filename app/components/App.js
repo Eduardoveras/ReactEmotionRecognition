@@ -320,7 +320,7 @@ class App extends React.Component {
                                                             )
                                                         })}
                                                     </Select>
-                                                    <FormHelperText>Criminal</FormHelperText>
+                                                    <FormHelperText>Persona</FormHelperText>
                                                 </FormControl>
                                                 <FormControl style={{display: "inline-block"}}>
                                                     <Select
@@ -474,13 +474,13 @@ class App extends React.Component {
                            Elige una emoción
                         </Button>
                         <hr/>
-                        <Button variant="fab" color="default" onClick={() => {this.handleRating("1")}} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😃</span></Button>
-                        <Button variant="fab" color="default" onClick={() => {this.handleRating("2")}} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😢</span></Button>
-                        <Button variant="fab" color="default" onClick={() => {this.handleRating("3")}} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😫</span></Button>
-                        <Button variant="fab" color="default" onClick={() => {this.handleRating("4")}} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😕</span></Button>
-                        <Button variant="fab" color="default" onClick={() => {this.handleRating("5")}} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😡</span></Button>
-                        <Button variant="fab" color="default" onClick={() => {this.handleRating("6")}} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😱</span></Button>
-                        <Button variant="fab" color="default" onClick={() => {this.handleRating("7")}} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😲</span></Button>
+                        <Button variant="fab" color="default" onClick={() => {this.handleRating("Felicidad")}} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😃</span></Button>
+                        <Button variant="fab" color="default" onClick={() => {this.handleRating("Tristeza")}} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😢</span></Button>
+                        <Button variant="fab" color="default" onClick={() => {this.handleRating("Asco")}} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😫</span></Button>
+                        <Button variant="fab" color="default" onClick={() => {this.handleRating("Desprecio")}} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😕</span></Button>
+                        <Button variant="fab" color="default" onClick={() => {this.handleRating("Enojo")}} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😡</span></Button>
+                        <Button variant="fab" color="default" onClick={() => {this.handleRating("Miedo")}} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😱</span></Button>
+                        <Button variant="fab" color="default" onClick={() => {this.handleRating("Sorpresa")}} style={{marginLeft: "1.1rem"}}><span style={{fontSize: "2.5rem"}}>😲</span></Button>
                     </div>
                 </Modal>
 
