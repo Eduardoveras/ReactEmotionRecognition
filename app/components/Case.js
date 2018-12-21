@@ -29,8 +29,26 @@ class Cases extends React.Component {
         this.state = {
             data: [],
             case_id: window.location.href.split('/').pop(),
+            link:''
         };
+        this.updateLink=this.updateLink.bind(this);
     }
+
+    updateLink = () => {
+        let decision = prompt("Link:", "http://www.youtube.com");
+        let currentThis=this;
+        if (decision != null) {
+            let URL = BASE_URL_PATH + '/cases/' + this.state.case_id;
+            axios.patch(URL, {case: {link: decision}})
+                .then(function (response) {
+                    console.log(response);
+                    currentThis.setState({link: decision})
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
+    };
 
     componentWillMount() {
         let URL = BASE_URL_PATH + '/cases/' + this.state.case_id;
@@ -54,20 +72,11 @@ class Cases extends React.Component {
                         });
                     })
                 );
+                this.setState({link:response.data.link})
             })
             .catch((error) => {
                 console.log(error);
             });
-    }
-    componentDidMount() {
-
-        if (this.state.data.face_video_analysis) {
-
-
-
-
-        }
-
     }
 
     render() {
@@ -78,8 +87,8 @@ class Cases extends React.Component {
                 <Typography variant="display1" gutterBottom>
                     Publicidad #{this.state.case_id}
                 </Typography>
-                <Typography variant="subheading" gutterBottom>
-                    Link: {this.state.data? this.state.data.link:'Loading...'}
+                <Typography variant="subheading" gutterBottom onClick={this.updateLink}>
+                    Link: {this.state.link? this.state.link:'Loading...'}
                 </Typography>
                 <Grid
                     container
