@@ -88,7 +88,7 @@ class Cases extends React.Component {
                     Publicidad #{this.state.case_id}
                 </Typography>
                 <Typography variant="subheading" gutterBottom onClick={this.updateLink}>
-                    Link: {this.state.link? this.state.link:'Loading...'}
+                    Link: {this.state.link==='' || this.state.link==null? ' No Definido':this.state.link}
                 </Typography>
                 <Grid
                     container
