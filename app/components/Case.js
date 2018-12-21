@@ -78,6 +78,9 @@ class Cases extends React.Component {
                 <Typography variant="display1" gutterBottom>
                     Publicidad #{this.state.case_id}
                 </Typography>
+                <Typography variant="subheading" gutterBottom>
+                    Link: {this.state.data? this.state.data.link:'Loading...'}
+                </Typography>
                 <Grid
                     container
                     justify="left"
