@@ -12,6 +12,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFileVideo } from '@fortawesome/free-solid-svg-icons'
 import videojs from 'video.js'
+import jwt from 'jsonwebtoken'
 
 library.add(faFileVideo);
 
@@ -26,11 +27,15 @@ const videoStyle = {
 class Cases extends React.Component {
     constructor(props) {
         super(props);
+
+
         this.state = {
             data: [],
             case_id: window.location.href.split('/').pop(),
-            link:''
+            link:'',
+            iframeUrl: null
         };
+
         this.updateLink=this.updateLink.bind(this);
     }
 
@@ -77,6 +82,24 @@ class Cases extends React.Component {
             .catch((error) => {
                 console.log(error);
             });
+
+
+
+
+        let METABASE_SITE_URL = "http://sdem-bi.herokuapp.com";
+        let METABASE_SECRET_KEY = "4a22557c855ddfa93b81d480f4e02fdec23016413807fe11952b5ba066589846";
+
+        let payload = {
+            resource: { dashboard: 1 },
+            params: {}
+        };
+        let token = jwt.sign(payload, METABASE_SECRET_KEY);
+
+        let the_iframeUrl = METABASE_SITE_URL + "/embed/dashboard/" + token + "#bordered=true&titled=true";
+        console.log("la vaina e");
+        console.log(the_iframeUrl);
+        this.setState({iframeUrl:the_iframeUrl});
+
     }
 
     render() {
@@ -90,6 +113,14 @@ class Cases extends React.Component {
                 <Typography variant="subheading" gutterBottom onClick={this.updateLink}>
                     Link: {this.state.link==='' || this.state.link==null? ' No Definido':this.state.link}
                 </Typography>
+                {this.state.iframeUrl==null?"Loading...":<iframe
+                    src={this.state.iframeUrl}
+                    frameBorder={0}
+                    width={800}
+                    height={600}
+                    allowTransparency
+                />}
+
                 <Grid
                     container
                     justify="left"

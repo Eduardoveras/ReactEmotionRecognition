@@ -1,11 +1,11 @@
 Arguments: 
-  /usr/local/bin/node /usr/share/yarn/bin/yarn.js install
+  /usr/local/bin/node /home/eduardo/Desktop/projects/ReactEmotionRecognition/node_modules/.bin/yarn add jsonwebtoke --ignore-engines
 
 PATH: 
-  /home/eduardo/.rbenv/plugins/ruby-build/bin:/home/eduardo/.rbenv/shims:/home/eduardo/.rbenv/bin:/home/eduardo/.rbenv/plugins/ruby-build/bin:/home/eduardo/.rbenv/shims:/home/eduardo/.rbenv/bin:/home/eduardo/Desktop/projects/ReactEmotionRecognition/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  /home/eduardo/.rbenv/plugins/ruby-build/bin:/home/eduardo/.rbenv/shims:/home/eduardo/.rbenv/bin:/home/eduardo/Desktop/projects/ReactEmotionRecognition/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/eduardo/Documents/flutter/bin
 
 Yarn version: 
-  1.12.3
+  1.7.0
 
 Node version: 
   11.4.0
@@ -14,19 +14,24 @@ Platform:
   linux x64
 
 Trace: 
-  SyntaxError: /home/eduardo/Desktop/projects/ReactEmotionRecognition/package.json: Unexpected token / in JSON at position 82
-      at JSON.parse (<anonymous>)
-      at /usr/share/yarn/lib/cli.js:1631:59
-      at Generator.next (<anonymous>)
-      at step (/usr/share/yarn/lib/cli.js:304:30)
-      at /usr/share/yarn/lib/cli.js:315:13
+  Error: https://registry.yarnpkg.com/jsonwebtoke: Not found
+      at Request.params.callback [as _callback] (/home/eduardo/Desktop/projects/ReactEmotionRecognition/node_modules/yarn/lib/cli.js:65656:18)
+      at Request.self.callback (/home/eduardo/Desktop/projects/ReactEmotionRecognition/node_modules/yarn/lib/cli.js:134675:22)
+      at Request.emit (events.js:189:13)
+      at Request.<anonymous> (/home/eduardo/Desktop/projects/ReactEmotionRecognition/node_modules/yarn/lib/cli.js:135658:10)
+      at Request.emit (events.js:189:13)
+      at IncomingMessage.<anonymous> (/home/eduardo/Desktop/projects/ReactEmotionRecognition/node_modules/yarn/lib/cli.js:135578:12)
+      at Object.onceWrapper (events.js:277:13)
+      at IncomingMessage.emit (events.js:194:15)
+      at endReadableNT (_stream_readable.js:1107:12)
+      at process.internalTickCallback (internal/process/next_tick.js:72:19)
 
 npm manifest: 
   {
     "name": "react-webpack-boilerplate",
     "version": "2.1.0",
     "engines": {
-      //"node": "^8.11.3",
+      "node": "^8.11.3",
       "npm": "6.1.0",
       "yarn": "^1.7.0"
     },
@@ -83,6 +88,7 @@ npm manifest:
       "firebase": "^5.4.1",
       "firebaseui": "^3.4.0",
       "jquery": "^3.3.1",
+      "jsonwebtoken": "^8.4.0",
       "jspdf": "^1.4.1",
       "popper.js": "1.12.9",
       "prop-types": "^15.6.2",
@@ -2223,6 +2229,11 @@ Lockfile:
     dependencies:
       node-int64 "^0.4.0"
   
+  buffer-equal-constant-time@1.0.1:
+    version "1.0.1"
+    resolved "https://registry.yarnpkg.com/buffer-equal-constant-time/-/buffer-equal-constant-time-1.0.1.tgz#f8e71132f7ffe6e01a5c9697a4c6f3e48d5cc819"
+    integrity sha1-+OcRMvf/5uAaXJaXpMbz5I1cyBk=
+  
   buffer-from@^1.0.0:
     version "1.1.0"
     resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-1.1.0.tgz#87fcaa3a298358e0ade6e442cfce840740d1ad04"
@@ -3425,6 +3436,13 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/ecc-jsbn/-/ecc-jsbn-0.1.1.tgz#0fc73a9ed5f0d53c38193398523ef7e543777505"
     dependencies:
       jsbn "~0.1.0"
+  
+  ecdsa-sig-formatter@1.0.10:
+    version "1.0.10"
+    resolved "https://registry.yarnpkg.com/ecdsa-sig-formatter/-/ecdsa-sig-formatter-1.0.10.tgz#1c595000f04a8897dfb85000892a0f4c33af86c3"
+    integrity sha1-HFlQAPBKiJffuFAAiSoPTDOvhsM=
+    dependencies:
+      safe-buffer "^5.0.1"
   
   ee-first@1.1.1:
     version "1.1.1"
@@ -5918,6 +5936,21 @@ Lockfile:
     version "4.0.1"
     resolved "https://registry.yarnpkg.com/jsonpointer/-/jsonpointer-4.0.1.tgz#4fd92cb34e0e9db3c89c8622ecf51f9b978c6cb9"
   
+  jsonwebtoken@^8.4.0:
+    version "8.4.0"
+    resolved "https://registry.yarnpkg.com/jsonwebtoken/-/jsonwebtoken-8.4.0.tgz#8757f7b4cb7440d86d5e2f3becefa70536c8e46a"
+    integrity sha512-coyXjRTCy0pw5WYBpMvWOMN+Kjaik2MwTUIq9cna/W7NpO9E+iYbumZONAz3hcr+tXFJECoQVrtmIoC3Oz0gvg==
+    dependencies:
+      jws "^3.1.5"
+      lodash.includes "^4.3.0"
+      lodash.isboolean "^3.0.3"
+      lodash.isinteger "^4.0.4"
+      lodash.isnumber "^3.0.3"
+      lodash.isplainobject "^4.0.6"
+      lodash.isstring "^4.0.1"
+      lodash.once "^4.0.0"
+      ms "^2.1.1"
+  
   jspdf@^1.4.1:
     version "1.4.1"
     resolved "https://registry.yarnpkg.com/jspdf/-/jspdf-1.4.1.tgz#8dbd437986346d65efe20ede5361927666b8e4ca"
@@ -6017,6 +6050,23 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/jsx-ast-utils/-/jsx-ast-utils-2.0.1.tgz#e801b1b39985e20fffc87b40e3748080e2dcac7f"
     dependencies:
       array-includes "^3.0.3"
+  
+  jwa@^1.1.5:
+    version "1.1.6"
+    resolved "https://registry.yarnpkg.com/jwa/-/jwa-1.1.6.tgz#87240e76c9808dbde18783cf2264ef4929ee50e6"
+    integrity sha512-tBO/cf++BUsJkYql/kBbJroKOgHWEigTKBAjjBEmrMGYd1QMBC74Hr4Wo2zCZw6ZrVhlJPvoMrkcOnlWR/DJfw==
+    dependencies:
+      buffer-equal-constant-time "1.0.1"
+      ecdsa-sig-formatter "1.0.10"
+      safe-buffer "^5.0.1"
+  
+  jws@^3.1.5:
+    version "3.1.5"
+    resolved "https://registry.yarnpkg.com/jws/-/jws-3.1.5.tgz#80d12d05b293d1e841e7cb8b4e69e561adcf834f"
+    integrity sha512-GsCSexFADNQUr8T5HPJvayTjvPIfoyJPtLQBwn5a4WZQchcrPMPMAWcC1AzJVRDKyD6ZPROPAxgv6rfHViO4uQ==
+    dependencies:
+      jwa "^1.1.5"
+      safe-buffer "^5.0.1"
   
   keycode@^2.1.9:
     version "2.2.0"
@@ -6147,9 +6197,34 @@ Lockfile:
     version "4.4.0"
     resolved "https://registry.yarnpkg.com/lodash.flattendeep/-/lodash.flattendeep-4.4.0.tgz#fb030917f86a3134e5bc9bec0d69e0013ddfedb2"
   
+  lodash.includes@^4.3.0:
+    version "4.3.0"
+    resolved "https://registry.yarnpkg.com/lodash.includes/-/lodash.includes-4.3.0.tgz#60bb98a87cb923c68ca1e51325483314849f553f"
+    integrity sha1-YLuYqHy5I8aMoeUTJUgzFISfVT8=
+  
+  lodash.isboolean@^3.0.3:
+    version "3.0.3"
+    resolved "https://registry.yarnpkg.com/lodash.isboolean/-/lodash.isboolean-3.0.3.tgz#6c2e171db2a257cd96802fd43b01b20d5f5870f6"
+    integrity sha1-bC4XHbKiV82WgC/UOwGyDV9YcPY=
+  
+  lodash.isinteger@^4.0.4:
+    version "4.0.4"
+    resolved "https://registry.yarnpkg.com/lodash.isinteger/-/lodash.isinteger-4.0.4.tgz#619c0af3d03f8b04c31f5882840b77b11cd68343"
+    integrity sha1-YZwK89A/iwTDH1iChAt3sRzWg0M=
+  
+  lodash.isnumber@^3.0.3:
+    version "3.0.3"
+    resolved "https://registry.yarnpkg.com/lodash.isnumber/-/lodash.isnumber-3.0.3.tgz#3ce76810c5928d03352301ac287317f11c0b1ffc"
+    integrity sha1-POdoEMWSjQM1IwGsKHMX8RwLH/w=
+  
   lodash.isplainobject@^4.0.6:
     version "4.0.6"
     resolved "https://registry.yarnpkg.com/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
+  
+  lodash.isstring@^4.0.1:
+    version "4.0.1"
+    resolved "https://registry.yarnpkg.com/lodash.isstring/-/lodash.isstring-4.0.1.tgz#d527dfb5456eca7cc9bb95d5daeaf88ba54a5451"
+    integrity sha1-1SfftUVuynzJu5XV2ur4i6VKVFE=
   
   lodash.memoize@^4.1.2:
     version "4.1.2"
@@ -6158,6 +6233,11 @@ Lockfile:
   lodash.mergewith@^4.6.0:
     version "4.6.0"
     resolved "https://registry.yarnpkg.com/lodash.mergewith/-/lodash.mergewith-4.6.0.tgz#150cf0a16791f5903b8891eab154609274bdea55"
+  
+  lodash.once@^4.0.0:
+    version "4.1.1"
+    resolved "https://registry.yarnpkg.com/lodash.once/-/lodash.once-4.1.1.tgz#0dd3971213c7c56df880977d504c88fb471a97ac"
+    integrity sha1-DdOXEhPHxW34gJd9UEyI+0cal6w=
   
   lodash.some@^4.6.0:
     version "4.6.0"
@@ -6506,6 +6586,11 @@ Lockfile:
   ms@2.0.0:
     version "2.0.0"
     resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
+  
+  ms@^2.1.1:
+    version "2.1.1"
+    resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.1.tgz#30a5864eb3ebb0a66f2ebe6d727af06a09d86e0a"
+    integrity sha512-tgp+dl5cGk28utYktBsrFqA7HKgrhgPsg6Z/EfhWI4gl1Hwq8B/GmY/0oXZ6nF8hDVesS/FpnYaD/kOWhYQvyg==
   
   multicast-dns-service-types@^1.1.0:
     version "1.1.0"
