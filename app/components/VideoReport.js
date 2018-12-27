@@ -13,7 +13,7 @@ import EmotionsPieChart from './fragments/EmotionsPieChart'
 import PositiveNegativeChart from './fragments/PositiveNegativeEmotionsChart'
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faChartBar, faFileAlt, faEyeSlash, faDownload} from '@fortawesome/free-solid-svg-icons'
+import {faChartBar, faFileAlt, faEyeSlash, faDownload, faVideo} from '@fortawesome/free-solid-svg-icons'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -26,6 +26,7 @@ library.add(faChartBar);
 library.add(faFileAlt);
 library.add(faEyeSlash);
 library.add(faDownload);
+library.add(faVideo);
 
 class VideoReport extends React.Component {
     constructor(props) {
@@ -136,11 +137,11 @@ class VideoReport extends React.Component {
         });
 
 
-        for(let indice = 0; indice < this.state.porcentajes.length; indice += 1){
-            if(terminado === true){
+        for (let indice = 0; indice < this.state.porcentajes.length; indice += 1) {
+            if (terminado === true) {
                 break;
             }
-            for(let indiceP = 0; indiceP < this.state.porcentajes[indice].emotions_percentage.length; indiceP += 1){
+            for (let indiceP = 0; indiceP < this.state.porcentajes[indice].emotions_percentage.length; indiceP += 1) {
                 if (indiceP === 5) {
                     indiceEmociones = 6;
                 }
@@ -148,7 +149,7 @@ class VideoReport extends React.Component {
                     if (this.porcentajeRango1(reporteActual.emotions_percentage[indiceEmociones], this.state.porcentajes[indice + 1].emotions_percentage[indiceEmociones])) {
                         Mensaje = "El reporte: " + parseInt(reporteActual.id) + " se parece al reporte: " + this.state.porcentajes[indice + 1].id + ". Debido a las siguientes situaciones:";
                         MensajeEmociones += " La emoción: " + this.sacarEmocion(indiceP) + " tienen promedios de: "
-                            + reporteActual.emotions_percentage[indiceEmociones]  + " en el reporte #" + reporteActual.id + " y de: "
+                            + reporteActual.emotions_percentage[indiceEmociones] + " en el reporte #" + reporteActual.id + " y de: "
                             + this.state.porcentajes[indice + 1].emotions_percentage[indiceEmociones] + " en el reporte #" + this.state.porcentajes[indice + 1].id + ". ";
                         terminado = true;
                     }
@@ -170,6 +171,26 @@ class VideoReport extends React.Component {
         const cardStyle = {
             margin: '58px 120px',
         };
+
+        let emocionDeseada = "";
+        if (this.state.summary_data) {
+            if (this.state.summary_data.rating.toString().toLowerCase() === "felicidad") {
+                emocionDeseada = "😃";
+            } else if (this.state.summary_data.rating.toString().toLowerCase() === "tristeza") {
+                emocionDeseada = "😢";
+            } else if (this.state.summary_data.rating.toString().toLowerCase() === "asco") {
+                emocionDeseada = "😫";
+            } else if (this.state.summary_data.rating.toString().toLowerCase() === "desprecio") {
+                emocionDeseada = "😕";
+            } else if (this.state.summary_data.rating.toString().toLowerCase() === "enojo") {
+                emocionDeseada = "😡";
+            } else if (this.state.summary_data.rating.toString().toLowerCase() === "miedo") {
+                emocionDeseada = "😱";
+            } else if (this.state.summary_data.rating.toString().toLowerCase() === "sorpresa") {
+                emocionDeseada = "😲";
+            }
+        }
+
         return (
             <div className='container'>
                 <Typography variant="display1" gutterBottom>
@@ -194,6 +215,12 @@ class VideoReport extends React.Component {
                 <Typography variant="display1" gutterBottom>
                     Notas del reporte: {this.state.summary_data ? this.state.summary_data.notes : 'loading data...'}
                 </Typography>
+                <Button variant="extendedFab" color="primary"><Typography variant="title" style={{color: "white", paddingTop: "0.35rem"}}
+                                                                          gutterBottom><FontAwesomeIcon
+                    icon="video"/> &nbsp;Emoción
+                    deseada: {this.state.summary_data ? this.state.summary_data.rating + " " + emocionDeseada : 'loading data...'}
+                </Typography></Button>
+
                 {this.state.textVisible &&
                 <Card style={cardStyle}>
                     <CardContent>
@@ -286,7 +313,10 @@ class VideoReport extends React.Component {
                             </Table>
                             <br/>
 
-                            {this.sacarPorcentajes() !== "" && <Card style={{marginBottom: "1rem", background: "linear-gradient(45deg, #b6dcfb 0%, #2196F2 50%, #2196F1 100%) no-repeat fixed"}}>
+                            {this.sacarPorcentajes() !== "" && <Card style={{
+                                marginBottom: "1rem",
+                                background: "linear-gradient(45deg, #b6dcfb 0%, #2196F2 50%, #2196F1 100%) no-repeat fixed"
+                            }}>
 
                                 <CardHeader title="👁️ Observaciones" subheader="Relaciones entre los reportes"/>
                                 <hr/>
@@ -344,7 +374,12 @@ class VideoReport extends React.Component {
                         <NotesLog report_id={this.state.report_id}/>
                     </Grid>
                     <br/>
-                    <Typography variant="display3" style={{marginTop: "2rem", marginBottom: "2rem", marginLeft: "40%", marginRight: "40%"}}>
+                    <Typography variant="display3" style={{
+                        marginTop: "2rem",
+                        marginBottom: "2rem",
+                        marginLeft: "40%",
+                        marginRight: "40%"
+                    }}>
                         📊 Gráficas
                     </Typography>
                     <br/>
