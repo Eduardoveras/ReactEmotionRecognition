@@ -86,7 +86,7 @@ class Cases extends React.Component {
 
 
 
-        let METABASE_SITE_URL = "http://sdem-bi.herokuapp.com";
+        let METABASE_SITE_URL = "https://sdem-bi.herokuapp.com";
         let METABASE_SECRET_KEY = "4a22557c855ddfa93b81d480f4e02fdec23016413807fe11952b5ba066589846";
 
         let payload = {
