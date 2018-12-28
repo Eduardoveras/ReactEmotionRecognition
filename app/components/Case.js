@@ -88,16 +88,13 @@ class Cases extends React.Component {
 
         let METABASE_SITE_URL = "https://sdem-bi.herokuapp.com";
         let METABASE_SECRET_KEY = "4a22557c855ddfa93b81d480f4e02fdec23016413807fe11952b5ba066589846";
-
         let payload = {
             resource: { dashboard: 1 },
-            params: {}
+            params: {case_id: this.state.case_id}
         };
         let token = jwt.sign(payload, METABASE_SECRET_KEY);
 
         let the_iframeUrl = METABASE_SITE_URL + "/embed/dashboard/" + token + "#bordered=true&titled=true";
-        console.log("la vaina e");
-        console.log(the_iframeUrl);
         this.setState({iframeUrl:the_iframeUrl});
 
     }
