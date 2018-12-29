@@ -113,7 +113,7 @@ class Cases extends React.Component {
                 {this.state.iframeUrl==null?"Loading...":<iframe
                     src={this.state.iframeUrl}
                     frameBorder={0}
-                    width={1400}
+                    width={"100%"}
                     height={1200}
                     allowTransparency
                 />}
