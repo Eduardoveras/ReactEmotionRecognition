@@ -36,6 +36,8 @@ function XHRWorker(url, ready, scope) {
 	 var oReq = new XMLHttpRequest();
 	 oReq.addEventListener('load', function() {
 	  var worker = new Worker(window.URL.createObjectURL(new Blob([this.responseText])));
+
+
 		if (ready) {
 			ready.call(scope, worker);
 		}
@@ -305,7 +307,12 @@ affdex.CameraDetector = function(element, imgW, imgH, faceMode) {
     };
 
     self.videoElement.addEventListener("playing", playingFn);
-    self.videoElement.src = window.URL.createObjectURL(stream);
+
+    try {
+      self.videoElement.srcObject = stream;
+    } catch (error) {
+      self.videoElement.src = window.URL.createObjectURL(stream);
+    }
 
     self.getCallback("onWebcamConnect", true)();
   };
