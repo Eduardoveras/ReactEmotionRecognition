@@ -66,7 +66,7 @@
     "react": "16.4.0",
     "react-chartjs": "^1.2.0",
     "react-chartjs-2": "^2.7.2",
-    "react-dom": "16.4.0",
+    "react-dom": "16.4.2",
     "react-firebaseui": "^3.0.6",
     "react-gif-player": "^0.4.1",
     "react-hot-loader": "4.3.2",
