@@ -75,7 +75,7 @@
     "react-toastify": "^4.1.0",
     "video.js": "^7.2.3",
     "videojs-markers": "^1.0.1",
-    "yarn": "^1.7.0"
+    "yarn": "^1.17.3"
   },
   "devDependencies": {
     "babel": "^6.23.0",
